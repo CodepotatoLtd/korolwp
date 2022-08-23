@@ -1,0 +1,217 @@
+.section-timeline {
+  position: relative;
+  width: 100vw;
+  overflow-x: hidden;
+
+  /*#timeline-wrapper {
+    height: 100vh;
+    width: 4400px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    padding: 0;
+    overflow: hidden;
+    background-color: #ddd;
+
+    .year {
+      width: 400px;
+      text-align: center;
+      overflow: hidden;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      height: 300px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: 600;
+      font-size: 1.5em;
+      color: white;
+      position: relative;
+      box-sizing: border-box;
+      //width: 100%;
+      //position: relative;
+      //width: 100vw;
+      //height: 100vh;
+      //overflow: hidden;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      //color: #333;
+      //text-align: left;
+
+    }
+  }*/
+
+  #container {
+    display:flex;
+    flex-wrap:wrap;
+    flex-direction:column;
+    height:100vh;
+
+
+  }
+
+  .start-spacer {
+    height:100%;
+    display:flex;
+    width: 400px;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    position: relative;
+
+    &:before {
+      width: 100vw;
+      height: 4px;
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+      content: "";
+      background: var(--background-color-dark);
+    }
+  }
+
+  .year{
+    height:100%;
+    display:flex;
+    width: 400px;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    position: relative;
+
+    .hotspot {
+      width: 300px;
+      height: 300px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translateX(-50%) translateY(-50%);
+      background: rgba(255, 0, 0, 0.5);
+      cursor: pointer;
+    }
+
+    h3 {
+      margin: 0;
+      padding: 0;
+    }
+
+    &:before {
+      width: 100%;
+      height: 4px;
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+      content: "";
+      background: var(--background-color-dark);
+    }
+
+    .content {
+      position: relative;
+
+      .dot {
+        cursor: pointer;
+        width: 28px;
+        height: 28px;
+        //border: 4px solid var(--background-color-dark);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translateX(-50%) translateY(-50%);
+        content: "";
+        //background: var(--background-color-light);
+        //-webkit-border-radius: 14px;
+        //-moz-border-radius: 14px;
+        //border-radius: 14px;
+
+        .c1 {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 100%;
+          height: 100%;
+          transform: translateX(-50%) translateY(-50%);
+        }
+
+        .c2 {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 100%;
+          height: 100%;
+          transform: translateX(-50%) translateY(-50%);
+        }
+      }
+
+      .corporate {
+        position: absolute;
+        top: -90px;
+        transform: translateX(-50%);
+        left: 50%;
+      }
+
+      .project {
+        position: absolute;
+        bottom: -90px;
+        transform: translateX(-50%);
+        left: 50%;
+      }
+    }
+  }
+
+  .end-spacer {
+    height:100%;
+    display:flex;
+    width: 600px;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    position: relative;
+
+    &:before {
+      width: 100%;
+      height: 4px;
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+      content: "";
+      background: var(--background-color-dark);
+    }
+  }
+
+  .green{
+    //width:500px;
+    background-color:green;
+  }
+
+  .yellow{
+    //width:1300px;
+    background-color:yellow;
+  }
+
+  .purple{
+    //width:800px;
+    background-color:purple;
+  }
+
+  .orange{
+    //width:800px;
+    background-color:orange;
+  }
+
+  .blue{
+    //width:2100px;
+    background-color:blue;
+  }
+
+  .red{
+    //width:900px;
+    background-color:red;
+  }
+}
+

@@ -1,0 +1,89 @@
+@font-face {
+  font-family: "Ogg-Regular";
+  font-weight: 300;
+  src: url('../../fonts/Ogg-Regular.woff2') format("woff2"), url('../../fonts/Ogg-Regular.woff') format("woff");
+}
+
+:root {
+  /* --- */
+  --font-nav: canada-type-gibson, sans-serif;
+  --font-headings: Ogg-Regular, serif;
+  --font-copy: canada-type-gibson, sans-serif;
+  --font-serif: Ogg-Regular, serif;
+  --font-sans: canada-type-gibson, sans-serif;
+  --font-buttons: canada-type-gibson, sans-serif;
+  --font-form: canada-type-gibson, sans-serif;
+
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: Ogg-Regular, serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+p {
+  font-family: canada-type-gibson, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.large {
+  h1, h2, h3, h4, h5 {
+    font-family: Ogg-Regular, serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  p {
+    font-family: Ogg-Regular, serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+}
+
+.medium {
+  h1, h2, h3, h4, h5 {
+    font-family: Ogg-Regular, serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  p {
+    font-family: canada-type-gibson, sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+}
+
+.small {
+  h1, h2, h3, h4, h5 {
+    font-family: Ogg-Regular, serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  p {
+    font-family: canada-type-gibson, sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+}
+
+.sans {
+  font-family: canada-type-gibson, sans-serif;
+  font-weight: 100;
+  font-style: normal;
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p {
+    font-family: canada-type-gibson, sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+}

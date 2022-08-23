@@ -1,0 +1,14 @@
+{
+  "app.js": "app.js",
+  "editor.js": "editor.js",
+  "vendor/bud.app.editor.js": "vendor/bud.app.editor.js",
+  "vendor/app.js": "vendor/app.js",
+  "fonts/Ogg-Regular.woff": "fonts/Ogg-Regular.woff",
+  "fonts/Ogg-Regular.woff2": "fonts/Ogg-Regular.woff2",
+  ".gitkeep": ".gitkeep",
+  "app.js.map": "vendor/app.js.map",
+  "app.hot-update.js.map": "app.0a4c844346d32e7a9d3b.hot-update.js.map",
+  "editor.js.map": "editor.js.map",
+  "editor.hot-update.js.map": "editor.0a4c844346d32e7a9d3b.hot-update.js.map",
+  "bud.app.editor.js.map": "vendor/bud.app.editor.js.map"
+}

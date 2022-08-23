@@ -1,0 +1,23 @@
+.section-casestudy-specification {
+  position: relative;
+  overflow: hidden;
+
+  .spec-wrapper {
+    height: 100%;
+    border-top: 1px solid rgba(14,54,133,1);
+    border-bottom: 1px solid rgba(14,54,133,1);
+    text-align: center;
+
+    h3 {
+      font-size: 18px;
+      padding-bottom: 10px;
+    }
+
+    p {
+      font-size: 30px;
+      max-width: 200px;
+      margin: auto;
+    }
+  }
+}
+

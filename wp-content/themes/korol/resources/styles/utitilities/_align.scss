@@ -1,0 +1,27 @@
+.text-center {
+  text-align: center;
+}
+
+.text-mobile-center {
+  @include media-breakpoint-down(lg) {
+    text-align: center;
+  }
+}
+
+.text-desktop-center {
+  @include media-breakpoint-up(lg) {
+    text-align: center;
+  }
+}
+
+.text-desktop-left {
+  @include media-breakpoint-up(lg) {
+    text-align: left;
+  }
+}
+
+.text-desktop-right {
+  @include media-breakpoint-up(lg) {
+    text-align: right;
+  }
+}

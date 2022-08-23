@@ -1,0 +1,36 @@
+.section-text-image {
+  position: relative;
+  overflow: hidden;
+
+  .icon {
+    max-width: 180px;
+    height: auto;
+  }
+
+  .image-wrapper {
+    img {
+      width: 100%;
+      height: auto;
+    }
+  }
+  .order-1 {
+    .text-wrapper {
+      //padding-right: 50px;
+    }
+
+    .image-wrapper {
+      //padding-right: 50px;
+    }
+  }
+
+  .order-2 {
+    .text-wrapper {
+      //padding-left: 50px;
+    }
+
+    .image-wrapper {
+     // padding-left: 50px;
+    }
+  }
+}
+
