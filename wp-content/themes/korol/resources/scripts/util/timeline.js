@@ -32,14 +32,21 @@ class Timeline {
                 let $c1 = $('.c1', this)
                 let $c2 = $('.c2', this)
 
+                let $corporate = $('.corporate', this)
+                let $project= $('.project', this)
+
                 $hotspot.mouseover(function () {
-                    gsap.to($c1, {width: 122, height: 122 })
-                    gsap.to($c2, {width: 160, height: 160 })
+                    gsap.to($c1, {width: 110, height: 110 })
+                    gsap.to($c2, {width: 140, height: 140 })
+                    gsap.to($corporate, {top: -150 })
+                    gsap.to($project, {bottom: -150 })
                 })
 
                 $hotspot.mouseleave(function () {
                     gsap.to($c1, {width: 28, height: 28 })
                     gsap.to($c2, {width: 28, height: 28 })
+                    gsap.to($corporate, {top: -90 })
+                    gsap.to($project, {bottom: -90 })
                 })
 
             });

@@ -7,8 +7,8 @@
   "fonts/Ogg-Regular.woff2": "fonts/Ogg-Regular.woff2",
   ".gitkeep": ".gitkeep",
   "app.js.map": "vendor/app.js.map",
-  "app.hot-update.js.map": "app.0a4c844346d32e7a9d3b.hot-update.js.map",
+  "app.hot-update.js.map": "app.f20b82dd5a1e752701df.hot-update.js.map",
   "editor.js.map": "editor.js.map",
-  "editor.hot-update.js.map": "editor.0a4c844346d32e7a9d3b.hot-update.js.map",
+  "editor.hot-update.js.map": "editor.f20b82dd5a1e752701df.hot-update.js.map",
   "bud.app.editor.js.map": "vendor/bud.app.editor.js.map"
 }
