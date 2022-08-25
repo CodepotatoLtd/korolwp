@@ -14,6 +14,8 @@ add_action('after_setup_theme', function () {
 
     add_image_size('featured-image', 1120, 700, true);
 
+    add_image_size('timeline-image', 600, 600, true);
+
     add_image_size('team-image', 500, 670, true);
 
 

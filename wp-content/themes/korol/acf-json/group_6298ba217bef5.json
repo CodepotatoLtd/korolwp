@@ -563,6 +563,30 @@
                     "display": "block",
                     "sub_fields": [
                         {
+                            "key": "field_6305fba5ef884",
+                            "label": "Include Footer",
+                            "name": "include_footer",
+                            "type": "radio",
+                            "instructions": "Include the footer in the timeline block so that the page scroll ends on the end of the time line",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "yes": "yes",
+                                "no": "no"
+                            },
+                            "allow_null": 0,
+                            "other_choice": 0,
+                            "default_value": "yes",
+                            "layout": "horizontal",
+                            "return_format": "value",
+                            "save_other_choice": 0
+                        },
+                        {
                             "key": "field_6304dd9e8d049",
                             "label": "Text",
                             "name": "text",
@@ -824,5 +848,5 @@
     "acfe_form": 0,
     "acfe_meta": "",
     "acfe_note": "",
-    "modified": 1661280928
+    "modified": 1661336574
 }

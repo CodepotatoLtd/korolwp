@@ -9,4 +9,4 @@
 </main>
 
 
-@include('sections.footer')
+
