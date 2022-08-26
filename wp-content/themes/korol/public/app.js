@@ -776,7 +776,7 @@ class Timeline {
         let yearWidth = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.year').width(); //let totalDivisions = 3 + numberOfYears
         //let divisionHeight = ((containerHeight-screenHeight) / (numberOfYears - 1))
 
-        let divisionHeight = 4 * container.offsetWidth / numberOfYears; //   let triggerElement = "<div id='trigger-last' class='trigger'></div>"
+        let divisionHeight = 4 * container.offsetWidth / 12; //   let triggerElement = "<div id='trigger-last' class='trigger'></div>"
         //   $("#timeline-wrapper").append(triggerElement);
         //   gsap.set("#trigger-last", {top: (4* container.offsetWidth)})
         //
@@ -796,36 +796,57 @@ class Timeline {
         console.log('nY', numberOfYears);
         console.log('cH', containerHeight);
         console.log('dH', divisionHeight);
-        jquery__WEBPACK_IMPORTED_MODULE_0___default()('.year').each(function (index) {// ScrollTrigger.create({
-          //            trigger: this,
-          //   //         //invalidateOnRefresh: true,
-          //   //         //pin: true,
-          //   //         //scrub: 3,
-          //   //         markers: true,
-          //   //         //end: () => "+=" + (4 * container.offsetWidth),
-          //   //         //animation: tl,
-          //        })
-          //
-          //     let triggerID = "trigger" + index
-          //     let hashTriggerID = "#trigger" + index
-          //     let triggerElement = "<div id=" + triggerID + " class='trigger'></div>"
-          //     $("#timeline-wrapper").append(triggerElement);
-          //
-          //     let triggerOffset =  (index * divisionHeight)
-          //
-          //     gsap.set(hashTriggerID, {top: triggerOffset})
-          //     gsap.set(this, {width: divisionHeight})
-          //
-          //     ScrollTrigger.create({
-          //         trigger: hashTriggerID,
-          //         //invalidateOnRefresh: true,
-          //         //pin: true,
-          //         //scrub: 3,
-          //         markers: true,
-          //         //end: () => "+=" + (4 * container.offsetWidth),
-          //         //animation: tl,
-          //     })
-        });
+
+        for (let i = 0; i < 12; i++) {
+          let triggerID = "trigger" + i;
+          let hashTriggerID = "#trigger" + i;
+          let triggerElement = "<div id=" + triggerID + " class='trigger'></div>";
+          jquery__WEBPACK_IMPORTED_MODULE_0___default()("#timeline-wrapper").append(triggerElement);
+          let triggerOffset = i * divisionHeight;
+          gsap__WEBPACK_IMPORTED_MODULE_1__.gsap.set(hashTriggerID, {
+            top: triggerOffset
+          });
+          gsap_ScrollTrigger__WEBPACK_IMPORTED_MODULE_2__.ScrollTrigger.create({
+            trigger: hashTriggerID,
+            //         //invalidateOnRefresh: true,
+            //         //pin: true,
+            //         //scrub: 3,
+            markers: true,
+            //end: () => "+=" + (4 * container.offsetWidth),
+            animation: yearTL
+          });
+        } //$('.year').each(function ( index ) {
+        // ScrollTrigger.create({
+        //            trigger: this,
+        //   //         //invalidateOnRefresh: true,
+        //   //         //pin: true,
+        //   //         //scrub: 3,
+        //   //         markers: true,
+        //   //         //end: () => "+=" + (4 * container.offsetWidth),
+        //   //         //animation: tl,
+        //        })
+        //
+        //     let triggerID = "trigger" + index
+        //     let hashTriggerID = "#trigger" + index
+        //     let triggerElement = "<div id=" + triggerID + " class='trigger'></div>"
+        //     $("#timeline-wrapper").append(triggerElement);
+        //
+        //     let triggerOffset =  (index * divisionHeight)
+        //
+        //     gsap.set(hashTriggerID, {top: triggerOffset})
+        //     gsap.set(this, {width: divisionHeight})
+        //
+        //     ScrollTrigger.create({
+        //         trigger: hashTriggerID,
+        //         //invalidateOnRefresh: true,
+        //         //pin: true,
+        //         //scrub: 3,
+        //         markers: true,
+        //         //end: () => "+=" + (4 * container.offsetWidth),
+        //         //animation: tl,
+        //     })
+        //});
+
       }
     }
 
@@ -1319,7 +1340,7 @@ module.exports = window["jQuery"];
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	!function() {
-/******/ 		__webpack_require__.h = function() { return "4198ad6bcc65e48a5758"; }
+/******/ 		__webpack_require__.h = function() { return "0413d032afb78230f3d8"; }
 /******/ 	}();
 /******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */

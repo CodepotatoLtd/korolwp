@@ -322,7 +322,7 @@ module.exports = window["wp"]["blocks"];
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	!function() {
-/******/ 		__webpack_require__.h = function() { return "4198ad6bcc65e48a5758"; }
+/******/ 		__webpack_require__.h = function() { return "0413d032afb78230f3d8"; }
 /******/ 	}();
 /******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */

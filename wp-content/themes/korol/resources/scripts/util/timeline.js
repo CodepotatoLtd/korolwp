@@ -26,14 +26,15 @@ class Timeline {
                 //scrub: 3,
                 scrub: true,
                 markers: true,
-                end: () => "+=" + (4*container.offsetWidth),
+                end: () => "+=" + (4 * container.offsetWidth),
                 animation: tl,
             })
 
-            function updateTimeline() {
-              console.log("w ", (4*container.offsetWidth))
+            function updateTimeline()
+            {
+                console.log("w ", (4 * container.offsetWidth))
 
-              console.log("x ", $('#container').position().left)
+                console.log("x ", $('#container').position().left)
             }
 
             $('.year').each(function ( index ) {
@@ -100,7 +101,7 @@ class Timeline {
                 let yearWidth = $('.year').width()
                 //let totalDivisions = 3 + numberOfYears
                //let divisionHeight = ((containerHeight-screenHeight) / (numberOfYears - 1))
-                let divisionHeight = ( 4* container.offsetWidth / (numberOfYears  ))
+                let divisionHeight = ( 4 * container.offsetWidth / (12  ))
 
               //   let triggerElement = "<div id='trigger-last' class='trigger'></div>"
               //   $("#timeline-wrapper").append(triggerElement);
@@ -125,7 +126,27 @@ class Timeline {
                 console.log('cH', containerHeight)
                 console.log('dH', divisionHeight)
 
-                 $('.year').each(function ( index ) {
+                for (let i = 0; i < 12; i++) {
+                    let triggerID = "trigger" + i
+                    let hashTriggerID = "#trigger" + i
+                    let triggerElement = "<div id=" + triggerID + " class='trigger'></div>"
+                    $("#timeline-wrapper").append(triggerElement);
+
+                    let triggerOffset =  (i * divisionHeight)
+                    gsap.set(hashTriggerID, {top: triggerOffset})
+
+                    ScrollTrigger.create({
+                        trigger: hashTriggerID,
+                      //         //invalidateOnRefresh: true,
+                      //         //pin: true,
+                      //         //scrub: 3,
+                        markers: true,
+                               //end: () => "+=" + (4 * container.offsetWidth),
+                               animation: yearTL,
+                    })
+                }
+
+                 //$('.year').each(function ( index ) {
 
                    // ScrollTrigger.create({
                    //            trigger: this,
@@ -158,7 +179,7 @@ class Timeline {
                 //         //end: () => "+=" + (4 * container.offsetWidth),
                 //         //animation: tl,
                 //     })
-                });
+                //});
 
 
             }
