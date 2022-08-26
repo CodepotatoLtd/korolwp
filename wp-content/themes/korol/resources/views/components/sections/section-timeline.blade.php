@@ -28,7 +28,7 @@
 
 
 
-      <div id="y<?php echo $yearCount;?>" class="year">
+      <div id="y<?php echo $yearCount;?>" class="year year-entry">
 
               <?php $date = get_sub_field('date');?>
 
