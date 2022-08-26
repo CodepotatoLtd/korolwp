@@ -3,7 +3,7 @@
   <div id="timeline-wrapper">
     <div id="container">
 
-      <div class="title">
+    <!--<div class="title">
         <div class="container">
           <div class="row">
             <div class="col-12">
@@ -12,8 +12,10 @@
           </div>
         </div>
 
-      </div>
-      <div class="start-spacer"></div>
+      </div>-->
+      <div class="year"></div>
+      <div class="year"></div>
+      <div class="year"></div>
 
       <?php
 
@@ -168,7 +170,9 @@
           <?php endwhile;
       endif;?>
 
-      <div class="end-spacer"></div>
+      <!--<div class="end-spacer"></div>-->
+      <div class="year"></div>
+      <div class="year"></div>
 
     </div>
 

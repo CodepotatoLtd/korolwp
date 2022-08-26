@@ -14,33 +14,27 @@ class Timeline {
 
             let container = document.getElementById("container");
 
-            // gsap.to(container, {
-            //     x: () => -(container.scrollWidth - document.documentElement.clientWidth) + "px",
-            //     ease: "none",
-            //     scrollTrigger: {
-            //         trigger: container,
-            //         invalidateOnRefresh: true,
-            //         pin: true,
-            //         scrub: 3,
-            //         end: () => "+=" + (4 * container.offsetWidth)
-            //     }
-            // })
-
-            let tl = gsap.timeline();
+            let tl = gsap.timeline({onUpdate:updateTimeline});
 
             tl.to(container, { x: () => -(container.scrollWidth - document.documentElement.clientWidth) + "px", ease: "none"})
-              .to('.title', { x: () => (container.scrollWidth - document.documentElement.clientWidth) + "px", ease: "none"}, 0);
+              //.to('.title', { x: () => (container.scrollWidth - document.documentElement.clientWidth) + "px", ease: "none"}, 0);
 
             ScrollTrigger.create({
                 trigger: container,
                 invalidateOnRefresh: true,
                 pin: true,
-                scrub: 3,
-                end: () => "+=" + (4 * container.offsetWidth),
+                //scrub: 3,
+                scrub: true,
+                markers: true,
+                end: () => "+=" + (4*container.offsetWidth),
                 animation: tl,
             })
 
+            function updateTimeline() {
+              console.log("w ", (4*container.offsetWidth))
 
+              console.log("x ", $('#container').position().left)
+            }
 
             $('.year').each(function ( index ) {
 
@@ -89,6 +83,85 @@ class Timeline {
                     gsap.to($c2, {opacity: 0, duration: d })
                 })
             });
+
+
+
+
+            const myTimeout = setTimeout(setTriggers, 500);
+
+            function setTriggers()
+            {
+
+                let numberOfYears = $('#timeline-wrapper .year').length
+                let containerHeight = $('#timeline-wrapper').height()
+                let containerWidth = $('#container').width()
+                let screenHeight = window.innerHeight;
+                let screenWidth = window.innerWidth;
+                let yearWidth = $('.year').width()
+                //let totalDivisions = 3 + numberOfYears
+               //let divisionHeight = ((containerHeight-screenHeight) / (numberOfYears - 1))
+                let divisionHeight = ( 4* container.offsetWidth / (numberOfYears  ))
+
+              //   let triggerElement = "<div id='trigger-last' class='trigger'></div>"
+              //   $("#timeline-wrapper").append(triggerElement);
+              //   gsap.set("#trigger-last", {top: (4* container.offsetWidth)})
+              //
+              // ScrollTrigger.create({
+              //           trigger: '#trigger-last',
+              //           //invalidateOnRefresh: true,
+              //           //pin: true,
+              //           //scrub: 3,
+              //           markers: true,
+              //           //end: () => "+=" + (4 * container.offsetWidth),
+              //           //animation: tl,
+              //    })
+
+
+
+                console.log('containerWidth', containerWidth)
+                console.log('screenWidth', screenWidth)
+                console.log('yearWidth', yearWidth)
+                console.log('nY', numberOfYears)
+                console.log('cH', containerHeight)
+                console.log('dH', divisionHeight)
+
+                 $('.year').each(function ( index ) {
+
+                   // ScrollTrigger.create({
+                   //            trigger: this,
+                   //   //         //invalidateOnRefresh: true,
+                   //   //         //pin: true,
+                   //   //         //scrub: 3,
+                   //   //         markers: true,
+                   //   //         //end: () => "+=" + (4 * container.offsetWidth),
+                   //   //         //animation: tl,
+                   //        })
+
+
+                //
+                //     let triggerID = "trigger" + index
+                //     let hashTriggerID = "#trigger" + index
+                //     let triggerElement = "<div id=" + triggerID + " class='trigger'></div>"
+                //     $("#timeline-wrapper").append(triggerElement);
+                //
+                //     let triggerOffset =  (index * divisionHeight)
+                //
+                //     gsap.set(hashTriggerID, {top: triggerOffset})
+                //     gsap.set(this, {width: divisionHeight})
+                //
+                //     ScrollTrigger.create({
+                //         trigger: hashTriggerID,
+                //         //invalidateOnRefresh: true,
+                //         //pin: true,
+                //         //scrub: 3,
+                //         markers: true,
+                //         //end: () => "+=" + (4 * container.offsetWidth),
+                //         //animation: tl,
+                //     })
+                });
+
+
+            }
         };
     }
 }
