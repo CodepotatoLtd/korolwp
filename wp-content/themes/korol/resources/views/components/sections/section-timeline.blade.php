@@ -3,7 +3,7 @@
   <div id="timeline-wrapper">
     <div id="container">
 
-    <!--<div class="title">
+    <div class="title">
         <div class="container">
           <div class="row">
             <div class="col-12">
@@ -12,10 +12,12 @@
           </div>
         </div>
 
-      </div>-->
+      </div>
       <div class="year"></div>
       <div class="year"></div>
       <div class="year"></div>
+
+      <?php $yearCount = 0;?>
 
       <?php
 
@@ -24,7 +26,9 @@
           while (have_rows('entires')) :
               the_row(); ?>
 
-      <div class="year">
+
+
+      <div id="y<?php echo $yearCount;?>" class="year">
 
               <?php $date = get_sub_field('date');?>
 
@@ -167,6 +171,8 @@
 
          <div class="hotspot"></div>
       </div>
+    <?php $yearCount ++ ;?>
+
           <?php endwhile;
       endif;?>
 

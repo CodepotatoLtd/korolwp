@@ -17,7 +17,7 @@ class Timeline {
             let tl = gsap.timeline({onUpdate:updateTimeline});
 
             tl.to(container, { x: () => -(container.scrollWidth - document.documentElement.clientWidth) + "px", ease: "none"})
-              //.to('.title', { x: () => (container.scrollWidth - document.documentElement.clientWidth) + "px", ease: "none"}, 0);
+              .to('.title', { x: () => (container.scrollWidth - document.documentElement.clientWidth) + "px", ease: "none"}, 0);
 
             ScrollTrigger.create({
                 trigger: container,
@@ -126,61 +126,47 @@ class Timeline {
                 console.log('cH', containerHeight)
                 console.log('dH', divisionHeight)
 
-                for (let i = 0; i < 12; i++) {
+                for (let i = 0; i < 11; i++) {
                     let triggerID = "trigger" + i
                     let hashTriggerID = "#trigger" + i
                     let triggerElement = "<div id=" + triggerID + " class='trigger'></div>"
                     $("#timeline-wrapper").append(triggerElement);
 
-                    let triggerOffset =  (i * divisionHeight)
+                    let triggerOffset = (2* divisionHeight ) + (i * divisionHeight)
                     gsap.set(hashTriggerID, {top: triggerOffset})
+
+                    let year = "#y" + i;
+
+                    let yearTl = gsap.timeline();
+
+                    yearTl.to(year, {opacity: 0.25})
+
+                    yearTl.pause()
+
+                  function playTL(){
+                    yearTl.play()
+                  }
+
+                  function reverseTL(){
+                    yearTl.reverse()
+                  }
 
                     ScrollTrigger.create({
                         trigger: hashTriggerID,
                       //         //invalidateOnRefresh: true,
                       //         //pin: true,
                       //         //scrub: 3,
+                      start: "top 60%",
+                      end: "bottom 40%",
                         markers: true,
                                //end: () => "+=" + (4 * container.offsetWidth),
-                               animation: yearTL,
+                               //animation: yearTL,
+                      onEnter: () => playTL(),
+                      onLeave: () => reverseTL(),
+                      onEnterBack: () => playTL(),
+                      onLeaveBack: () => reverseTL(),
                     })
                 }
-
-                 //$('.year').each(function ( index ) {
-
-                   // ScrollTrigger.create({
-                   //            trigger: this,
-                   //   //         //invalidateOnRefresh: true,
-                   //   //         //pin: true,
-                   //   //         //scrub: 3,
-                   //   //         markers: true,
-                   //   //         //end: () => "+=" + (4 * container.offsetWidth),
-                   //   //         //animation: tl,
-                   //        })
-
-
-                //
-                //     let triggerID = "trigger" + index
-                //     let hashTriggerID = "#trigger" + index
-                //     let triggerElement = "<div id=" + triggerID + " class='trigger'></div>"
-                //     $("#timeline-wrapper").append(triggerElement);
-                //
-                //     let triggerOffset =  (index * divisionHeight)
-                //
-                //     gsap.set(hashTriggerID, {top: triggerOffset})
-                //     gsap.set(this, {width: divisionHeight})
-                //
-                //     ScrollTrigger.create({
-                //         trigger: hashTriggerID,
-                //         //invalidateOnRefresh: true,
-                //         //pin: true,
-                //         //scrub: 3,
-                //         markers: true,
-                //         //end: () => "+=" + (4 * container.offsetWidth),
-                //         //animation: tl,
-                //     })
-                //});
-
 
             }
         };
