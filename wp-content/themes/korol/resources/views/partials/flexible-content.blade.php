@@ -8,6 +8,12 @@
 
       @endif
 
+      @if(get_row_layout() == 'intro_small')
+
+        @include('components.sections.section-intro-small')
+
+      @endif
+
       @if(get_row_layout() == 'text_image')
 
         @include('components.sections.section-text-image')
@@ -59,6 +65,12 @@
     @if(get_row_layout() == 'timeline')
 
       @include('components.sections.section-timeline')
+
+    @endif
+
+    @if(get_row_layout() == 'map')
+
+      @include('components.sections.section-map')
 
     @endif
 

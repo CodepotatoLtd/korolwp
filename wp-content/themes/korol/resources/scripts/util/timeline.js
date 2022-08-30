@@ -18,14 +18,15 @@ class Timeline {
             let tl = gsap.timeline();
 
             tl.to(container, { x: () => -(container.scrollWidth - document.documentElement.clientWidth) + "px", ease: "none"})
-              .to('.title', { x: () => (container.scrollWidth - document.documentElement.clientWidth) + "px", ease: "none"}, 0);
+              .to('.title', { x: () => (container.scrollWidth - document.documentElement.clientWidth) + "px", ease: "none"}, 0)
+              .to('.timeline-footer', { x: () => (container.scrollWidth - document.documentElement.clientWidth) + "px", ease: "none"}, 0);
 
             ScrollTrigger.create({
                 trigger: container,
                 invalidateOnRefresh: true,
                 pin: true,
-                //scrub: 3,
-                scrub: true,
+                scrub: 3,
+                //scrub: true,
                 //markers: true,
                 end: () => "+=" + (4 * container.offsetWidth),
                 animation: tl,
@@ -35,6 +36,7 @@ class Timeline {
 
             $('.year').each(function ( index ) {
 
+                let $year = $(this)
                 let $hotspot = $('.hotspot', this)
                 let $d1 = $('.d1', this)
                 let $d2 = $('.d2', this)
@@ -49,42 +51,42 @@ class Timeline {
 
                 let d = 0.35;
 
-                // $hotspot.mouseover(function () {
-                //     gsap.killTweensOf($p1);
-                //     gsap.killTweensOf($p2);
-                //     gsap.killTweensOf($c1);
-                //     gsap.killTweensOf($c2);
-                //     gsap.to($d1, {width: 70, height: 70, duration: d })
-                //     gsap.to($d2, {width: 88, height: 88, duration: d })
-                //     gsap.to($corporate, {y: -35, duration: d })
-                //     gsap.to($project, {y: 35, duration: d })
-                //     gsap.to($p1, {opacity: 1, duration: d * 3, delay: d })
-                //     gsap.to($p2, {opacity: 1, duration: d * 3, delay: d * 1.5 })
-                //     gsap.to($c1, {opacity: 1, duration: d * 3, delay: d })
-                //     gsap.to($c2, {opacity: 1, duration: d * 3, delay: d * 1.5 })
-                //
-                // })
-                //
-                // $hotspot.mouseleave(function () {
-                //     gsap.killTweensOf($p1);
-                //     gsap.killTweensOf($p2);
-                //     gsap.killTweensOf($c1);
-                //     gsap.killTweensOf($c2);
-                //     gsap.to($d1, {width: 28, height: 28, duration: d })
-                //     gsap.to($d2, {width: 28, height: 28, duration: d })
-                //     gsap.to($corporate, {y: 0, duration: d })
-                //     gsap.to($project, {y: 0, duration: d })
-                //     gsap.to($p1, {opacity: 0, duration: d })
-                //     gsap.to($p2, {opacity: 0, duration: d })
-                //     gsap.to($c1, {opacity: 0, duration: d })
-                //     gsap.to($c2, {opacity: 0, duration: d })
-                // })
+                $hotspot.mouseover(function () {
+                    $year.addClass('active')
+                    gsap.killTweensOf($p1);
+                    gsap.killTweensOf($p2);
+                    gsap.killTweensOf($c1);
+                    gsap.killTweensOf($c2);
+                    gsap.to($d1, {width: 70, height: 70, duration: d })
+                    gsap.to($d2, {width: 88, height: 88, duration: d })
+                    gsap.to($corporate, {y: -35, duration: d })
+                    gsap.to($project, {y: 35, duration: d })
+                    gsap.to($p1, {opacity: 1, duration: d * 3, delay: d })
+                    gsap.to($p2, {opacity: 1, duration: d * 3, delay: d * 1.5 })
+                    gsap.to($c1, {opacity: 1, duration: d * 3, delay: d })
+                    gsap.to($c2, {opacity: 1, duration: d * 3, delay: d * 1.5 })
+
+                })
+
+                $hotspot.mouseleave(function () {
+                  $year.removeClass('active')
+                    gsap.killTweensOf($p1);
+                    gsap.killTweensOf($p2);
+                    gsap.killTweensOf($c1);
+                    gsap.killTweensOf($c2);
+                    gsap.to($d1, {width: 28, height: 28, duration: d })
+                    gsap.to($d2, {width: 28, height: 28, duration: d })
+                    gsap.to($corporate, {y: 0, duration: d })
+                    gsap.to($project, {y: 0, duration: d })
+                    gsap.to($p1, {opacity: 0, duration: d })
+                    gsap.to($p2, {opacity: 0, duration: d })
+                    gsap.to($c1, {opacity: 0, duration: d })
+                    gsap.to($c2, {opacity: 0, duration: d })
+                })
             });
 
 
-
-
-            const myTimeout = setTimeout(setTriggers, 500);
+            //const myTimeout = setTimeout(setTriggers, 500);
 
             function setTriggers()
             {
@@ -112,7 +114,8 @@ class Timeline {
                     let triggerElement = "<div id=" + triggerID + " class='trigger'></div>"
                     $("#timeline-wrapper").append(triggerElement);
 
-                    let triggerOffset = (2 * divisionHeight ) + (i * divisionHeight)
+                    //let triggerOffset = (2 * divisionHeight ) + (i * divisionHeight)
+                    let triggerOffset = (divisionHeight ) + (i * divisionHeight)
                     gsap.set(hashTriggerID, {top: triggerOffset})
 
                     let year = "#y" + i;
@@ -190,64 +193,30 @@ class Timeline {
                         trigger: hashTriggerID,
                         //markers: {startColor: "yellow", endColor: "green", indent: 60 },
                         start: "center 60%",
-                        end: "center 30%",
+                        end: "center 25%",
                         onEnter: () => onEnter(),
                         onLeave: () => onLeave(),
                         })
 
-                   ScrollTrigger.create({
+                    ScrollTrigger.create({
                         trigger: hashTriggerID,
-                        //markers: {startColor: "blue", endColor: "orange"},
+                        markers: {startColor: "blue", endColor: "orange"},
                         start: "center 60%",
-                        end: "center 30%",
+                        end: "center 25%",
                         onEnterBack: () => onEnter(),
                         onLeaveBack: () => onLeave(),
                       })
 
 
+                    $(this).click(function () {
+
+                        let scrollYPos = ($(hashTriggerID).offset().top) - (divisionHeight / 2);
+
+                        gsap.to(window, {ease: "Sine.easeOut", duration: 1, scrollTo: {y: scrollYPos}});
+                    });
+
+
                 });
-
-
-                // for (let i = 0; i < numberOfEntries; i++) {
-                //     let triggerID = "trigger" + i
-                //     let hashTriggerID = "#trigger" + i
-                //     let triggerElement = "<div id=" + triggerID + " class='trigger'></div>"
-                //     $("#timeline-wrapper").append(triggerElement);
-                //
-                //     let triggerOffset = (2 * divisionHeight ) + (i * divisionHeight)
-                //     gsap.set(hashTriggerID, {top: triggerOffset})
-                //
-                //     let year = "#y" + i;
-                //
-                //     let yearTl = gsap.timeline();
-                //
-                //     yearTl.to(year, {opacity: 0.25})
-                //
-                //     yearTl.pause()
-                //
-                //     function playTL()
-                //     {
-                //         yearTl.play()
-                //     }
-                //
-                //     function reverseTL()
-                //     {
-                //         yearTl.reverse()
-                //     }
-                //
-                //     ScrollTrigger.create({
-                //         trigger: hashTriggerID,
-                //         start: "top 60%",
-                //         end: "bottom 40%",
-                //         markers: true,
-                //                //end: () => "+=" + (4 * container.offsetWidth),
-                //                //animation: yearTL,
-                //         onEnter: () => playTL(),
-                //         onLeave: () => reverseTL(),
-                //         onEnterBack: () => playTL(),
-                //         onLeaveBack: () => reverseTL(),
-                //     })
-                // }
 
             }
         };

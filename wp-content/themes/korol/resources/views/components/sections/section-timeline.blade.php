@@ -1,9 +1,12 @@
-<section class="section-timeline bg-colour-light text-dark medium">
+<section class="section-timeline bg-colour-light medium">
+
+
 
   <div id="timeline-wrapper">
-    <div id="container">
 
-    <div class="title">
+
+    <div id="container">
+      <div class="title text-dark">
         <div class="container">
           <div class="row">
             <div class="col-12">
@@ -11,11 +14,25 @@
             </div>
           </div>
         </div>
-
       </div>
+
+      <div class="key text-dark">
+        <div class="container">
+          <div class="row">
+            <div class="col-12">
+              <div>
+                <div class="corporate-key p-b-mobile-element p-b-desktop-element">Corporate time</div>
+                <div class="project-key p-t-mobile-element p-t-desktop-element">Project timeline</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
       <div class="year"></div>
       <div class="year"></div>
-      <div class="year"></div>
+      <!--<div class="year"></div>-->
 
       <?php $yearCount = 0;?>
 
@@ -28,7 +45,7 @@
 
 
 
-      <div id="y<?php echo $yearCount;?>" class="year year-entry">
+      <div id="y<?php echo $yearCount;?>" class="year year-entry text-dark">
 
               <?php $date = get_sub_field('date');?>
 
@@ -36,7 +53,7 @@
 
           <span class="dot">
             <svg class="d1" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="50" cy="50" r="50" stroke-linecap="round" fill="#001F60" stroke="none" stroke-width="0"/>
+              <circle cx="50" cy="50" r="50" stroke-linecap="round" stroke="none" stroke-width="0"/>
             </svg>
             <svg class="d2" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
               <circle cx="50" cy="50" r="35" vector-effect="non-scaling-stroke" stroke-linecap="round" fill="#EEEDEB" stroke="none" stroke-width="0"/>
@@ -180,13 +197,18 @@
       <div class="year"></div>
       <div class="year"></div>
 
+      <?php $include_footer = get_sub_field('include_footer');?>
+
+      <?php if ($include_footer ==="yes"){?>
+
+      <div class="timeline-footer">
+        @include('sections.footer')
+      </div>
+
+      <?php } ?>
+
     </div>
 
   </div>
-
-
-
-
-
 
 </section>

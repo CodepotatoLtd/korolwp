@@ -2,12 +2,30 @@
   position: relative;
   overflow: hidden;
 
-  .image {
-    max-width:250px;
+  .member {
+    .image {
+      max-width:250px;
 
-    img {
-      width: 100%;
-      height: auto;
+      img {
+        width: 100%;
+        height: auto;
+      }
+    }
+
+    .bio {
+      opacity: 0;
+    }
+
+    $transition: 0.5s;
+
+    &:hover {
+      .bio {
+        opacity: 1;
+        -webkit-transition: $transition ease-in-out;
+        -moz-transition: $transition ease-in-out;
+        -o-transition: $transition ease-in-out;
+        transition: $transition ease-in-out;
+      }
     }
   }
 }

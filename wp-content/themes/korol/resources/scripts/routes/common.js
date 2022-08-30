@@ -5,6 +5,8 @@ import MouseParallax from "../util/mouseParallax.js";
 import GalleryCoverflowCarousel  from "../util/galleryCoverflowCarousel.js";
 import Tabs from "../util/tabs.js";
 import Timeline from "../util/timeline.js";
+import CardProject from "../util/cardProject.js";
+import Map from "../util/map.js";
 import AOS from 'aos';
 
 export default {
@@ -21,6 +23,8 @@ export default {
         const galleryCoverflowCarousel = new GalleryCoverflowCarousel()
         const timeline = new Timeline()
         const tabs = new Tabs()
+        const cardProject = new CardProject()
+        const map = new Map();
 
     },
 };

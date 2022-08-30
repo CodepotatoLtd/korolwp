@@ -27,6 +27,48 @@
             "max_size": "",
             "mime_types": "",
             "library": "all"
+        },
+        {
+            "key": "field_630daf6b5f3fa",
+            "label": "Map API",
+            "name": "map_api",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_630daf7928ae5",
+            "label": "Map Styles",
+            "name": "map_styles",
+            "type": "acfe_code_editor",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "mode": "text\/html",
+            "lines": 1,
+            "indent_unit": 4,
+            "maxlength": "",
+            "rows": 4,
+            "max_rows": "",
+            "return_entities": 0
         }
     ],
     "location": [
@@ -54,5 +96,5 @@
     "acfe_form": 0,
     "acfe_meta": "",
     "acfe_note": "",
-    "modified": 1659557682
+    "modified": 1661841288
 }

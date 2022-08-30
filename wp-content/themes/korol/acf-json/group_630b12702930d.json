@@ -1,0 +1,56 @@
+{
+    "key": "group_630b12702930d",
+    "title": "Hide Footer",
+    "fields": [
+        {
+            "key": "field_630b127844fbc",
+            "label": "",
+            "name": "hide_footer",
+            "type": "radio",
+            "instructions": "Set this to yes if the last block on page is the timeline.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "yes": "yes",
+                "no": "no"
+            },
+            "allow_null": 0,
+            "other_choice": 0,
+            "default_value": "no",
+            "layout": "horizontal",
+            "return_format": "value",
+            "save_other_choice": 0
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "page_template",
+                "operator": "==",
+                "value": "template-master.blade.php"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "side",
+    "style": "default",
+    "label_placement": "left",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "acfe_display_title": "",
+    "acfe_autosync": [
+        "json"
+    ],
+    "acfe_form": 0,
+    "acfe_meta": "",
+    "acfe_note": "",
+    "modified": 1661670246
+}

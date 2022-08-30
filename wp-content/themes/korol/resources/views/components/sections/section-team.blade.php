@@ -17,7 +17,7 @@
             <?php setup_postdata($post); ?>
              <div class="col-6">
 
-               <div class="medium text-dark sans" data-aos="fade-up"  data-aos-duration="750">
+               <div class="member medium text-dark sans" data-aos="fade-up"  data-aos-duration="750">
 
                  <div class="image p-b-mobile-element p-b-desktop-element">
 
@@ -33,7 +33,9 @@
                   </div>
                  <p class="h4 light"><?php the_field('position', $post->ID);?></p>
 
-                 <?php the_field('bio', $post->ID);?>
+                 <div class="bio">
+                  <?php the_field('bio', $post->ID);?>
+                 </div>
 
 
 

@@ -42,6 +42,8 @@
 @import "sections/section-projects";
 @import "sections/section-team";
 @import "sections/section-timeline";
+@import "sections/section-map";
+@import "cards/card-project";
 
 .sr-only {
   border: 0;
@@ -63,4 +65,12 @@ body {
   width: 100vw;
   overflow-x: hidden;
   overscroll-behavior-y: none;
+  scroll-behavior: auto;
 }
+
+*
+{
+  scroll-behavior: auto;
+}
+
+//scroll-behavior: auto;
