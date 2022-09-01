@@ -1,4 +1,4 @@
-<div id="p<?php echo $count;?>" class="card-project medoum" href="<?php the_permalink($post->ID);?>" data-aos="fade-up"  data-aos-duration="750">
+<div id="p<?php echo $count;?>" class="card-project medoum" data-aos="fade-up"  data-aos-duration="750">
 
   <div class="image">
 
@@ -8,7 +8,7 @@
 
     <img src="<?php echo $image[0]; ?>" alt="<?php echo $alt_text; ?>">
 
-    <a class="overlay large text-white" href="<?php the_permalink();?>">
+    <a class="overlay large text-white" href="<?php the_permalink($post->ID);?>">
       <h3><?php echo get_the_title($post->ID);?></h3>
     </a>
 
@@ -27,7 +27,7 @@
     <span class="strong">Purchased:</span> <?php the_field('purchased', $post->ID);?><br>
    <span class="strong">Status:</span> <?php the_field('status', $post->ID);?></p>
 
-    <a class="link strong" href="<?php the_permalink();?>">
+    <a class="link strong" href="<?php the_permalink($post->ID);?>">
 
         <span class="mark">
 
