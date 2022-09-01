@@ -4,7 +4,7 @@
 
     <?php $img_id = get_post_thumbnail_id($post->ID);
     $image = wp_get_attachment_image_src($img_id, "featured-image");
-    $alt_text = get_post_meta($img_id , '_wp_attachment_image_alt', true); ?>
+    $alt_text = get_post_meta($img_id, '_wp_attachment_image_alt', true); ?>
 
     <img src="<?php echo $image[0]; ?>" alt="<?php echo $alt_text; ?>">
 
@@ -22,10 +22,24 @@
 
     </div>
 
-    <p><span class="strong">Location:</span> <?php the_field('location', $post->ID);?><br>
-    <span class="strong">Size:</span> <?php the_field('size', $post->ID);?><br>
-    <span class="strong">Purchased:</span> <?php the_field('purchased', $post->ID);?><br>
-   <span class="strong">Status:</span> <?php the_field('status', $post->ID);?></p>
+    <?php $location = get_field('location', $post->ID);?>
+    <?php $size = get_field('size', $post->ID);?>
+    <?php $purchased = get_field('purchased', $post->ID);?>
+    <?php $status = get_field('status', $post->ID);?>
+    <p>
+      <?php if ($location) { ?>
+      <span class="strong">Location:</span> <?php echo $location;?><br>
+      <?php }?>
+      <?php if ($size) { ?>
+      <span class="strong">Location:</span> <?php echo $size;?><br>
+      <?php }?>
+      <?php if ($purchased) { ?>
+      <span class="strong">Location:</span> <?php echo $purchased;?><br>
+      <?php }?>
+      <?php if ($status) { ?>
+      <span class="strong">Location:</span> <?php echo $status;?><br>
+      <?php }?>
+    </p>
 
     <a class="link strong" href="<?php the_permalink($post->ID);?>">
 
