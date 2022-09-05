@@ -78,9 +78,13 @@
 
     <div class="row justify-content-center" data-aos="fade-up"  data-aos-duration="750">
 
-      <div class="col-xxl-11 address p-t-mobile-intro p-t-desktop-intro text-center small">
+      <div class="col-xxl-11">
+
+        <div class="address p-t-mobile-intro p-t-desktop-intro text-center small">
 
         <?php the_sub_field('address');?>
+
+        </div>
 
       </div>
 
