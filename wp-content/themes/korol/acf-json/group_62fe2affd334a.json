@@ -41,6 +41,25 @@
             "maxlength": ""
         },
         {
+            "key": "field_6315b68a476fa",
+            "label": "Email",
+            "name": "email",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
             "key": "field_62fe2b1e0a4ae",
             "label": "Bio",
             "name": "bio",
@@ -87,5 +106,5 @@
     "acfe_form": 0,
     "acfe_meta": "",
     "acfe_note": "",
-    "modified": 1660824358
+    "modified": 1662367380
 }

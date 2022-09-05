@@ -319,7 +319,7 @@ if ( WPMUDEV_LIMIT_TO_USER ) {
 									if ( 'en_US' === $current_language ) {
 										$current_native_language = __( 'English (United States)', 'wpmudev' );
 									} else {
-										$current_native_language = isset( $translations[ $current_language ] ) ? $translations[ $current_language ]['native_name'] : $current_language;	 		  		  				 		   
+										$current_native_language = isset( $translations[ $current_language ] ) ? $translations[ $current_language ]['native_name'] : $current_language;
 									}
 
 									if ( 'en_US' === $locale ) {

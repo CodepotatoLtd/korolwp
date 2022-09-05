@@ -412,7 +412,7 @@ class WPMUDEV_Dashboard_Site {
 	 */
 	public function first_time_actions() {
 		// On our hosting, if it's first time activation enable few services.
-		if ( defined( 'WPMUDEV_HOSTING_SITE_ID' ) || isset( $_SERVER['WPMUDEV_HOSTED'] ) ) {
+		if ( WPMUDEV_Dashboard::$api->is_wpmu_dev_hosting() ) {
 			$user_id = get_current_user_id();
 			// If we couldn't find a user.
 			if ( empty( $user_id ) ) {

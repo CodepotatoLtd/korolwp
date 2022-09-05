@@ -74,6 +74,12 @@
 
     @endif
 
+    @if(get_row_layout() == 'contact_footer')
+
+      @include('components.sections.section-contact-footer')
+
+    @endif
+
     @endwhile
 @else
    {{-- no layouts found --}}

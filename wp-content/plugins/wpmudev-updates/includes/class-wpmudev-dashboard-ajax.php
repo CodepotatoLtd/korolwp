@@ -47,6 +47,8 @@ class WPMUDEV_Dashboard_Ajax {
 		'wdp-sso-status',
 		'wdp-dismiss-highlights',
 		'wdp-reset-settings',
+		'wdp-dismiss-upsell',
+		'wdp-extend-upsell',
 	);
 
 	/**
@@ -865,6 +867,37 @@ class WPMUDEV_Dashboard_Ajax {
 				'redirect' => $url . '#data',
 			)
 		);
+	}
+
+	/**
+	 * Dismiss upsell modal dialog.
+	 *
+	 * @since 4.11.15
+	 *
+	 * @return void
+	 */
+	public function dismiss_upsell() {
+		// Set dismissal flag.
+		WPMUDEV_Dashboard::$settings->set( 'upsell_dismissed', true, 'flags' );
+		WPMUDEV_Dashboard::$settings->set( 'upsell_notice_time', time(), 'general' );
+
+		$this->send_json_success();
+	}
+
+	/**
+	 * Extend upsell modal dialog.
+	 *
+	 * @since 4.11.15
+	 *
+	 * @return void
+	 */
+	public function extend_upsell() {
+		// Set extension flag.
+		WPMUDEV_Dashboard::$settings->set( 'upsell_dismissed', false, 'flags' );
+		// Show after 1 week.
+		WPMUDEV_Dashboard::$settings->set( 'upsell_notice_time', strtotime( '+1 week' ), 'general' );
+
+		$this->send_json_success();
 	}
 
 	/**
