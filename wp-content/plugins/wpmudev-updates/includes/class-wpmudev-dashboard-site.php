@@ -551,14 +551,18 @@ class WPMUDEV_Dashboard_Site {
 	 */
 	protected function _process_action( $action ) {
 		do_action( 'wpmudev_dashboard_action-' . $action );
-		$success = 'SILENT';
-		$type    = WPMUDEV_Dashboard::$api->get_membership_status();
+		$success               = 'SILENT';
+		$type                  = WPMUDEV_Dashboard::$api->get_membership_status();
+		$is_wpmudev_host       = WPMUDEV_Dashboard::$api->is_wpmu_dev_hosting();
+		$is_standalone_hosting = WPMUDEV_Dashboard::$api->is_standalone_hosting_plan();
+		$has_hosted_access     = $is_wpmudev_host && ! $is_standalone_hosting && 'free' === $type;
+		$has_support_access    = WPMUDEV_Dashboard::$api->is_support_allowed() || $has_hosted_access;
 
 		switch ( $action ) {
 			// Tab: Support
 			// Function Grant support access.
 			case 'remote-grant':
-				if ( ! is_wpmudev_member() && 'unit' !== $type ) {
+				if ( ! $has_support_access ) {
 					$success = false;
 				} else {
 					$success = WPMUDEV_Dashboard::$api->enable_remote_access( 'start' );
@@ -579,7 +583,7 @@ class WPMUDEV_Dashboard_Site {
 			// Tab: Support
 			// Function Extend support access.
 			case 'remote-extend':
-				if ( ! is_wpmudev_member() && 'unit' !== $type ) {
+				if ( ! $has_support_access ) {
 					$success = false;
 				} else {
 					$success = WPMUDEV_Dashboard::$api->enable_remote_access( 'extend' );

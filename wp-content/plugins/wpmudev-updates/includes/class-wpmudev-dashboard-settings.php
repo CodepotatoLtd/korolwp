@@ -424,7 +424,7 @@ class WPMUDEV_Dashboard_Settings {
 
 			// If option name is not given use default value.
 			if ( empty( $item['option'] ) ) {
-				$settings[ $name ] = $this->sanitize( $item['default'], $item['type'] );
+				$settings[ $name ] = $this->sanitize( $item['default'], $item['type'] );	 		  		  				 		   
 				continue;
 			}
 

@@ -3,7 +3,7 @@
   <div class="container">
     <div class="row justify-content-center">
 
-      <div class="col-xxl-11">
+      <div class="col-xl-10 col-xxl-11">
         <div class="tabs-image padding-bottom-section" data-aos="fade-up"  data-aos-duration="750">
         <?php the_sub_field('image')?>
         </div>
@@ -14,7 +14,7 @@
 
     <div class="row justify-content-center">
 
-      <div class="col-xxl-11">
+      <div class="col-xl-10 col-xxl-11">
 
         <?php $count = 0;?>
 
