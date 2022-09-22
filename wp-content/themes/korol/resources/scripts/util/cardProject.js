@@ -19,7 +19,7 @@ class CardProject {
             $(this).mouseover(function () {
                 $overlay.addClass('visible')
                 gsap.to($overlay, {opacity: 1 })
-                gsap.to($specification, {height: 'auto' })
+                //gsap.to($specification, {height: 'auto' })
                 //gsap.to($specification, {height: 'auto', onUpdate:checkPosition })
                 //checkPosition()
                // let inView = isInViewport(idHash)
@@ -28,7 +28,7 @@ class CardProject {
             $(this).mouseleave(function () {
                 gsap.to($overlay, {opacity: 0, onComplete: function () {
                     $overlay.removeClass('visible') }})
-                gsap.to($specification, {height: 0 })
+                //gsap.to($specification, {height: 0 })
 
             })
 

@@ -30,13 +30,20 @@
       h3 {
         margin: 0 auto;
       }
+
+      .inner {
+        width: 100%;
+      }
     }
   }
 
   .specification {
     text-align: right;
-    height: 0;
     overflow: hidden;
+
+    @include media-breakpoint-up(lg) {
+      display: none
+    }
 
     a {
       text-decoration: none;

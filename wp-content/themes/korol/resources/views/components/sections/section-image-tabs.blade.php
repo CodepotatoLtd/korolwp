@@ -4,8 +4,12 @@
     <div class="row justify-content-center">
 
       <div class="col-xl-10 col-xxl-11">
-        <div class="tabs-image padding-bottom-section" data-aos="fade-up"  data-aos-duration="750">
+        <div class="tabs-image padding-bottom-intro" data-aos="fade-up"  data-aos-duration="750">
         <?php the_sub_field('image')?>
+
+          <div class="padding-top-element">
+          <p>Please click on the labels in the diagram for more information.</p>
+          </div>
         </div>
       </div>
 
@@ -18,7 +22,7 @@
 
         <?php $count = 0;?>
 
-          <div class="panel-holder" data-aos="fade-up"  data-aos-duration="750">
+          <div id="panel-holder" class="panel-holder">
 
         <?php
 

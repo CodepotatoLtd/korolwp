@@ -9,7 +9,10 @@
     <img src="<?php echo $image[0]; ?>" alt="<?php echo $alt_text; ?>">
 
     <a class="overlay large text-white" href="<?php the_permalink($post->ID);?>">
-      <h3><?php echo get_the_title($post->ID);?></h3>
+      <div class="inner">
+        <h3><?php echo get_the_title($post->ID);?></h3>
+        <div class="medium sans"><p>View Project</p></div>
+      </div>
     </a>
 
   </div>
@@ -22,24 +25,24 @@
 
     </div>
 
-    <?php $location = get_field('location', $post->ID);?>
-    <?php $size = get_field('size', $post->ID);?>
-    <?php $purchased = get_field('purchased', $post->ID);?>
-    <?php $status = get_field('status', $post->ID);?>
-    <p>
-      <?php if ($location) { ?>
-      <span class="strong">Location:</span> <?php echo $location;?><br>
-      <?php }?>
-      <?php if ($size) { ?>
-      <span class="strong">Location:</span> <?php echo $size;?><br>
-      <?php }?>
-      <?php if ($purchased) { ?>
-      <span class="strong">Location:</span> <?php echo $purchased;?><br>
-      <?php }?>
-      <?php if ($status) { ?>
-      <span class="strong">Location:</span> <?php echo $status;?><br>
-      <?php }?>
-    </p>
+{{--    <?php $location = get_field('location', $post->ID);?>--}}
+{{--    <?php $size = get_field('size', $post->ID);?>--}}
+{{--    <?php $purchased = get_field('purchased', $post->ID);?>--}}
+{{--    <?php $status = get_field('status', $post->ID);?>--}}
+{{--    <p>--}}
+{{--      <?php if ($location) { ?>--}}
+{{--      <span class="strong">Location:</span> <?php echo $location;?><br>--}}
+{{--      <?php }?>--}}
+{{--      <?php if ($size) { ?>--}}
+{{--      <span class="strong">Size:</span> <?php echo $size;?><br>--}}
+{{--      <?php }?>--}}
+{{--      <?php if ($purchased) { ?>--}}
+{{--      <span class="strong">Purchased:</span> <?php echo $purchased;?><br>--}}
+{{--      <?php }?>--}}
+{{--      <?php if ($status) { ?>--}}
+{{--      <span class="strong">Status:</span> <?php echo $status;?><br>--}}
+{{--      <?php }?>--}}
+{{--    </p>--}}
 
     <a class="link strong" href="<?php the_permalink($post->ID);?>">
 
