@@ -14,10 +14,12 @@ class Team {
                 $('.show-bio', $member).click(function () {
 
                     if ($('.bio', $member).hasClass('visible')) {
+                        $('img', $member).addClass('gray')
                         $('.plus', $member).removeClass('hidden')
                         $('.minus', $member).addClass('hidden')
                         $('.bio', $member).removeClass('visible')
                     } else {
+                        $('img', $member).removeClass('gray')
                         $('.plus', $member).addClass('hidden')
                         $('.minus', $member).removeClass('hidden')
                         $('.bio', $member).addClass('visible')

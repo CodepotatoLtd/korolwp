@@ -25,7 +25,7 @@
                    $image = wp_get_attachment_image_src($img_id, "team-image");
                    $alt_text = get_post_meta($img_id , '_wp_attachment_image_alt', true); ?>
 
-                   <img src="<?php echo $image[0]; ?>" alt="<?php echo $alt_text; ?>">
+                   <img class="gray" src="<?php echo $image[0]; ?>" alt="<?php echo $alt_text; ?>">
 
                  </div>
 {{--                  <div class="name">--}}
