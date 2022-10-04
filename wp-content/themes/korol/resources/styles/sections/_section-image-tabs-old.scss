@@ -1,0 +1,55 @@
+.section-image-tabs-old {
+  position: relative;
+  overflow: hidden;
+
+  .tab-hotspot {
+    cursor: pointer;
+  }
+
+  .tabs {
+    overflow: hidden;
+    -webkit-box-shadow: 0 7px 22px 6px rgba(0, 0, 0, 0.33);
+    box-shadow: 0 7px 22px 6px rgba(0, 0, 0, 0.33);
+  }
+
+  .tab-button {
+    -webkit-transition: $transition ease-in-out;
+    -moz-transition: $transition ease-in-out;
+    -o-transition: $transition ease-in-out;
+    transition: $transition ease-in-out;
+    transform: translateY(0px);
+
+    &.active {
+      .st20 {
+        fill: rgba(253,197,108,1);
+      }
+
+      .st163 {
+        fill: rgba(0,0,32,1);
+      }
+    }
+
+    &.hover {
+      -webkit-transition: $transition ease-in-out;
+      -moz-transition: $transition ease-in-out;
+      -o-transition: $transition ease-in-out;
+      transition: $transition ease-in-out;
+      transform: translateY(-10px);
+    }
+  }
+
+  .panel-holder {
+    margin: auto;
+    overflow: hidden;
+    position: relative;
+    height: 300px;
+
+    .tab-panel {
+      position: absolute;
+      left: 0;
+      top: 0;
+      line-height: 1.5;
+    }
+  }
+}
+

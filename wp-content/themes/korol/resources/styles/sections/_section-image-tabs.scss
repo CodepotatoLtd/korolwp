@@ -1,46 +1,31 @@
 .section-image-tabs {
   position: relative;
   overflow: hidden;
+  background: #EEEDEB;
 
-  .tab-hotspot {
-    cursor: pointer;
-  }
+  .tab {
+    padding: 30px;
 
-  .tabs {
-    overflow: hidden;
-    -webkit-box-shadow: 0 7px 22px 6px rgba(0, 0, 0, 0.33);
-    box-shadow: 0 7px 22px 6px rgba(0, 0, 0, 0.33);
-  }
+    .icon {
+      width: 100%;
+      height: auto;
+      background: #001F60;
+      -webkit-border-radius: 50%;
+      -moz-border-radius: 50%;
+      border-radius: 50%;
+      overflow: hidden;
+      -webkit-box-shadow: 0px 0px 11px 12px rgba(0,31,96,0.15);
+      box-shadow: 0px 0px 11px 12px rgba(0,31,96,0.15);
 
-  .tab-button {
-    -webkit-transition: $transition ease-in-out;
-    -moz-transition: $transition ease-in-out;
-    -o-transition: $transition ease-in-out;
-    transition: $transition ease-in-out;
-    transform: translateY(0px);
 
-    &.active {
-      .st20 {
-        fill: rgba(253,197,108,1);
+      img {
+        width: 100%;
+        height: auto;
       }
-
-      .st163 {
-        fill: rgba(0,0,32,1);
-      }
-    }
-
-    &.hover {
-      -webkit-transition: $transition ease-in-out;
-      -moz-transition: $transition ease-in-out;
-      -o-transition: $transition ease-in-out;
-      transition: $transition ease-in-out;
-      transform: translateY(-10px);
     }
   }
 
   .panel-holder {
-    margin: auto;
-    overflow: hidden;
     position: relative;
     height: 300px;
 
@@ -49,6 +34,57 @@
       left: 0;
       top: 0;
       line-height: 1.5;
+      padding: 60px 30px 30px 30px;
+
+      $triangle:  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='98.422' height='81.904' viewBox='0 0 98.422 81.904'%3E%3Cdefs%3E%3Cstyle%3E .cls-1 %7B fill: %23ffc56d%3B %7D %3C/style%3E%3C/defs%3E%3Cg id='Group_614' data-name='Group 614' transform='translate(-1903.119 -114.65)'%3E%3Cpath id='Path_1050' data-name='Path 1050' class='cls-1' d='M1903.119 196.554l49.24-81.9 49.182 81.9Z' transform='translate(0)'/%3E%3C/g%3E%3C/svg%3E");
+
+      &:before {
+        content: "";
+        background-color: #FFC56D;
+
+        -webkit-mask-image: $triangle;
+        mask-image: $triangle;
+
+        webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+
+        -webkit-mask-position: center;
+        mask-position: center;
+
+        width: 98px;
+        height: 82px;
+        top: 0px;
+        position: absolute;
+      }
+
+      .inner {
+        background: #FFC56D;
+        padding: 50px;
+      }
+    }
+
+    #tab-panel-0 {
+      &:before {
+        left: calc((25% / 2) - (#{49px} + #{15px}));
+      }
+    }
+
+    #tab-panel-1 {
+      &:before {
+        left: calc(37.5% - #{49px});
+      }
+    }
+
+    #tab-panel-2 {
+      &:before {
+        left: calc(62.5% - #{49px});
+      }
+    }
+
+    #tab-panel-3 {
+      &:before {
+        left: calc(87.5% - #{34px});
+      }
     }
   }
 }

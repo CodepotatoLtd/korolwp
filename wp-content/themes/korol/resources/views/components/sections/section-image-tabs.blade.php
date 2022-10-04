@@ -3,14 +3,52 @@
   <div class="container">
     <div class="row justify-content-center">
 
-      <div class="col-xl-10 col-xxl-11">
-        <div class="tabs-image padding-bottom-intro" data-aos="fade-up"  data-aos-duration="750">
-        <?php the_sub_field('image')?>
+      <div class="col-xl-12 col-xxl-12">
 
-          <div class="padding-top-element">
-          <p>Please click on the labels in the diagram for more information.</p>
-          </div>
+        <div class="row justify-content-center">
+
+
+          <?php $count = 0;?>
+
+          <?php
+
+          // Check rows exists.
+          if (have_rows('tabs')) :
+          // Loop through rows.
+          while (have_rows('tabs')) :
+          the_row();?>
+
+            <div class="col-3">
+
+              <div id="tab-panel-<?php echo $count;?>" class="tab">
+                <div class="medium sans text-center padding-bottom-intro">
+                  <h3 class="h4"><?php the_sub_field('title')?></h3>
+                </div>
+
+                  <div class="icon">
+
+                  <?php
+                  $image = get_sub_field('image');
+                  if( !empty( $image ) ): ?>
+                  <img src="<?php echo esc_url($image['url']); ?>" alt="<?php echo esc_attr($image['alt']); ?>" />
+                  <?php endif; ?>
+
+                  </div>
+
+              </div>
+
+            </div>
+          <?php  $count ++;?>
+
+          <?php // End loop.
+          endwhile;
+
+          // No value.
+          else :
+            // Do something...
+          endif; ?>
         </div>
+
       </div>
 
 
@@ -18,7 +56,7 @@
 
     <div class="row justify-content-center">
 
-      <div class="col-xl-10 col-xxl-11">
+      <div class="col-xl-12 padding-top-intro">
 
         <?php $count = 0;?>
 
@@ -33,8 +71,9 @@
                 the_row();?>
 
               <div id="tab-panel-<?php echo $count;?>" class="tab-panel">
-                <div class="medium">
+                <div class="inner medium">
                 <h3><?php the_sub_field('title')?></h3>
+
                 <?php the_sub_field('text')?>
                 </div>
               </div>
