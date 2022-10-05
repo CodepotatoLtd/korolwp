@@ -3,7 +3,7 @@
   <div class="container">
     <div class="row justify-content-center">
 
-      <div class="col-xl-12 col-xxl-12">
+      <div class="col-xl-12 col-xxl-10">
 
         <div class="row justify-content-center">
 
@@ -58,7 +58,7 @@
 
     <div class="row justify-content-center">
 
-      <div class="col-xl-12 padding-top-intro">
+      <div class="col-xxl-10 padding-top-intro">
 
         <?php $count = 0;?>
 
