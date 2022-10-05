@@ -20,12 +20,12 @@
 
             <div class="col-3">
 
-              <div id="tab-panel-<?php echo $count;?>" class="tab">
+              <div id="tab-<?php echo $count;?>" class="tab">
                 <div class="medium sans text-center padding-bottom-intro">
                   <h3 class="h4"><?php the_sub_field('title')?></h3>
                 </div>
 
-                  <div class="icon">
+                  <div id="icon-<?php echo $count;?>" class="icon">
 
                   <?php
                   $image = get_sub_field('image');
@@ -34,6 +34,8 @@
                   <?php endif; ?>
 
                   </div>
+
+                <div class="tab-hotspot"></div>
 
               </div>
 
@@ -60,7 +62,7 @@
 
         <?php $count = 0;?>
 
-          <div id="panel-holder" class="panel-holder">
+          <div id="panel-holder" class="panel-holder padding-bottom-section">
 
         <?php
 

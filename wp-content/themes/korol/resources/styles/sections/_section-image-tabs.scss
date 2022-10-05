@@ -5,6 +5,7 @@
 
   .tab {
     padding: 30px;
+    position: relative;
 
     .icon {
       width: 100%;
@@ -23,11 +24,22 @@
         height: auto;
       }
     }
+
+    .tab-hotspot {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #ff0000;
+      opacity: 0;
+      cursor: pointer;
+    }
   }
 
   .panel-holder {
     position: relative;
-    height: 300px;
+    height: 400px;
 
     .tab-panel {
       position: absolute;
