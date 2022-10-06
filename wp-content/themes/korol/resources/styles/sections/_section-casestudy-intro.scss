@@ -1,0 +1,45 @@
+.section-casestudy-intro {
+  position: relative;
+  overflow: hidden;
+  height: 80vh;
+  width: 100%;
+
+  .film-link {
+    text-decoration: none;
+    -webkit-transition: $transition ease-in-out;
+    -moz-transition: $transition ease-in-out;
+    -o-transition: $transition ease-in-out;
+    transition: $transition ease-in-out;
+
+    svg {
+      width: 30px;
+      height: auto;
+      margin-right: 5px;
+    }
+
+    .mark-fill {
+      fill: rgba(0,0,32,1);
+      -webkit-transition: $transition ease-in-out;
+      -moz-transition: $transition ease-in-out;
+      -o-transition: $transition ease-in-out;
+      transition: $transition ease-in-out;
+    }
+
+    &:hover {
+      color: rgba(253,197,108,1);
+      -webkit-transition: $transition ease-in-out;
+      -moz-transition: $transition ease-in-out;
+      -o-transition: $transition ease-in-out;
+      transition: $transition ease-in-out;
+
+      .mark-fill {
+        fill: rgba(253,197,108,1);
+        -webkit-transition: $transition ease-in-out;
+        -moz-transition: $transition ease-in-out;
+        -o-transition: $transition ease-in-out;
+        transition: $transition ease-in-out;
+      }
+    }
+  }
+}
+
