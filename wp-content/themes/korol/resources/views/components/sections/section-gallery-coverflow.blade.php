@@ -12,7 +12,7 @@
                 <?php foreach ($images as $image) : ?>
                   <div class="swiper-slide">
                     <div class="image-wrapper">
-                    <img src="<?php echo esc_url($image['sizes']['carousel-image']); ?>"
+                    <img src="<?php echo esc_url($image['url']); ?>"
                          alt="<?php echo esc_attr($image['alt']); ?>" />
                     </div>
                   </div>
