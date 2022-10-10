@@ -82,6 +82,35 @@
           }
         }
       },
+      "jsconfig.json": {
+        "name": "jsconfig.json",
+        "path": "/Users/treforcoster/development2018/korolwp/wp-content/themes/korol/jsconfig.json",
+        "module": {
+          "compilerOptions": {
+            "allowSyntheticDefaultImports": true,
+            "jsx": "preserve",
+            "lib": [
+              "dom",
+              "dom.iterable",
+              "esnext"
+            ],
+            "module": "commonjs",
+            "moduleResolution": "node",
+            "paths": {
+              "@scripts/*": [
+                "./resources/scripts/*"
+              ],
+              "@styles/*": [
+                "./resources/styles/*"
+              ]
+            }
+          },
+          "exclude": [
+            "./public",
+            "./node_modules"
+          ]
+        }
+      },
       "composer.json": {
         "name": "composer.json",
         "path": "/Users/treforcoster/development2018/korolwp/wp-content/themes/korol/composer.json",
@@ -154,35 +183,6 @@
               ]
             }
           }
-        }
-      },
-      "jsconfig.json": {
-        "name": "jsconfig.json",
-        "path": "/Users/treforcoster/development2018/korolwp/wp-content/themes/korol/jsconfig.json",
-        "module": {
-          "compilerOptions": {
-            "allowSyntheticDefaultImports": true,
-            "jsx": "preserve",
-            "lib": [
-              "dom",
-              "dom.iterable",
-              "esnext"
-            ],
-            "module": "commonjs",
-            "moduleResolution": "node",
-            "paths": {
-              "@scripts/*": [
-                "./resources/scripts/*"
-              ],
-              "@styles/*": [
-                "./resources/styles/*"
-              ]
-            }
-          },
-          "exclude": [
-            "./public",
-            "./node_modules"
-          ]
         }
       },
       "theme.json": {

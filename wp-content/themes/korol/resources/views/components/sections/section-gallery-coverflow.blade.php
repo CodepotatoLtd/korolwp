@@ -12,8 +12,10 @@
                 <?php foreach ($images as $image) : ?>
                   <div class="swiper-slide">
                     <div class="image-wrapper">
+                      <div class="image">
                     <img src="<?php echo esc_url($image['url']); ?>"
                          alt="<?php echo esc_attr($image['alt']); ?>" />
+                      </div>
                     </div>
                   </div>
                 <?php endforeach; ?>

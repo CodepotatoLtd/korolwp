@@ -21,23 +21,45 @@
 
   .swiper-slide {
     .image-wrapper{
-      background: #fff;
-    }
-    img {
-      opacity: 0.7;
+      //background: #fff;
       width: 100%;
-      -webkit-transition: $transition ease-in-out;
-      -moz-transition: $transition ease-in-out;
-      -o-transition: $transition ease-in-out;
-      transition: $transition ease-in-out;
+      padding-bottom: 66%;
+      //background: #f00;
+      position: relative;
+
+      .image {
+        background: #fff;
+        height: 100%;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+
+        img {
+          position: relative;
+          top: 0;
+          //left: 50%;
+          //transform: translateX(-50%);
+          opacity: 0.7;
+          height: 100%;
+          width: auto;
+          -webkit-transition: $transition ease-in-out;
+          -moz-transition: $transition ease-in-out;
+          -o-transition: $transition ease-in-out;
+          transition: $transition ease-in-out;
+          background: #fff;
+        }
+      }
     }
   }
 
   .swiper-slide-active  {
 
-
-    img {
-      opacity: 1;
+    .image-wrapper {
+      .image {
+        img {
+          opacity: 1;
+        }
+      }
     }
   }
 }
