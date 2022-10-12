@@ -2,22 +2,26 @@ module.exports = {
   "entry": {
     "app": {
       "import": [
+        "@roots/bud-server/client/index.js?name=bud&bud.overlay=true&bud.indicator=true&path=/__bud/hmr",
+        "@roots/bud-server/client/proxy-click-interceptor.js",
         "@scripts/main",
         "@styles/app"
       ]
     },
     "editor": {
       "import": [
+        "@roots/bud-server/client/index.js?name=bud&bud.overlay=true&bud.indicator=true&path=/__bud/hmr",
+        "@roots/bud-server/client/proxy-click-interceptor.js",
         "@scripts/editor",
         "@styles/editor"
       ]
     }
   },
-  "bail": true,
+  "bail": false,
   "cache": {
-    "name": "bud.production",
+    "name": "bud.development",
     "type": "filesystem",
-    "version": "rc5e1ojnj4domyhadrtnueyuz2u_",
+    "version": "njdfknnt6vx_nernpjvjynujagw_",
     "cacheDirectory": "/Users/treforcoster/development2018/korolwp/wp-content/themes/korol/.budfiles/cache/webpack",
     "managedPaths": [
       "/Users/treforcoster/development2018/korolwp/wp-content/themes/korol/node_modules"
@@ -36,13 +40,14 @@ module.exports = {
     }
   },
   "context": "/Users/treforcoster/development2018/korolwp/wp-content/themes/korol",
+  "devtool": "cheap-module-source-map",
   "infrastructureLogging": {
     "console": {
       "Console": {}
     },
     "level": "none"
   },
-  "mode": "production",
+  "mode": "development",
   "module": {
     "noParse": {},
     "rules": [
@@ -109,13 +114,13 @@ module.exports = {
             ],
             "use": [
               {
-                "loader": "/Users/treforcoster/development2018/korolwp/wp-content/themes/korol/node_modules/mini-css-extract-plugin/dist/loader.js"
+                "loader": "/Users/treforcoster/development2018/korolwp/wp-content/themes/korol/node_modules/style-loader/dist/cjs.js"
               },
               {
                 "loader": "/Users/treforcoster/development2018/korolwp/wp-content/themes/korol/node_modules/css-loader/dist/cjs.js",
                 "options": {
                   "importLoaders": 1,
-                  "sourceMap": false
+                  "sourceMap": true
                 }
               },
               {
@@ -156,7 +161,7 @@ module.exports = {
             ],
             "use": [
               {
-                "loader": "/Users/treforcoster/development2018/korolwp/wp-content/themes/korol/node_modules/mini-css-extract-plugin/dist/loader.js"
+                "loader": "/Users/treforcoster/development2018/korolwp/wp-content/themes/korol/node_modules/style-loader/dist/cjs.js"
               },
               {
                 "loader": "/Users/treforcoster/development2018/korolwp/wp-content/themes/korol/node_modules/css-loader/dist/cjs.js",
@@ -164,7 +169,7 @@ module.exports = {
                   "importLoaders": 1,
                   "localIdentName": "[name]__[local]___[hash:base64:5]",
                   "modules": true,
-                  "sourceMap": false
+                  "sourceMap": true
                 }
               }
             ]
@@ -176,7 +181,7 @@ module.exports = {
             ],
             "type": "asset/resource",
             "generator": {
-              "filename": "images/[name].[contenthash:6][ext]"
+              "filename": "images/[name][ext]"
             }
           },
           {
@@ -186,7 +191,7 @@ module.exports = {
             ],
             "type": "asset/resource",
             "generator": {
-              "filename": "images/[name].[contenthash:6][ext]"
+              "filename": "images/[name][ext]"
             }
           },
           {
@@ -196,7 +201,7 @@ module.exports = {
             ],
             "type": "asset/resource",
             "generator": {
-              "filename": "images/[name].[contenthash:6][ext]"
+              "filename": "images/[name][ext]"
             }
           },
           {
@@ -206,7 +211,7 @@ module.exports = {
             ],
             "type": "asset",
             "generator": {
-              "filename": "fonts/[name].[contenthash:6][ext]"
+              "filename": "fonts/[name][ext]"
             }
           },
           {
@@ -294,13 +299,13 @@ module.exports = {
             ],
             "use": [
               {
-                "loader": "/Users/treforcoster/development2018/korolwp/wp-content/themes/korol/node_modules/mini-css-extract-plugin/dist/loader.js"
+                "loader": "/Users/treforcoster/development2018/korolwp/wp-content/themes/korol/node_modules/style-loader/dist/cjs.js"
               },
               {
                 "loader": "/Users/treforcoster/development2018/korolwp/wp-content/themes/korol/node_modules/css-loader/dist/cjs.js",
                 "options": {
                   "importLoaders": 1,
-                  "sourceMap": false
+                  "sourceMap": true
                 }
               },
               {
@@ -336,7 +341,7 @@ module.exports = {
                 "loader": "/Users/treforcoster/development2018/korolwp/wp-content/themes/korol/node_modules/resolve-url-loader/index.js",
                 "options": {
                   "root": "/Users/treforcoster/development2018/korolwp/wp-content/themes/korol/resources",
-                  "sourceMap": false
+                  "sourceMap": true
                 }
               },
               {
@@ -397,38 +402,19 @@ module.exports = {
   "name": "bud",
   "node": false,
   "output": {
-    "assetModuleFilename": "[name].[contenthash:6][ext]",
-    "chunkFilename": "[name].[contenthash:6].js",
-    "filename": "[name].[contenthash:6].js",
+    "assetModuleFilename": "[name][ext]",
+    "chunkFilename": "[name].js",
+    "filename": "[name].js",
     "path": "/Users/treforcoster/development2018/korolwp/wp-content/themes/korol/public",
     "pathinfo": false,
-    "publicPath": ""
+    "publicPath": "/"
   },
   "optimization": {
     "emitOnErrors": false,
-    "minimize": true,
+    "minimize": false,
     "minimizer": [
-      "...",
-      {
-        "options": {
-          "test": {},
-          "parallel": true,
-          "minimizer": {
-            "options": {
-              "preset": [
-                "default",
-                {
-                  "discardComments": {
-                    "removeAll": true
-                  }
-                }
-              ]
-            }
-          }
-        }
-      }
+      "..."
     ],
-    "runtimeChunk": "single",
     "splitChunks": {
       "cacheGroups": {
         "bud": {
@@ -457,10 +443,13 @@ module.exports = {
   "target": "browserslist:/Users/treforcoster/development2018/korolwp/wp-content/themes/korol/package.json",
   "plugins": [
     {
+      "options": {}
+    },
+    {
       "patterns": [
         {
           "from": "images",
-          "to": "[name].[contenthash:6][ext]",
+          "to": "[name][ext]",
           "context": "/Users/treforcoster/development2018/korolwp/wp-content/themes/korol/resources",
           "noErrorOnMissing": true
         }
@@ -482,29 +471,6 @@ module.exports = {
         "useLegacyEmit": false,
         "writeToFileEmit": true
       }
-    },
-    {
-      "_sortedModulesCache": {},
-      "options": {
-        "filename": "[name].[contenthash:6].css",
-        "ignoreOrder": false,
-        "runtime": true,
-        "chunkFilename": "[name].[contenthash:6].css"
-      },
-      "runtimeOptions": {
-        "linkType": "text/css"
-      }
-    },
-    {
-      "options": {
-        "enabled": true,
-        "verbose": false,
-        "extensions": {},
-        "ignore": [],
-        "remove": {}
-      },
-      "enabled": true,
-      "verbose": false
     },
     {
       "options": {

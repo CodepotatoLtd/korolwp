@@ -4,9 +4,9 @@
 
       <div class="row justify-content-center">
 
-        <div class="col-xxl-11 p-t-mobile-intro p-t-desktop-intro">
+        <div class="col-11 ">
 
-          <div class="row justify-content-center g-10">
+          <div class="row justify-content-center g-5 g-xxl-10">
 
             <?php $count = 0;?>
             <?php
@@ -16,7 +16,7 @@
             <?php foreach ($posts as $post) : // variable must be called $post (IMPORTANT) ?>
 
             <?php setup_postdata($post); ?>
-             <div class="col-6">
+             <div class="col-lg-6">
 
                @include('components.cards.card-project')
 

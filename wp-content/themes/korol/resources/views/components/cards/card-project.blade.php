@@ -43,7 +43,7 @@
 {{--      <span class="strong">Status:</span> <?php echo $status;?><br>--}}
 {{--      <?php }?>--}}
 {{--    </p>--}}
-
+    <p>
     <a class="link strong" href="<?php the_permalink($post->ID);?>">
 
         <span class="mark">
@@ -69,6 +69,7 @@
         </span> VIEW
 
     </a>
+    </p>
 
 
   </div>
