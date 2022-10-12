@@ -1,14 +1,11 @@
 {
-  "app.js": "app.js",
-  "editor.js": "editor.js",
-  "vendor/bud.app.editor.js": "vendor/bud.app.editor.js",
-  "vendor/app.js": "vendor/app.js",
-  "fonts/Ogg-Regular.woff": "fonts/Ogg-Regular.woff",
-  "fonts/Ogg-Regular.woff2": "fonts/Ogg-Regular.woff2",
-  ".gitkeep": ".gitkeep",
-  "app.js.map": "vendor/app.js.map",
-  "app.hot-update.js.map": "app.a2afda51218265113cdb.hot-update.js.map",
-  "editor.js.map": "editor.js.map",
-  "editor.hot-update.js.map": "editor.a2afda51218265113cdb.hot-update.js.map",
-  "bud.app.editor.js.map": "vendor/bud.app.editor.js.map"
+  "app.css": "app.ae6060.css",
+  "app.js": "app.59d8df.js",
+  "editor.css": "editor.866d9f.css",
+  "editor.js": "editor.8b878c.js",
+  "runtime.js": "runtime.194772.js",
+  "vendor/app.js": "vendor/app.a13217.js",
+  "fonts/Ogg-Regular.woff": "fonts/Ogg-Regular.952c7d.woff",
+  "fonts/Ogg-Regular.woff2": "fonts/Ogg-Regular.d93035.woff2",
+  ".gitkeep": ".gitkeep.31d6cf"
 }

@@ -27,7 +27,7 @@
       <div class="row justify-content-center">
 
 
-      <div class="col-xxl-11" data-aos="fade-up"  data-aos-duration="750" data-aos-delay="200">
+      <div class="col-11 col-xxl-11" data-aos="fade-up"  data-aos-duration="750" data-aos-delay="200">
 
           <?php echo get_sub_field('text')?>
 
