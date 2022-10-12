@@ -1,4 +1,4 @@
-<section class="section-image-tabs section  section p-t-mobile-section p-b-mobile-section p-t-desktop-section p-b-desktop-section">
+<section class="section-image-tabs section  section p-t-mobile-intro p-b-mobile-section p-t-desktop-section p-b-desktop-section">
 
   <div class="container">
     <div class="row justify-content-center">
