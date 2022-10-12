@@ -38,7 +38,7 @@
 
         <div class="col-xxl-8 p-t-mobile-element p-t-desktop-element p-b-mobile-intro p-b-desktop-intro">
 
-          <div class="row justify-content-center g-10">
+          <div class="row justify-content-center g-lg-10">
 
             <?php
             $posts = get_sub_field('team_contacts');
@@ -47,7 +47,7 @@
             <?php foreach ($posts as $post) : // variable must be called $post (IMPORTANT) ?>
 
             <?php setup_postdata($post); ?>
-             <div class="col-4">
+             <div class="col-6 col-lg-4">
 
                <div class="medium text-white text-center sans" data-aos="fade-up"  data-aos-duration="750">
 

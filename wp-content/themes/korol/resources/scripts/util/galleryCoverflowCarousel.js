@@ -20,10 +20,19 @@ class GalleryCoverflowCarousel {
             $(this).attr('id', swiperID);
 
             let coverflowSwiper = new Swiper(swiperIDHash, {
-                slidesPerView: 1.9,
+                slidesPerView: 1.05,
+                //slidesPerView: 1.9,
                 centeredSlides: true,
                 slideToClickedSlide: true,
                 initialSlide: 1,
+
+                breakpoints: {
+                  // when window width is >= 320px
+                  992: {
+                    slidesPerView: 1.9,
+                  },
+
+                },
                 loop: true,
                 //cssMode: true,
                 effect: 'coverflow',

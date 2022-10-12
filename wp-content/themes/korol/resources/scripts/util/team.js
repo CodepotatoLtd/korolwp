@@ -18,11 +18,13 @@ class Team {
                         $('.plus', $member).removeClass('hidden')
                         $('.minus', $member).addClass('hidden')
                         $('.bio', $member).removeClass('visible')
+                        gsap.to($('.bio', $member), { height: 0, opacity: 0, duration: 0.5 })
                     } else {
                         $('img', $member).removeClass('gray')
                         $('.plus', $member).addClass('hidden')
                         $('.minus', $member).removeClass('hidden')
                         $('.bio', $member).addClass('visible')
+                        gsap.to($('.bio', $member), { height: 'auto', opacity: 1, duration: 0.5 })
                     }
                   //alert( "Handler for .click() called." );
                 });

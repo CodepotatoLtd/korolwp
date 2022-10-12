@@ -20,8 +20,8 @@
 
           <?php $delay = ($count * 150 ) ;?>
 
-          <div class="col-3">
-            <div class="spec-wrapper p-b-mobile-intro p-b-mobile-intro p-t-desktop-intro p-b-desktop-intro" data-aos="fade-up"  data-aos-duration="750" data-aos-delay="<?php echo $delay;?>">
+          <div class="col-6 col-lg-3">
+            <div id="s<?php echo $count;?>" class="spec-wrapper p-t-mobile-intro p-b-mobile-intro p-t-desktop-intro p-b-desktop-intro" data-aos="fade-up"  data-aos-duration="750" data-aos-delay="<?php echo $delay;?>">
               <div class="medium sans">
                 <h3><?php echo get_sub_field('label');?></h3>
                 <p><?php  the_sub_field('info');?></p>

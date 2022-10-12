@@ -3,7 +3,7 @@
   width: 100vw;
   overflow-x: hidden;
   $height: 100vh;
-  //$mobileWidth: 25vw;
+  $mobileWidth: 50vw;
   $desktopWidth: 25vw;
 
   &:after {
@@ -97,41 +97,22 @@
     }
   }
 
-  /*.start-spacer {
-    height:100%;
-    display:flex;
-    width: 75vw;
-    align-items: center;
-    text-align: center;
-    justify-content: center;
-    position: relative;
-
-    &:before {
-      width: 100%;
-      height: 4px;
-      position: absolute;
-      top: 50%;
-      left: 0;
-      transform: translateY(-50%);
-      content: "";
-      background: var(--background-color-dark);
-    }
-  }*/
-
   .year{
     height:100%;
     display:flex;
-    width: 25vw;
     align-items: center;
     text-align: center;
-    //justify-content: center;
     position: relative;
+    width: $mobileWidth;
+
+    @include media-breakpoint-up(lg) {
+      width: $desktopWidth;
+    }
 
     &:after {
       content: "";
       width: 1px;
       height: 100%;
-      //background: #ff0;
       position: absolute;
       left: 0;
       top: 0;
@@ -139,7 +120,6 @@
 
 
     .hotspot {
-      width: 25vw;
       height: 300px;
       position: absolute;
       top: 50%;
@@ -147,7 +127,11 @@
       transform: translateY(-50%);
       background: rgba(255, 0, 0, 0);
       cursor: pointer;
-     // border: 1px solid #f00;
+      width: $mobileWidth;
+
+      @include media-breakpoint-up(lg) {
+        width: $desktopWidth;
+      }
     }
 
     h3 {

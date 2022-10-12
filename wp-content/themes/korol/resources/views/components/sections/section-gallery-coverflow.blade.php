@@ -1,4 +1,4 @@
-<section class="section section-gallery-coverflow text-dark p-b-mobile-section p-b-mobile-section p-t-desktop-section p-b-desktop-section">
+<section class="section section-gallery-coverflow text-dark p-t-mobile-section p-b-mobile-section p-t-desktop-section p-b-desktop-section">
   <div class="container-fluid">
     <div class="row align-items-center justify-content-center">
       <div class="col-12" data-aos="fade-up"  data-aos-duration="750">

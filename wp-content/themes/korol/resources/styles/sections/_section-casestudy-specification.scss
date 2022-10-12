@@ -19,5 +19,13 @@
       margin: auto;
     }
   }
+
+  #s2, #s3 {
+    border-top: 0px solid rgba(14,54,133,1);
+
+    @include media-breakpoint-up(lg) {
+      border-top: 1px solid rgba(14,54,133,1);
+    }
+  }
 }
 

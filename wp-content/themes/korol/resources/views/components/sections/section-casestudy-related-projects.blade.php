@@ -24,7 +24,7 @@
             <?php setup_postdata($post); ?>
 
             <?php $delay = ($count * 150 ) ;?>
-             <div class="col-4 sans text-center p-b-mobile-element p-b-desktop-element" data-aos="fade-up"  data-aos-duration="750" data-aos-delay="<?php echo $delay;?>">
+             <div class="col-10 col-sm-4 sans text-center p-b-mobile-element p-b-desktop-element" data-aos="fade-up"  data-aos-duration="750" data-aos-delay="<?php echo $delay;?>">
 
                <div class="image p-b-mobile-element p-b-desktop-element">
 
@@ -36,7 +36,7 @@
 
                </div>
 
-               <h3><?php the_title();?></h3>
+               <h3><?php echo get_the_title($post->ID);?></h3>
 
               </div>
           <?php  $count ++;?>

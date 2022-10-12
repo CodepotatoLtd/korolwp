@@ -1,10 +1,10 @@
-<section class="section-intro large text-dark p-b-mobile-section p-b-mobile-section p-t-desktop-section p-b-desktop-section">
+<section class="section-intro large text-dark p-t-mobile-section p-b-mobile-section p-t-desktop-section p-b-desktop-section">
 
   <div class="container">
 
     <div class="row justify-content-center">
 
-      <div class="col-2">
+      <div class="col-3 col-lg-2">
 
         <?php
         $image = get_sub_field('icon');

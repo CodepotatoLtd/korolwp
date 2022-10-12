@@ -1,4 +1,4 @@
-<section class="section-image-tabs  section text-dark p-b-mobile-section p-b-mobile-section p-t-desktop-section p-b-desktop-section">
+<section class="section-image-tabs  section p-b-mobile-section p-b-mobile-section p-t-desktop-section p-b-desktop-section">
 
   <div class="container">
     <div class="row justify-content-center">
@@ -20,7 +20,7 @@
 
             <div class="col-3">
 
-              <div id="tab-<?php echo $count;?>" class="tab">
+              <div id="tab-<?php echo $count;?>" class="tab text-dark">
                 <div class="medium sans text-center padding-bottom-intro">
                   <h3 class="h4"><?php the_sub_field('title')?></h3>
                 </div>
@@ -53,16 +53,23 @@
 
       </div>
 
+      </div>
 
     </div>
 
-    <div class="row justify-content-center">
+  <div class="padding-top-section">
 
-      <div class="col-xxl-10 padding-top-element">
+    <div class="bg-colour-navy">
+
+      <div class="container">
+
+        <div class="row justify-content-center">
+
+      <div class="col-xxl-10">
 
         <?php $count = 0;?>
 
-          <div id="panel-holder" class="panel-holder padding-bottom-section">
+          <div id="panel-holder" class="panel-holder">
 
         <?php
 
@@ -72,7 +79,7 @@
             while (have_rows('tabs')) :
                 the_row();?>
 
-              <div id="tab-panel-<?php echo $count;?>" class="tab-panel">
+              <div id="tab-panel-<?php echo $count;?>" class="tab-panel text-white">
                 <div class="inner medium">
                 <h3><?php the_sub_field('title')?></h3>
 
@@ -94,6 +101,10 @@
       </div>
 
     </div>
+
+      </div>
+
+  </div>
 
   </div>
 

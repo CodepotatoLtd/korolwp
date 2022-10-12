@@ -46,56 +46,46 @@
       left: 0;
       top: 0;
       line-height: 1.5;
-      padding: 60px 30px 30px 30px;
+      padding: 30px 30px 30px 30px;
 
       $triangle:  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='98.422' height='81.904' viewBox='0 0 98.422 81.904'%3E%3Cdefs%3E%3Cstyle%3E .cls-1 %7B fill: %23ffc56d%3B %7D %3C/style%3E%3C/defs%3E%3Cg id='Group_614' data-name='Group 614' transform='translate(-1903.119 -114.65)'%3E%3Cpath id='Path_1050' data-name='Path 1050' class='cls-1' d='M1903.119 196.554l49.24-81.9 49.182 81.9Z' transform='translate(0)'/%3E%3C/g%3E%3C/svg%3E");
 
       &:before {
         content: "";
-        background-color: #FFC56D;
-
-        -webkit-mask-image: $triangle;
-        mask-image: $triangle;
-
-        webkit-mask-repeat: no-repeat;
-        mask-repeat: no-repeat;
-
-        -webkit-mask-position: center;
-        mask-position: center;
-
-        width: 98px;
-        height: 82px;
-        top: 0px;
+        background: #001F60;
+        width: 3px;
+        height: 110px;
+        top: -110px;
         position: absolute;
       }
 
       .inner {
-        background: #FFC56D;
+       // background: #FFC56D;
         padding: 50px;
       }
     }
 
     #tab-panel-0 {
       &:before {
-        left: calc((25% / 2) - (#{49px} + #{15px}));
+        left: calc(100%/8 - #{15px})
       }
     }
 
     #tab-panel-1 {
       &:before {
-        left: calc(37.5% - #{49px});
+        left: calc((100%/8)*3 )
       }
     }
 
     #tab-panel-2 {
       &:before {
-        left: calc(62.5% - #{49px});
+        left: calc((100%/8)*5 )
       }
     }
 
     #tab-panel-3 {
       &:before {
-        left: calc(87.5% - #{34px});
+        left: calc((100%/8)*7 )
       }
     }
   }

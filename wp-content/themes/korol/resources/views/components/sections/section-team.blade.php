@@ -4,7 +4,9 @@
 
       <div class="row justify-content-center">
 
-        <div class="col-xxl-11 p-t-mobile-intro p-t-desktop-intro">
+        <div class="col-11 col-xxl-11 p-t-mobile-intro p-t-desktop-intro">
+
+          <div class="members">
 
           <div class="row justify-content-center g-10">
 
@@ -15,7 +17,7 @@
             <?php foreach ($posts as $post) : // variable must be called $post (IMPORTANT) ?>
 
             <?php setup_postdata($post); ?>
-             <div class="col-6">
+             <div class="col-lg-6">
 
                <div class="member medium text-dark sans" data-aos="fade-up"  data-aos-duration="750">
 
@@ -62,6 +64,8 @@
                 <?php endforeach; ?>
 
             <?php endif; ?>
+
+          </div>
 
           </div>
 

@@ -3,6 +3,7 @@
   --background-color-black: #000 !important;
   --background-color-light: #EEEDEB !important;
   --background-color-dark: #00184E !important;
+  --background-color-navy: #001F60 !important;
 
   /* --- */
   --background-color-primary: rgba(0,0,32,1);
@@ -30,6 +31,10 @@
 
 .bg-colour-dark {
   background-color: var(--background-color-dark);
+}
+
+.bg-colour-navy {
+  background-color: var(--background-color-navy);
 }
 
 .bg-colour-primary {

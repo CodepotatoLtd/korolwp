@@ -10,16 +10,16 @@
 
       <?php if ($image_position === "right") {
 
-          $text_class = " order-1 col-6";
-          $image_class = " order-2 col-6";
-          $image_row = " justify-content-end";
+          $text_class = "order-2 order-lg-1 col-lg-6";
+          $image_class = "order-1 order-lg-2 col-lg-6";
+          $image_row = " justify-content-center justify-content-lg-end";
           $textAnimation = 'data-aos="fade-right"  data-aos-duration="750" data-aos-delay="200"';
           $imageAnimation = 'data-aos="fade"  data-aos-duration="750" data-aos-delay="100"';
         } else {
 
-          $text_class = "order-2 col-6";
-          $image_class = "order-1 col-6";
-          $image_row = " justify-content-start";
+          $text_class = "order-2 order-lg-2 col-lg-6";
+          $image_class = "order-1 order-lg-1 col-lg-6";
+          $image_row = " justify-content-center justify-content-lg-start";
           $textAnimation = 'data-aos="fade-left"  data-aos-duration="750" data-aos-delay="200"';
           $imageAnimation = 'data-aos="fade"  data-aos-duration="750" data-aos-delay="100"';
        }?>
@@ -30,7 +30,7 @@
 
           <div class="row justify-content-center">
 
-            <div class="col-10">
+            <div class="col-11 col-lg-10">
 
               <div class="text-wrapper" <?php echo $textAnimation;?>>
 
@@ -72,7 +72,7 @@
 
           <div class="col-11">
 
-        <div class="image-wrapper" <?php echo $imageAnimation;?> >
+        <div class="image-wrapper p-b-mobile-element" <?php echo $imageAnimation;?> >
 
           <?php
             $image = get_sub_field('image');

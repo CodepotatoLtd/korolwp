@@ -3,11 +3,11 @@
     <div class="row justify-content-center">
       <div class="col-xxl-11">
         <div class="row">
-          <div class="col-9 text-mobile-center text-desktop-left">
+          <div class="col-lg-9 text-mobile-center p-b-mobile-element text-desktop-left">
             @php(dynamic_sidebar('sidebar-footer-1'))
           </div>
 
-          <div class="col-3 text-mobile-center text-desktop-right">
+          <div class="col-lg-3 text-mobile-center text-desktop-right">
             @php(dynamic_sidebar('sidebar-footer-2'))
           </div>
         </div>

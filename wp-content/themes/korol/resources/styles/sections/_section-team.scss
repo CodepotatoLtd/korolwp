@@ -2,6 +2,10 @@
   position: relative;
   overflow: hidden;
 
+  .members {
+    min-height: 870px;
+  }
+
   .member {
     .image {
       max-width:250px;
@@ -65,23 +69,25 @@
     }
 
     .bio {
-      &.hidden {
-        visibility: hidden;
-      }
-
+      height: 0;
       opacity: 0;
-      -webkit-transition: $transition ease-in-out;
-      -moz-transition: $transition ease-in-out;
-      -o-transition: $transition ease-in-out;
-      transition: $transition ease-in-out;
-
-      &.visible {
-        opacity: 1;
-        -webkit-transition: $transition ease-in-out;
-        -moz-transition: $transition ease-in-out;
-        -o-transition: $transition ease-in-out;
-        transition: $transition ease-in-out;
-      }
+      //&.hidden {
+      //  height: 0;
+      //}
+      //
+      //opacity: 0;
+      //-webkit-transition: $transition ease-in-out;
+      //-moz-transition: $transition ease-in-out;
+      //-o-transition: $transition ease-in-out;
+      //transition: $transition ease-in-out;
+      //
+      //&.visible {
+      //  opacity: 1;
+      //  -webkit-transition: $transition ease-in-out;
+      //  -moz-transition: $transition ease-in-out;
+      //  -o-transition: $transition ease-in-out;
+      //  transition: $transition ease-in-out;
+      //}
     }
   }
 }
