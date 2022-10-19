@@ -41,6 +41,7 @@
     .project-key {
       text-transform: uppercase;
       font-size: 80%;
+      margin-top: 0%;
     }
   }
 
@@ -89,7 +90,7 @@
       width: 100%;
       height: 4px;
       position: absolute;
-      top: 50%;
+      top: 35%;
       left: 0;
       transform: translateY(-50%);
       content: "";
@@ -100,7 +101,7 @@
   .year{
     height:100%;
     display:flex;
-    align-items: center;
+    //align-items: center;
     text-align: center;
     position: relative;
     width: $mobileWidth;
@@ -122,12 +123,13 @@
     .hotspot {
       height: 300px;
       position: absolute;
-      top: 50%;
+      top: 35%;
       left: 0%;
       transform: translateY(-50%);
-      background: rgba(255, 0, 0, 0);
+      //background: rgba(255, 0, 0, 0);
       cursor: pointer;
       width: $mobileWidth;
+      //background: rgba(255, 0, 0,0.5);
 
       @include media-breakpoint-up(lg) {
         width: $desktopWidth;
@@ -144,7 +146,7 @@
       width: 100%;
       height: 4px;
       position: absolute;
-      top: 50%;
+      top: 35%;
       left: 0;
       transform: translateY(-50%);
       content: "";
@@ -154,6 +156,9 @@
     .content {
       position: relative;
       width: 100%;
+      top: 35%;
+      height: 70%;
+      //margin-top: -40%;
 
       .dot {
         cursor: pointer;
@@ -161,7 +166,7 @@
         height: 28px;
         //border: 4px solid var(--background-color-dark);
         position: absolute;
-        top: 50%;
+        top: 0%;
         left: 50%;
         transform: translateX(-50%) translateY(-50%);
         content: "";
@@ -248,7 +253,7 @@
 
       .project {
         position: absolute;
-        bottom: -70px;
+        top: 30px;
         transform: translateX(-50%);
         left: 50%;
 
@@ -357,7 +362,7 @@
       width: 100%;
       height: 4px;
       position: absolute;
-      top: 50%;
+      top: 40%;
       left: 0;
       transform: translateY(-50%);
       content: "";

@@ -7,8 +7,11 @@
             @php(dynamic_sidebar('sidebar-footer-1'))
           </div>
 
+          <?php  if (is_page(array( 'contact' ))) { ?>
           <div class="col-lg-3 text-mobile-center text-desktop-right">
             @php(dynamic_sidebar('sidebar-footer-2'))
+
+          <?php } ?>
           </div>
         </div>
       </div>

@@ -8,6 +8,7 @@ import Team from "../util/team.js";
 import Timeline from "../util/timeline.js";
 import CardProject from "../util/cardProject.js";
 import Map from "../util/map.js";
+import GradientAnimation from "../util/gradientAnimation";
 import AOS from 'aos';
 
 export default {
@@ -21,6 +22,7 @@ export default {
         const downArrow = new DownArrow();
         const videoPlayer = new VideoPlayer();
         const mouseParallax = new MouseParallax()
+        const gradientAnimation = new GradientAnimation()
         const galleryCoverflowCarousel = new GalleryCoverflowCarousel()
         const timeline = new Timeline()
         const tabs = new Tabs()

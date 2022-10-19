@@ -21,8 +21,8 @@
           <div class="row">
             <div class="col-12">
               <div>
-                <div class="corporate-key p-b-mobile-element p-b-desktop-element">Corporate time</div>
-                <div class="project-key p-t-mobile-element p-t-desktop-element">Project timeline</div>
+{{--                <div class="corporate-key p-b-mobile-element p-b-desktop-element">Corporate time</div>--}}
+{{--                <div class="project-key p-t-mobile-element p-t-desktop-element">Project timeline</div>--}}
               </div>
             </div>
           </div>
