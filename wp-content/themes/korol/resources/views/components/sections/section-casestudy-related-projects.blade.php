@@ -25,19 +25,19 @@
 
             <?php $delay = ($count * 150 ) ;?>
              <div class="col-10 col-sm-4 sans text-center p-b-mobile-element p-b-desktop-element" data-aos="fade-up"  data-aos-duration="750" data-aos-delay="<?php echo $delay;?>">
-
+               <a href="<?php echo get_the_permalink($post->ID)?>">
                <div class="image p-b-mobile-element p-b-desktop-element">
 
                  <?php $img_id = get_post_thumbnail_id($post->ID);
                  $image = wp_get_attachment_image_src($img_id, "featured-image");
                  $alt_text = get_post_meta($img_id , '_wp_attachment_image_alt', true); ?>
 
-                 <img src="<?php echo $image[0]; ?>" alt="<?php echo $alt_text; ?>">
+                   <img src="<?php echo $image[0]; ?>" alt="<?php echo $alt_text; ?>">
 
                </div>
 
                <h3><?php echo get_the_title($post->ID);?></h3>
-
+               </a>
               </div>
           <?php  $count ++;?>
                 <?php endforeach; ?>
