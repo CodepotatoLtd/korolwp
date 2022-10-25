@@ -261,47 +261,6 @@
                             "library": "all"
                         },
                         {
-                            "key": "field_633eda8bb61af",
-                            "label": "Film",
-                            "name": "film",
-                            "aria-label": "",
-                            "type": "file",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "50",
-                                "class": "",
-                                "id": ""
-                            },
-                            "uploader": "",
-                            "return_format": "url",
-                            "min_size": "",
-                            "max_size": "",
-                            "mime_types": "",
-                            "library": "all"
-                        },
-                        {
-                            "key": "field_633edaf4fa02c",
-                            "label": "Film Text",
-                            "name": "film_text",
-                            "aria-label": "",
-                            "type": "text",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "50",
-                                "class": "",
-                                "id": ""
-                            },
-                            "default_value": "See Film",
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": "",
-                            "maxlength": ""
-                        },
-                        {
                             "key": "field_6357faf1f263e",
                             "label": "Films",
                             "name": "films",
@@ -338,7 +297,7 @@
                                         "id": ""
                                     },
                                     "uploader": "",
-                                    "return_format": "array",
+                                    "return_format": "url",
                                     "min_size": "",
                                     "max_size": "",
                                     "mime_types": "",
@@ -634,5 +593,5 @@
     "acfe_form": 0,
     "acfe_meta": "",
     "acfe_note": "",
-    "modified": 1666710512
+    "modified": 1666711490
 }
