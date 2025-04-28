@@ -1,86 +1,92 @@
 @if(have_rows('content'))
-    {{-- loop through the rows of data --}}
-    @while (have_rows('content')) @php(the_row())
+{{-- loop through the rows of data --}}
+@while (have_rows('content')) @php(the_row())
 
-      @if(get_row_layout() == 'intro')
+  @if(get_row_layout() == 'intro')
 
-        @include('components.sections.section-intro')
+    @include('components.sections.section-intro')
 
-      @endif
+  @endif
 
-      @if(get_row_layout() == 'intro_small')
+  @if(get_row_layout() == 'intro_small')
 
-        @include('components.sections.section-intro-small')
+    @include('components.sections.section-intro-small')
 
-      @endif
+  @endif
 
-      @if(get_row_layout() == 'text_image')
+  @if(get_row_layout() == 'text_image')
 
-        @include('components.sections.section-text-image')
+    @include('components.sections.section-text-image')
 
-      @endif
+  @endif
 
-      @if(get_row_layout() == 'image_tabs')
+  @if(get_row_layout() == 'image_tabs')
 
-        @include('components.sections.section-image-tabs')
+    @include('components.sections.section-image-tabs')
 
-      @endif
+  @endif
 
-    @if(get_row_layout() == 'projects')
+  @if(get_row_layout() == 'projects')
 
-      @include('components.sections.section-projects')
+    @include('components.sections.section-projects')
 
-    @endif
+  @endif
 
-    @if(get_row_layout() == 'team')
+  @if(get_row_layout() == 'team')
 
-      @include('components.sections.section-team')
+    @include('components.sections.section-team')
 
-    @endif
+  @endif
 
-    @if(get_row_layout() == 'intro_cs')
+  @if(get_row_layout() == 'intro_cs')
 
-      @include('components.sections.section-casestudy-intro')
+    @include('components.sections.section-casestudy-intro')
 
-    @endif
+  @endif
 
-    @if(get_row_layout() == 'specification_cs')
+  @if(get_row_layout() == 'specification_cs')
 
-      @include('components.sections.section-casestudy-specification')
+    @include('components.sections.section-casestudy-specification')
 
-    @endif
+  @endif
 
-    @if(get_row_layout() == 'gallery_cs')
+  @if(get_row_layout() == 'gallery_cs')
 
-      @include('components.sections.section-gallery-coverflow')
+    @include('components.sections.section-gallery-coverflow')
 
-    @endif
+  @endif
 
-    @if(get_row_layout() == 'related_projects_cs')
+  @if(get_row_layout() == 'before_after_gallery_cs')
 
-      @include('components.sections.section-casestudy-related-projects')
+    @include('components.sections.section-gallery-coverflow-before-after')
 
-    @endif
+  @endif
 
-    @if(get_row_layout() == 'timeline')
+  @if(get_row_layout() == 'related_projects_cs')
 
-      @include('components.sections.section-timeline')
+    @include('components.sections.section-casestudy-related-projects')
 
-    @endif
+  @endif
 
-    @if(get_row_layout() == 'map')
+  @if(get_row_layout() == 'timeline')
 
-      @include('components.sections.section-map')
+    @include('components.sections.section-timeline')
 
-    @endif
+  @endif
 
-    @if(get_row_layout() == 'contact_footer')
+  @if(get_row_layout() == 'map')
 
-      @include('components.sections.section-contact-footer')
+    @include('components.sections.section-map')
 
-    @endif
+  @endif
 
-    @endwhile
+  @if(get_row_layout() == 'contact_footer')
+
+    @include('components.sections.section-contact-footer')
+
+  @endif
+
+  @endwhile
 @else
-   {{-- no layouts found --}}
+{{-- no layouts found --}}
 @endif
