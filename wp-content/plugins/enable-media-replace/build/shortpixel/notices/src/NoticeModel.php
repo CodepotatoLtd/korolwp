@@ -13,8 +13,6 @@ class NoticeModel //extends ShortPixelModel
   protected $is_dismissed = false; // for persistent notices,
   protected $suppress_until = null;
   protected $suppress_period = -1;
-	protected $include_screens = array();
-	protected $exclude_screens = array();
   public $is_removable = true; // if removable, display a notice dialog with red X or so.
   public $messageType = self::NOTICE_NORMAL;
 
@@ -35,6 +33,7 @@ class NoticeModel //extends ShortPixelModel
   {
       $this->message = $message;
       $this->messageType = $messageType;
+
   }
 
   public function isDone()
@@ -44,7 +43,9 @@ class NoticeModel //extends ShortPixelModel
     {
         if (time() >= $this->suppress_until)
         {
+            //Log::addDebug('')
             $this->is_persistent = false; // unpersist, so it will be cleaned and dropped.
+
         }
     }
 
@@ -97,53 +98,6 @@ class NoticeModel //extends ShortPixelModel
         $this->details[] = $detail;
   }
 
-	/**
-	* @param $method String Include or Exclude
-	* @param $includes String|Array  Screen Names to Include / Exclude either string, or array
-	*/
-	public function limitScreens($method, $screens)
-	{
-			if ($method == 'exclude')
-			{
-				 $var = 'exclude_screens';
-			}
-			else {
-				  $var = 'include_screens';
-			}
-
-			if (is_array($screens))
-			{
-				 $this->$var = array_merge($this->$var, $screens);
-			}
-			else {
-				 $this->{$var}[] = $screens; // strange syntax is PHP 5.6 compat.
-			}
-	}
-
-	/* Checks if Notice is allowed on this screen
-	* @param @screen_id String The screen Id to check ( most likely current one, via EnvironmentModel)
-	*/
-	public function checkScreen($screen_id)
-	{
-			if (in_array($screen_id, $this->exclude_screens))
-			{
-				 return false;
-			}
-			if (in_array($screen_id, $this->include_screens))
-			{
-				 return true;
-			}
-
-			// if include is set, don't show if not screen included.
-			if (count($this->include_screens) == 0)
-			{
-				return true;
-			}
-			else {
-				return false;
-			}
-	}
-
 
 
   /** Set a notice persistent. Meaning it shows every page load until dismissed.
@@ -182,14 +136,6 @@ class NoticeModel //extends ShortPixelModel
     self::$icons[$type] = $icon;
   }
 
-	public function _debug_getvar($var)
-	{
-		 if (property_exists($this, $var))
-		 {
-			  return $this->$var;
-		 }
-	}
-
   private function checkIncomplete($var)
   {
      return ($var instanceof \__PHP_Incomplete_Class);
@@ -219,16 +165,9 @@ class NoticeModel //extends ShortPixelModel
               return false;
       }
 
-			if (! is_callable($this->callback))
-			{
-				 return;
-			}
-			else {
-				$return = call_user_func($this->callback, $this);
-        if ($return === false) // don't display is callback returns false explicitly.
-         return;
-
-			}
+       $return = call_user_func($this->callback, $this);
+       if ($return === false) // don't display is callback returns false explicitly.
+        return;
     }
 
     switch($this->messageType)
@@ -295,9 +234,9 @@ class NoticeModel //extends ShortPixelModel
                                 document.getElementById('button-$id').onclick = function()
                                 {
                                   var el = document.getElementById('$id');
-                           				jQuery(el).fadeTo(100,0,function() {
-                               		jQuery(el).slideUp(100, 0, function () {
-                                  jQuery(el).remove();
+                           				$(el).fadeTo(100,0,function() {
+                               		$(el).slideUp(100, 0, function () {
+                                  $(el).remove();
                                })
                            });
                          } </script>";

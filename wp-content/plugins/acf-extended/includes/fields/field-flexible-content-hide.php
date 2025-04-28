@@ -91,8 +91,8 @@ class acfe_field_flexible_content_hide{
      */
     function validate_hide($field){
         
-        /**
-         * old settings:
+        /*
+         * Old settings:
          *
          * acfe_flexible_remove_add_button
          * acfe_flexible_remove_duplicate_button

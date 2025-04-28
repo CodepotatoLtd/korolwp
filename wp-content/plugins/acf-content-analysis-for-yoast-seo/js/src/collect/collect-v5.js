@@ -1,5 +1,4 @@
-/* global _, acf, jQuery, wp, window */
-
+/* global _, acf, jQuery, wp */
 module.exports = function() {
 	var outerFieldsName = [
 		"flexible_content",
@@ -11,12 +10,9 @@ module.exports = function() {
 	var outerFields = [];
 	var acfFields = [];
 
-	// Check if Gutenberg editor is used.
-	if ( window.wpseoScriptData.isBlockEditor ) {
-	        /*
-	         * Return only fields in metabox areas (either below or side) or
-	         * ACF block fields in the content (not in the sidebar, to prevent duplicates).
-		*/
+	if ( wp.data.select( "core/block-editor" ) ) {
+		// Return only fields in metabox areas (either below or side) or
+		// ACF block fields in the content (not in the sidebar, to prevent duplicates)
 		var parentContainer = jQuery( ".metabox-location-normal, .metabox-location-side, .acf-block-component.acf-block-body" );
 		acfFields = acf.get_fields( false, parentContainer );
 	} else {

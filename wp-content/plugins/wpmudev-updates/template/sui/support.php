@@ -291,8 +291,8 @@ if ( in_array( $membership_type, array( 'expired', 'paused' ), true ) ) {
 			<div class="sui-message sui-message-lg">
 
 				<img
-					src="<?php echo esc_url( WPMUDEV_Dashboard::$site->plugin_url . 'assets/images/module.png' ); ?>"
-					srcset="<?php echo esc_url( WPMUDEV_Dashboard::$site->plugin_url . 'assets/images/module.png' ); ?> 1x, <?php echo esc_url( WPMUDEV_Dashboard::$site->plugin_url . 'assets/images/module@2x.png' ); ?> 2x"
+					src="<?php echo esc_url( WPMUDEV_Dashboard::$site->plugin_url . 'assets/images/graphic-support-new.png' ); ?>"
+					srcset="<?php echo esc_url( WPMUDEV_Dashboard::$site->plugin_url . 'assets/images/graphic-support-new.png' ); ?> 1x, <?php echo esc_url( WPMUDEV_Dashboard::$site->plugin_url . 'assets/images/graphic-support-new@2x.png' ); ?> 2x"
 					alt="Support"
 					aria-hidden="true"
 				/>
@@ -515,8 +515,8 @@ if ( in_array( $membership_type, array( 'expired', 'paused' ), true ) ) {
 				<?php if ( empty( $access_logs ) ) : ?>
 					<div class="sui-message">
 						<img
-							src="<?php echo esc_url( WPMUDEV_Dashboard::$site->plugin_url . 'assets/images/module.png' ); ?>"
-							srcset="<?php echo esc_url( WPMUDEV_Dashboard::$site->plugin_url . 'assets/images/module.png' ); ?> 1x, <?php echo esc_url( WPMUDEV_Dashboard::$site->plugin_url . 'assets/images/module@2x.png' ); ?> 2x"
+							src="<?php echo esc_url( WPMUDEV_Dashboard::$site->plugin_url . 'assets/images/graphic-support-new.png' ); ?>"
+							srcset="<?php echo esc_url( WPMUDEV_Dashboard::$site->plugin_url . 'assets/images/graphic-support-new.png' ); ?> 1x, <?php echo esc_url( WPMUDEV_Dashboard::$site->plugin_url . 'assets/images/graphic-support-new@2x.png' ); ?> 2x"
 							alt="dev-man"
 							class="sui-image"
 						/>
@@ -786,7 +786,7 @@ if ( in_array( $membership_type, array( 'expired', 'paused' ), true ) ) {
 
 				<h4 class="dashui-modal-header"><?php esc_html_e( 'How it works', 'wpmudev' ); ?></h4>
 				<p id="dialogDescription"
-				   class="sui-p-small"><?php esc_html_e( 'When you click the "Grant Access" button a random 64 character access token is generated that is only good for 120 hours (5 days) and saved in your Database. This token is sent to the WPMU DEV API over an SSL encrypted connection to prevent eavesdropping, and stored on our secure servers. This access token is in no way related to your password, and can only be used from our closed WPMU DEV API system for temporary access to this site.', 'wpmudev' ); ?></p>
+				   class="sui-p-small"><?php esc_html_e( 'When you click the "Grant Access" button a random 64 character access token is generated that is only good for 96 hours (5 days) and saved in your Database. This token is sent to the WPMU DEV API over an SSL encrypted connection to prevent eavesdropping, and stored on our secure servers. This access token is in no way related to your password, and can only be used from our closed WPMU DEV API system for temporary access to this site.', 'wpmudev' ); ?></p>
 
 				<h4 class="dashui-modal-header"><?php esc_html_e( 'Who has access?', 'wpmudev' ); ?></h4>
 				<p class="sui-p-small"><?php echo wp_kses_post( __( 'Only current WPMU DEV support staff can use this token to login as your user account by submitting a special form that only they have access to. This will give them 1 hour of admin access to this site before their login cookie expires. Every support staff login during the 5 day period is logged locally and you can view the details on this page.', 'wpmudev' ) ); ?></p>

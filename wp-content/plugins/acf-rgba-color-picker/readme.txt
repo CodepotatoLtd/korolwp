@@ -1,10 +1,10 @@
 === ACF RGBA Color Picker ===
 Contributors: tmconnect
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=XMLKD8H84HXB4&lc=US&item_name=Donation%20for%20WordPress%20Plugins&no_note=0&cn=Add%20a%20message%3a&no_shipping=1&currency_code=EUR
-Tags: acf, acfpro, color, color picker, rgba
+Tags: acf, acfpro, advanced custom fields, color, color picker, rgba, rgba color picker
 Requires at least: 4.7
-Tested up to: 6.7.1
-Stable tag: 1.2.3
+Tested up to: 5.5
+Stable tag: 1.2.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -101,9 +101,6 @@ Setting the color palette to false will disable and hide the "Color Palette" and
 
 
 == Changelog ==
-
-= v1.2.3 =
-* Fixed for PHP 8
 
 = v1.2.2 =
 * Fixes for WP 5.5

@@ -21,8 +21,7 @@ class acfe_field_image extends acfe_field_extend{
         
         $this->add_filter('gettext',                         array($this, 'gettext'), 99, 3);
         $this->add_filter('acf/prepare_field/name=library',  array($this, 'prepare_library'));
-        $this->add_field_action('acf/render_field_settings', array($this, 'render_field_settings_before'), 0);
-        $this->add_field_action('acf/render_field_settings', array($this, 'render_field_settings_after'), 15);
+        $this->add_field_action('acf/render_field_settings', array($this, '_render_field_settings'), 0);
         
     }
     
@@ -69,14 +68,7 @@ class acfe_field_image extends acfe_field_extend{
                         'operator'  => '==',
                         'value'     => 'wp',
                     )
-                ),
-                array(
-                    array(
-                        'field'     => 'uploader',
-                        'operator'  => '==',
-                        'value'     => '',
-                    )
-                ),
+                )
             );
             
         }
@@ -87,49 +79,37 @@ class acfe_field_image extends acfe_field_extend{
     
     
     /**
-     * render_field_settings_before
+     * _render_field_settings
      *
      * acf/render_field_settings:0
      *
      * @param $field
      */
-    function render_field_settings_before($field){
+    function _render_field_settings($field){
         
         // uploader type
         acf_render_field_setting($field, array(
-            'label'         => __('Uploader Type', 'acfe'),
+            'label'         => __('Uploader type'),
             'name'          => 'uploader',
             'key'           => 'uploader',
-            'instructions'  => __('Choose the uploader type', 'acfe'),
+            'instructions'  => __('Choose the uploader type'),
             'type'          => 'radio',
             'choices'       => array(
-                ''      => __('Default', 'acf'),
+                ''      => 'Default',
                 'wp'    => 'WordPress',
-                'basic' => __('Browser', 'acfe'),
+                'basic' => 'Browser',
             ),
             'default_value' => '',
             'layout'        => 'horizontal',
             'return_format' => 'value',
         ));
         
-    }
-    
-    
-    /**
-     * render_field_settings_after
-     *
-     * acf/render_field_settings:15
-     *
-     * @param $field
-     */
-    function render_field_settings_after($field){
-    
         // featured thumbnail
         acf_render_field_setting($field, array(
-            'label'         => __('Featured Thumbnail', 'acfe'),
+            'label'         => __('Featured thumbnail'),
             'name'          => 'acfe_thumbnail',
             'key'           => 'acfe_thumbnail',
-            'instructions'  => __('Make this image the featured thumbnail', 'acfe'),
+            'instructions'  => __('Make this image the featured thumbnail'),
             'type'          => 'true_false',
             'default_value'     => false,
             'ui'                => true,

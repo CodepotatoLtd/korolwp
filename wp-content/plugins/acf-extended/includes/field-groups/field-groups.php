@@ -8,44 +8,43 @@ if(!class_exists('ACFE_Field_Groups')):
 
 class ACFE_Field_Groups{
     
-    // vars
     var $view = '';
     var $sync = '';
     var $old_version = false;
     
-    /**
-     * construct
+    /*
+     * Construct
      */
     function __construct(){
         
+        // Actions
         add_action('current_screen',        array($this, 'current_screen'));
         add_action('acf/add_meta_boxes',    array($this, 'seamless_metabox'), 10, 3);
         
     }
     
-    
-    /**
-     * current_screen
+    /*
+     * Current Screen
      */
     function current_screen(){
         
-        // bail early if not Field Groups admin page.
+        // Bail early if not Field Groups admin page.
         if(!acf_is_screen('edit-acf-field-group')){
             return;
         }
         
-        // old Compatibility
+        // Old Compatibility
         if(acf_version_compare(acf_get_setting('version'),  '<', '5.9')){
             $this->old_version = true;
         }
         
-        // acf < 5.9
+        // ACF < 5.9
         if($this->old_version){
     
             $this->view = isset($_GET['post_status']) ? sanitize_text_field($_GET['post_status']) : '';
             $this->sync = $this->get_sync_compatibility();
         
-        // acf >= 5.9
+        // ACF >= 5.9
         }else{
     
             $this->view = acf_get_instance('ACF_Admin_Field_Groups')->view;
@@ -53,7 +52,7 @@ class ACFE_Field_Groups{
             
         }
         
-        // hooks
+        // Hooks
         add_filter('manage_edit-acf-field-group_columns',           array($this, 'table_columns'), 20);
         add_action('manage_acf-field-group_posts_custom_column',    array($this, 'table_columns_html'), 10, 2);
     
@@ -72,90 +71,73 @@ class ACFE_Field_Groups{
         
     }
     
-    
-    /**
-     * table_columns
-     *
-     * @param $columns
-     *
-     * @return array
+    /*
+     * Table Columns
      */
     function table_columns($columns){
         
         switch($this->view){
     
-            // sync
-            case('sync'): {
-    
-                acfe_unset($columns, 'acf-field-group-category');
-                break;
+            // View: Sync
+            case('sync'):
                 
-            }
+                acfe_unset($columns, 'acf-field-group-category');
+                
+            break;
             
-            // local
-            case('acfe-local'): {
+            // View: Local
+            case('acfe-local'):
     
                 if($this->old_version){
-        
+                    
                     $columns = array(
                         'cb'            => '<input type="checkbox" />',
                         'title'         => __('Title', 'acf'),
                         'acfe-source'   => __('Source', 'acf'),
                         'acf-count'     => __('Fields', 'acf'),
                         'acfe-location' => __('Location', 'acf'),
+                        'acfe-load'     => __('Load', 'acf'),
                     );
-        
+                    
                 }else{
-        
+    
                     $columns = array(
                         'cb'            => '<input type="checkbox" />',
                         'title'         => __('Title', 'acf'),
                         'acfe-source'   => __('Source', 'acf'),
                         'acf-count'     => __('Fields', 'acf'),
                         'acf-location'  => __('Location', 'acf'),
+                        'acfe-load'     => __('Load', 'acf'),
                     );
-        
-                }
-                
-                if(acf_get_setting('acfe/php') || acf_get_setting('acfe/json')){
-                    $columns['acfe-load'] = __('Load', 'acf');
-                }
-    
-                if(acf_get_setting('acfe/php')){
-                    $columns['acfe-autosync-php'] = __('PHP Sync');
-                }
-    
-                if(acf_get_setting('acfe/json')){
-                    $columns['acfe-autosync-json'] = __('Json Sync', 'acf');
-                }
-    
-                break;
-                
-            }
-            
-            // active/trash
-            default: {
-    
-                // acf < 5.9
-                if($this->old_version){
-        
-                    acfe_unset($columns, 'acf-fg-status');
-        
-                    $columns['acfe-location'] = __('Location', 'acf');
                     
-                    if(acf_get_setting('acfe/php') || acf_get_setting('acfe/json')){
-                        $columns['acfe-load'] = __('Load', 'acf');
-                    }
+                }
+    
+                if(acf_get_setting('acfe/php'))
+                    $columns['acfe-autosync-php'] = __('PHP Sync');
+    
+                if(acf_get_setting('json'))
+                    $columns['acfe-autosync-json'] = __('Json Sync', 'acf');
+                
+            break;
+            
+            // View: Active/Trash
+            default:
+    
+                // ACF < 5.9
+                if($this->old_version){
+    
+                    acfe_unset($columns, 'acf-fg-status');
+                    
+                    $columns['acfe-location'] = __('Location', 'acf');
+                    $columns['acfe-load'] = __('Load', 'acf');
         
-                    if(acf_get_setting('acfe/php')){
+                    if(acf_get_setting('acfe/php'))
                         $columns['acfe-autosync-php'] = __('PHP');
-                    }
         
-                    if(acf_get_setting('acfe/json')){
+                    if(acf_get_setting('json'))
                         $columns['acfe-autosync-json'] = __('Json');
-                    }
         
-                // acf >= 5.9
+                // ACF >= 5.9
                 }else{
         
                     // Re-order
@@ -166,22 +148,18 @@ class ACFE_Field_Groups{
         
                     $columns['acf-count'] = __('Fields', 'acf');
                     $columns['acf-location'] = __('Location', 'acf');
-                    
-                    if(acf_get_setting('acfe/php') || acf_get_setting('acfe/json')){
-                        $columns['acfe-load'] = __('Load', 'acf');
-                    }
         
-                    if(acf_get_setting('acfe/php')){
+                    $columns['acfe-load'] = __('Load', 'acf');
+        
+                    if(acf_get_setting('acfe/php'))
                         $columns['acfe-autosync-php'] = __('PHP');
-                    }
         
-                    if(acf_get_setting('json')){
-                        $columns['acfe-autosync-json'] = __('Json');
-                    }
+                    if(acf_get_setting('json'))
+                        $columns['acfe-autosync-json'] = __('Json', 'acf');
         
                 }
     
-                // remove category column if empty
+                // Remove Category column if empty
                 if(isset($columns['acf-field-group-category'])){
         
                     $categories_count = get_terms(array(
@@ -190,15 +168,12 @@ class ACFE_Field_Groups{
                         'fields'        => 'count'
                     ));
         
-                    if(empty($categories_count)){
+                    if(empty($categories_count))
                         unset($columns['acf-field-group-category']);
-                    }
         
                 }
-    
-                break;
                 
-            }
+            break;
             
         }
         
@@ -206,81 +181,72 @@ class ACFE_Field_Groups{
         
     }
     
-    
-    /**
-     * table_columns_html
-     *
-     * @param $column
-     * @param $post_id
+    /*
+     * Table Columns HTML
      */
     function table_columns_html($column, $post_id){
         
         $field_group = acf_get_field_group($post_id);
         
-        if(!$field_group){
+        if(!$field_group)
             return;
-        }
         
         $this->render_table_column($column, $field_group);
         
     }
     
-    
-    /**
-     * render_table_column
-     *
-     * @param $column
-     * @param $field_group
-     */
     function render_table_column($column, $field_group){
     
         switch($column){
     
-            // source
-            case 'acfe-source': {
+            // Source
+            case 'acfe-source':
+    
                 $this->render_admin_table_column_source_html($field_group);
-                break;
-            }
-            
-            // count
-            case 'acfe-count': {
+        
+            break;
+    
+            // Count
+            case 'acfe-count':
+    
                 echo esc_html( acf_get_field_count($field_group));
-                break;
-            }
+        
+            break;
             
-            // location
-            case 'acfe-location': {
+            // Location
+            case 'acfe-location':
+    
                 acfe_render_field_group_locations_html($field_group);
-                break;
-            }
-            
-            // load
-            case 'acfe-load': {
+        
+            break;
+    
+            // Load
+            case 'acfe-load':
+    
                 $this->render_admin_table_column_load_html($field_group);
-                break;
-            }
-            
-            // autosync php
-            case 'acfe-autosync-php': {
+        
+            break;
+    
+            // PHP Sync
+            case 'acfe-autosync-php':
+    
                 $this->render_admin_table_column_php_html($field_group);
-                break;
-            }
+        
+            break;
             
-            // autosync json
-            case 'acfe-autosync-json': {
+            // New Json Sync
+            case 'acfe-autosync-json':
+    
                 $this->render_admin_table_column_json_html($field_group);
-                break;
-            }
+        
+            break;
             
         }
         
     }
     
-    
-    /**
-     * render_admin_table_column_source_html
-     *
-     * @param $field_group
+    /*
+     * Column: Source
      */
     function render_admin_table_column_source_html($field_group){
     
@@ -311,11 +277,8 @@ class ACFE_Field_Groups{
         
     }
     
-    
-    /**
-     * render_admin_table_column_load_html
-     *
-     * @param $field_group
+    /*
+     * Column: Load
      */
     function render_admin_table_column_load_html($field_group){
     
@@ -324,24 +287,25 @@ class ACFE_Field_Groups{
         
         // PHP
         if(isset($php[$field_group['key']]) || acf_maybe_get($local_field_group, 'local') === 'php'){
+        
             echo '<span>php</span>';
         
         // Json
         }elseif(acf_maybe_get($local_field_group, 'local') === 'json'){
+        
             echo '<span>Json</span>';
         
         // DB
         }else{
+        
             echo '<span>DB</span>';
+        
         }
         
     }
     
-    
-    /**
-     * render_admin_table_column_php_html
-     *
-     * @param $field_group
+    /*
+     * Column: PHP Sync HTML
      */
     function render_admin_table_column_php_html($field_group){
     
@@ -363,16 +327,14 @@ class ACFE_Field_Groups{
         
         $icons = array();
         
-        if($return['icon']){
+        if($return['icon'])
             $icons[] = '<span class="dashicons dashicons-' . $return['icon'] . '"></span>';
-        }
     
-        if($return['warning']){
+        if($return['warning'])
             $icons[] = '<span class="dashicons dashicons-warning"></span>';
-        }
         
         ?>
-        <span <?php echo acf_esc_atts($wrapper); ?>>
+        <span <?php echo acf_esc_attrs($wrapper); ?>>
             
             <?php if($return['wrapper_start']){ echo $return['wrapper_start']; } ?>
             
@@ -387,14 +349,6 @@ class ACFE_Field_Groups{
         
     }
     
-    
-    /**
-     * get_php_data
-     *
-     * @param $field_group
-     *
-     * @return array
-     */
     function get_php_data($field_group){
         
         $return = array(
@@ -409,7 +363,7 @@ class ACFE_Field_Groups{
     
         $php = acfe_get_local_php_files();
     
-        if(isset($php[ $field_group['key'] ])){
+        if(isset($php[$field_group['key']])){
         
             $file = $php[$field_group['key']];
             $file_readable = $this->get_human_readable_file_location($file);
@@ -433,8 +387,14 @@ class ACFE_Field_Groups{
         
         }else{
     
-            $path = acfe_get_php_save_path($field_group);
+            $path = untrailingslashit(acf_get_setting('acfe/php_save'));
+    
+            $path = apply_filters("acfe/settings/php_save/all",                         $path, $field_group);
+            $path = apply_filters("acfe/settings/php_save/ID={$field_group['ID']}",     $path, $field_group);
+            $path = apply_filters("acfe/settings/php_save/key={$field_group['key']}",   $path, $field_group);
+            
             $found = (bool) is_dir($path) && wp_is_writable($path);
+            
             $folder = $this->get_human_readable_file_location($path, $found, false);
             
             if(acfe_has_php_sync($field_group)){
@@ -461,9 +421,8 @@ class ACFE_Field_Groups{
             $return['warning'] = false;
             $return['class'] = false;
             
-            if($return['icon'] !== 'yes'){
+            if($return['icon'] !== 'yes')
                 $return['class'] = 'secondary';
-            }
             
         }
         
@@ -471,11 +430,8 @@ class ACFE_Field_Groups{
         
     }
     
-    
-    /**
-     * render_admin_table_column_json_html
-     *
-     * @param $field_group
+    /*
+     * Column: Json Sync HTML
      */
     function render_admin_table_column_json_html($field_group){
     
@@ -485,27 +441,26 @@ class ACFE_Field_Groups{
             'class' => ''
         );
     
-        if($return['class']){
+        if($return['class'])
             $wrapper['class'] = $return['class'];
-        }
     
         if($return['message']){
+        
             $wrapper['class'] .= ' acf-js-tooltip';
             $wrapper['title'] = $return['message'];
+        
         }
     
         $icons = array();
     
-        if($return['icon']){
+        if($return['icon'])
             $icons[] = '<span class="dashicons dashicons-' . $return['icon'] . '"></span>';
-        }
     
-        if($return['warning']){
+        if($return['warning'])
             $icons[] = '<span class="dashicons dashicons-warning"></span>';
-        }
     
         ?>
-        <span <?php echo acf_esc_atts($wrapper); ?>>
+        <span <?php echo acf_esc_attrs($wrapper); ?>>
             
             <?php if($return['wrapper_start']){ echo $return['wrapper_start']; } ?>
             
@@ -520,14 +475,6 @@ class ACFE_Field_Groups{
         
     }
     
-    
-    /**
-     * get_json_data
-     *
-     * @param $field_group
-     *
-     * @return false[]
-     */
     function get_json_data($field_group){
         
         $return = array(
@@ -542,12 +489,12 @@ class ACFE_Field_Groups{
     
         $json = acf_get_local_json_files();
     
-        if(isset($json[ $field_group['key'] ])){
+        if(isset($json[$field_group['key']])){
         
             $file = $json[$field_group['key']];
             $file_readable = $this->get_human_readable_file_location($file);
         
-            if(isset($this->sync[ $field_group['key'] ])){
+            if(isset($this->sync[$field_group['key']])){
                 
                 // vars
                 $nonce = wp_create_nonce('bulk-posts');
@@ -598,8 +545,14 @@ class ACFE_Field_Groups{
         
         }else{
     
-            $path = acfe_get_json_save_path($field_group);
+            $path = untrailingslashit(acf_get_setting('save_json'));
+    
+            $path = apply_filters("acfe/settings/json_save/all",                        $path, $field_group);
+            $path = apply_filters("acfe/settings/json_save/ID={$field_group['ID']}",    $path, $field_group);
+            $path = apply_filters("acfe/settings/json_save/key={$field_group['key']}",  $path, $field_group);
+    
             $found = (bool) is_dir($path) && wp_is_writable($path);
+    
             $folder = $this->get_human_readable_file_location($path, $found, false);
         
             if(acfe_has_json_sync($field_group)){
@@ -626,9 +579,8 @@ class ACFE_Field_Groups{
             $return['warning'] = false;
             $return['class'] = false;
             
-            if($return['icon'] !== 'yes'){
+            if($return['icon'] !== 'yes')
                 $return['class'] = 'secondary';
-            }
         
         }
         
@@ -636,40 +588,28 @@ class ACFE_Field_Groups{
         
     }
     
-    
-    /**
-     * default_hidden_columns
-     *
-     * @param $hidden
-     * @param $screen
-     *
-     * @return mixed
+    /*
+     * Hide Default Columns
      */
     function default_hidden_columns($hidden, $screen){
         
         $hidden[] = 'acf-description';
+        
         return $hidden;
         
     }
     
-    
-    /**
-     * posts_per_page
-     *
-     * @return int
+    /*
+     * Posts Per Page
      */
     function posts_per_page(){
+        
         return 999;
+        
     }
     
-    
-    /**
-     * row_actions
-     *
-     * @param $actions
-     * @param $post
-     *
-     * @return mixed
+    /*
+     * Row Actions
      */
     function row_actions($actions, $post){
         
@@ -689,51 +629,51 @@ class ACFE_Field_Groups{
         
     }
     
-    
-    /**
-     * post_states
-     *
-     * @param $states
-     * @param $post
-     *
-     * @return mixed
+    /*
+     * Post States
      */
     function post_states($states, $post){
         
-        // vars
+        // Vars
         $field_group = acf_get_field_group($post->ID);
         
-        // acf < 5.9
+        // ACF < 5.9
         if($this->old_version){
             
-            // disabled
+            // Disabled
             if($post->post_status === 'acf-disabled'){
+    
                 $states['acf-disabled'] = '<span class="dashicons dashicons-hidden acf-js-tooltip" title="' . _x('Disabled', 'post status', 'acf') . '"></span>';
+                
             }
             
-        // acf > 5.9
+        // ACF > 5.9
         }else{
             
             if(isset($states['acf-disabled'])){
+    
                 unset($states['acf-disabled']);
                 $states['acf-disabled'] = '<span class="dashicons dashicons-hidden acf-js-tooltip" title="' . _x('Disabled', 'post status', 'acf') . '"></span>';
+                
             }
             
         }
         
-        // alternative title
+        // Alternative Title
         $display_title = acf_maybe_get($field_group, 'acfe_display_title');
         
         if(!empty($display_title)){
+    
             $states['acfe-title'] = '<span class="acf-js-tooltip" title="' . __('Alternative title', 'acf') . '">' . $display_title . '</span>';
+            
         }
         
         return $states;
         
     }
     
-    /**
-     * admin_footer
+    /*
+     * Admin Footer
      */
     function admin_footer(){
         ?>
@@ -767,13 +707,8 @@ class ACFE_Field_Groups{
         <?php
     }
     
-    
-    /**
-     * bulk_actions
-     *
-     * @param $actions
-     *
-     * @return mixed
+    /*
+     * Bulk Actions
      */
     function bulk_actions($actions){
         
@@ -784,15 +719,8 @@ class ACFE_Field_Groups{
         
     }
     
-    
-    /**
-     * handle_bulk_actions
-     *
-     * @param $redirect
-     * @param $action
-     * @param $post_ids
-     *
-     * @return mixed|void
+    /*
+     * Handle Bulk Actions
      */
     function handle_bulk_actions($redirect, $action, $post_ids){
         
@@ -839,16 +767,8 @@ class ACFE_Field_Groups{
         
     }
     
-    
-    /**
-     * get_human_readable_file_location
-     *
-     * @param $file
-     * @param $found
-     * @param $br
-     * @param $prefix
-     *
-     * @return string
+    /*
+     * Helper: Human Readable File
      */
     function get_human_readable_file_location($file, $found = true, $br = true, $prefix = true){
         
@@ -891,13 +811,8 @@ class ACFE_Field_Groups{
         
     }
     
-    
-    /**
-     * seamless_metabox
-     *
-     * @param $post_type
-     * @param $post
-     * @param $field_groups
+    /*
+     * Seamless Metabox
      */
     function seamless_metabox($post_type, $post, $field_groups){
         
@@ -935,12 +850,6 @@ class ACFE_Field_Groups{
         
     }
     
-    
-    /**
-     * get_sync_compatibility
-     *
-     * @return array
-     */
     function get_sync_compatibility(){
         
         $sync = array();

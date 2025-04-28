@@ -194,22 +194,6 @@ class acfe_field_button extends acf_field{
         
     }
     
-    
-    /**
-     * translate_field
-     *
-     * @param $field
-     *
-     * @return mixed
-     */
-    function translate_field($field){
-    
-        $field['button_value'] = acf_translate($field['button_value']);
-        
-        return $field;
-        
-    }
-    
 }
 
 // initialize

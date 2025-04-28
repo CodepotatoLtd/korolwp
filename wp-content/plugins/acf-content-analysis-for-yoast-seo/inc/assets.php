@@ -19,8 +19,6 @@ class Yoast_ACF_Analysis_Assets {
 
 	/**
 	 * Initialize.
-	 *
-	 * @return void
 	 */
 	public function init() {
 		$this->plugin_data = get_plugin_data( AC_SEO_ACF_ANALYSIS_PLUGIN_FILE );
@@ -30,8 +28,6 @@ class Yoast_ACF_Analysis_Assets {
 
 	/**
 	 * Enqueue JavaScript file to feed data to Yoast Content Analyses.
-	 *
-	 * @return void
 	 */
 	public function enqueue_scripts() {
 		/**

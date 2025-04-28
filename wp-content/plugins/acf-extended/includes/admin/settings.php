@@ -8,14 +8,10 @@ if(!class_exists('acfe_admin_settings')):
 
 class acfe_admin_settings{
     
-    // vars
     public $defaults = array();
     public $updated = array();
     public $fields = array();
     
-    /**
-     * construct
-     */
     function __construct(){
     
         add_action('acf/init', array($this, 'acf_pre_init'), 1);
@@ -25,17 +21,15 @@ class acfe_admin_settings{
         
     }
     
-    
-    /**
-     * acf_pre_init
+    /*
+     * Pre Init
      */
     function acf_pre_init(){
         $this->defaults = acf()->settings;
     }
     
-    
-    /**
-     * acf_post_init
+    /*
+     * Post Init
      */
     function acf_post_init(){
         
@@ -49,9 +43,8 @@ class acfe_admin_settings{
         
     }
     
-    
-    /**
-     * register_fields
+    /*
+     * Register Fields
      */
     function register_fields(){
     
@@ -162,7 +155,7 @@ class acfe_admin_settings{
                 array(
                     'label'         => 'l10n textdomain',
                     'name'          => 'l10n_textdomain',
-                    'type'          => 'text',
+                    'type'          => 'true_false',
                     'description'   => 'Sets the text domain used when translating field and field group settings.<br />Defaults to ”. Strings will not be translated if this setting is empty',
                     'category'      => 'acf',
                 ),
@@ -227,41 +220,6 @@ class acfe_admin_settings{
                     'name'          => 'remove_wp_meta_box',
                     'type'          => 'true_false',
                     'description'   => 'Allows ACF to remove the default WP custom fields metabox. Defaults to true',
-                    'category'      => 'acf',
-                ),
-                array(
-                    'label'         => 'Rest API enabled',
-                    'name'          => 'rest_api_enabled',
-                    'type'          => 'true_false',
-                    'description'   => 'Enables/disables the ACF REST API integration.. Defaults to true',
-                    'category'      => 'acf',
-                ),
-                array(
-                    'label'         => 'Rest API format',
-                    'name'          => 'rest_api_format',
-                    'type'          => 'text',
-                    'description'   => 'Defines how ACF formats field values in the REST API. Defaults to light',
-                    'category'      => 'acf',
-                ),
-                array(
-                    'label'         => 'Rest API Embed Links',
-                    'name'          => 'rest_api_embed_links',
-                    'type'          => 'true_false',
-                    'description'   => 'Enables/disables embed links for ACF fields in the REST API. Defaults to true',
-                    'category'      => 'acf',
-                ),
-                array(
-                    'label'         => 'Preload Blocks',
-                    'name'          => 'preload_blocks',
-                    'type'          => 'true_false',
-                    'description'   => 'Allows ACF to preload the initial render html of ACF Blocks into the block editor. Defaults to true',
-                    'category'      => 'acf',
-                ),
-                array(
-                    'label'         => 'Enable Shortcode',
-                    'name'          => 'enable_shortcode',
-                    'type'          => 'true_false',
-                    'description'   => 'Enable the ACF shortcode. Defaults to true',
                     'category'      => 'acf',
                 ),
         
@@ -384,13 +342,6 @@ class acfe_admin_settings{
                     'category'      => 'modules',
                 ),
                 array(
-                    'label'         => 'Forms: Top Level',
-                    'name'          => 'acfe/modules/forms/top_level',
-                    'type'          => 'true_false',
-                    'description'   => 'Show/hide the Forms module as top level menu. Defaults to false',
-                    'category'      => 'modules',
-                ),
-                array(
                     'label'         => 'Multilangual',
                     'name'          => 'acfe/modules/multilang',
                     'type'          => 'true_false',
@@ -412,17 +363,17 @@ class acfe_admin_settings{
                     'category'      => 'modules',
                 ),
                 array(
-                    'label'         => 'Performance',
-                    'name'          => 'acfe/modules/performance',
-                    'type'          => 'text',
-                    'description'   => 'Enable/disable Performance module. Defaults to false',
-                    'category'      => 'modules',
-                ),
-                array(
                     'label'         => 'Post Types',
                     'name'          => 'acfe/modules/post_types',
                     'type'          => 'true_false',
                     'description'   => 'Show/hide the Post Types module. Defaults to true',
+                    'category'      => 'modules',
+                ),
+                array(
+                    'label'         => 'Single Meta',
+                    'name'          => 'acfe/modules/single_meta',
+                    'type'          => 'true_false',
+                    'description'   => 'Enable/disable Single Meta Save module. Defaults to false',
                     'category'      => 'modules',
                 ),
                 array(
@@ -496,7 +447,6 @@ class acfe_admin_settings{
     
 }
 
-// instantiate
 acf_new_instance('acfe_admin_settings');
 
 endif;
@@ -505,14 +455,10 @@ if(!class_exists('acfe_admin_settings_ui')):
 
 class acfe_admin_settings_ui{
     
-    // vars
     public $defaults = array();
     public $updated = array();
     public $fields = array();
     
-    /**
-     * construct
-     */
     function __construct(){
         
         add_action('admin_menu',                array($this, 'admin_menu'));
@@ -521,9 +467,8 @@ class acfe_admin_settings_ui{
     
     }
     
-    
-    /**
-     * admin_menu
+    /*
+     * Admin Menu
      */
     function admin_menu(){
         
@@ -537,25 +482,22 @@ class acfe_admin_settings_ui{
         
     }
     
-    
-    /**
-     * menu_load
+    /*
+     * Menu Load
      */
     function menu_load(){
         do_action('acfe/admin_settings/load');
     }
     
-    
-    /**
-     * menu_html
+    /*
+     * Menu HTML
      */
     function menu_html(){
         do_action('acfe/admin_settings/html');
     }
     
-    
-    /**
-     * load
+    /*
+     * Load
      */
     function load(){
     
@@ -572,10 +514,6 @@ class acfe_admin_settings_ui{
         
     }
     
-    
-    /**
-     * admin_footer
-     */
     function admin_footer(){
         ?>
         <script type="text/javascript">
@@ -586,13 +524,8 @@ class acfe_admin_settings_ui{
         <?php
     }
     
-    
-    /**
-     * prepare_setting
-     *
-     * @param $setting
-     *
-     * @return array|false
+    /*
+     * Prepare Setting
      */
     function prepare_setting($setting){
     
@@ -610,20 +543,13 @@ class acfe_admin_settings_ui{
         
         $name = $setting['name'];
         $type = $setting['type'];
-        
-        // setting doesn't exist in default acf settings
-        // probably an older version of acf
-        if(!isset($this->defaults[ $name ])){
-            return false;
-        }
-        
         $format = $setting['format'];
-        $default = $this->defaults[ $name ];
-        $updated = $this->updated[ $name ];
+        $default = $this->defaults[$name];
+        $updated = $this->updated[$name];
         
         $vars = array(
-            'default' => $this->defaults[ $name ],
-            'updated' => $this->updated[ $name ]
+            'default' => $this->defaults[$name],
+            'updated' => $this->updated[$name]
         );
     
         foreach($vars as $v => $var){
@@ -648,18 +574,8 @@ class acfe_admin_settings_ui{
                         $var = explode(',', $var);
                     }
                 
-                    foreach($var as $k => &$r){
-                        if(is_array($r)){
-                            $encode = json_encode($r);
-                            $r = '<div class="acfe-settings-text"><code>' . $encode . '</code></div>';
-                        }else{
-                            
-                            if(!is_numeric($k)){
-                                $r = "{$k} = {$r}";
-                            }
-                            
-                            $r = '<div class="acf-js-tooltip acfe-settings-text" title="' . $r . '"><code>' . $r . '</code></div>';
-                        }
+                    foreach($var as &$r){
+                        $r = '<div class="acf-js-tooltip acfe-settings-text" title="' . $r . '"><code>' . $r . '</code></div>';
                     }
                 
                     $result = implode('', $var);
@@ -684,23 +600,25 @@ class acfe_admin_settings_ui{
         
     }
     
-    
-    /**
-     * html
+    /*
+     * HTML
      */
     function html(){
+        
         ?>
         <div class="wrap" id="acfe-admin-settings">
 
             <h1><?php _e('Settings'); ?></h1>
 
             <div id="poststuff">
+        
                 <div id="post-body" class="metabox-holder">
                     
                     <!-- Metabox -->
                     <div id="postbox-container-2" class="postbox-container">
         
                         <div class="postbox acf-postbox">
+                            
                             <div class="postbox-header">
                                 <h2 class="hndle ui-sortable-handle"><span><?php _e('Settings'); ?></span></h2>
                             </div>
@@ -722,16 +640,13 @@ class acfe_admin_settings_ui{
                     </div>
                 
                 </div>
+                
             </div>
             
         </div>
         <?php
     }
     
-    
-    /**
-     * render_fields
-     */
     function render_fields(){
         
         foreach(array('ACF', 'ACFE', 'AutoSync', 'Modules', 'Fields') as $tab){
@@ -747,11 +662,7 @@ class acfe_admin_settings_ui{
                 foreach($this->fields[$category] as $field){
                     
                     $field = $this->prepare_setting($field);
-                    
-                    // make sure the setting exists
-                    if($field){
-                        $fields[] = $field;
-                    }
+                    $fields[] = $field;
         
                 }
     

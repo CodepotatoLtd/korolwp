@@ -61,15 +61,9 @@
 					<?php endif; ?>
 					<ul>
 						<li>
-							<?php if ( $free_services_active ) : ?>
-								<button data-modal-open="logout-confirmation-content">
-									<i class="sui-icon-plug-disconnected" aria-hidden="true"></i> <?php esc_html_e( 'Logout', 'wpmudev' ); ?>
-								</button>
-							<?php else : ?>
-								<a href="<?php echo esc_url( $url_logout ); ?>">
-									<i class="sui-icon-plug-disconnected" aria-hidden="true"></i> <?php esc_html_e( 'Logout', 'wpmudev' ); ?>
-								</a>
-							<?php endif; ?>
+							<a href="<?php echo esc_url( $url_logout ); ?>">
+								<i class="sui-icon-plug-disconnected" aria-hidden="true"></i> <?php esc_html_e( 'Logout', 'wpmudev' ); ?>
+							</a>
 						</li>
 					</ul>
 				</div>
@@ -77,6 +71,3 @@
 		</div>
 	</div>
 </div>
-<?php if ( $is_logged_in && $free_services_active ) : ?>
-	<?php $this->render( 'sui/popup-logout-confirmation' ); ?>
-<?php endif; ?>

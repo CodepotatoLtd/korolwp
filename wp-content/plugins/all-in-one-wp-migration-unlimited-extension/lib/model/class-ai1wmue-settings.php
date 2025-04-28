@@ -58,11 +58,7 @@ class Ai1wmue_Settings {
 	}
 
 	public function set_backups_path( $path ) {
-		if ( realpath( $path ) !== realpath( ABSPATH ) ) {
-			return update_option( AI1WM_BACKUPS_PATH_OPTION, $path );
-		}
-
-		return false;
+		return update_option( AI1WM_BACKUPS_PATH_OPTION, $path );
 	}
 
 	public function reset_backups_path() {

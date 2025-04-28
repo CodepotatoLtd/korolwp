@@ -39,8 +39,10 @@ class acfe_field_file extends acfe_field_extend{
      */
     function gettext($translated_text, $text, $domain){
         
-        if($domain === 'acf' && $text === 'No file selected'){
-            return '';
+        if($domain === 'acf'){
+            if($text === 'No file selected'){
+                return '';
+            }
         }
         
         return $translated_text;
@@ -127,15 +129,15 @@ class acfe_field_file extends acfe_field_extend{
         
         // uploader
         acf_render_field_setting($field, array(
-            'label'         => __('Uploader Type', 'acfe'),
+            'label'         => __('Uploader type'),
             'name'          => 'uploader',
             'key'           => 'uploader',
-            'instructions'  => __('Choose the uploader type', 'acfe'),
+            'instructions'  => __('Choose the uploader type'),
             'type'          => 'radio',
             'choices'       => array(
-                ''      => __('Default', 'acf'),
+                ''      => 'Default',
                 'wp'    => 'WordPress',
-                'basic' => __('Browser', 'acfe'),
+                'basic' => 'Browser',
             ),
             'default_value' => '',
             'layout'        => 'horizontal',

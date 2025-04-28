@@ -9,6 +9,7 @@ if(!class_exists('acfe_location_post_type_archive')):
 class acfe_location_post_type_archive{
     
     public $post_type = false;
+    public $post_types = array();
     
     function __construct(){
         
@@ -36,9 +37,10 @@ class acfe_location_post_type_archive{
         
         // loop
         foreach($post_types as $name => $object){
-            
-            // parent
-            $parent = $this->get_menu_parent_slug($object);
+    
+            $parent = "edit.php?post_type={$name}";
+            $parent = $name === 'post' ? 'edit.php' : $parent;         // post
+            $parent = $name === 'attachment' ? 'upload.php' : $parent; // attachment
             
             // label
             $label = __('Archive <span class="count">(%s)</span>');
@@ -46,28 +48,24 @@ class acfe_location_post_type_archive{
             
             // capability
             $capability = acf_get_setting('capability');
-            $capability = apply_filters_deprecated("acfe/post_type_archive_capability",              array($capability, $name), '0.8.9.1', "acfe/validate_post_type_archive");
-            $capability = apply_filters_deprecated("acfe/post_type_archive_capability/name={$name}", array($capability, $name), '0.8.9.1', "acfe/validate_post_type_archive/name={$name}");
-            
-            // arguments
-            $args = array(
-                'page_title'             => "{$object->label} {$label}",
-                'menu_title'             => $label,
-                'menu_slug'              => "{$name}-archive",
-                'post_id'                => "{$name}_archive",
-                'capability'             => $capability,
-                'redirect'               => false,
-                'parent_slug'            => $parent,
-                'updated_message'        => $object->label . ' Archive Saved.',
-                'acfe_post_type_archive' => $name,
-            );
-            
-            // filters
-            $args = apply_filters("acfe/validate_post_type_archive",              $args);
-            $args = apply_filters("acfe/validate_post_type_archive/name={$name}", $args);
+            $capability = apply_filters("acfe/post_type_archive_capability",                $capability, $name);
+            $capability = apply_filters("acfe/post_type_archive_capability/name={$name}",   $capability, $name);
             
             // add options page
-            acf_add_options_page($args);
+            acf_add_options_page(array(
+                'page_title'                => "{$object->label} {$label}",
+                'menu_title'                => $label,
+                'menu_slug'                 => "{$name}-archive",
+                'post_id'                   => "{$name}_archive",
+                'capability'                => $capability,
+                'redirect'                  => false,
+                'parent_slug'               => $parent,
+                'updated_message'           => $object->label . ' Archive Saved.',
+                'acfe_post_type_archive'    => true
+            ));
+            
+            // add to collection
+            $this->post_types[] = $name;
             
         }
         
@@ -79,33 +77,44 @@ class acfe_location_post_type_archive{
      */
     function current_screen(){
         
-        // global
-        global $plugin_page;
-        
-        if(empty($plugin_page)){
+        // bail early
+        if(!$this->post_types){
             return;
         }
         
-        // get options pages
-        $options_pages = acf_get_options_pages();
-        
-        if(!empty($options_pages) && isset($options_pages[ $plugin_page ]) && isset($options_pages[ $plugin_page ]['acfe_post_type_archive'])){
+        // loop post types archives
+        foreach($this->post_types as $post_type){
+    
+            $base = $post_type;
+            $base = $post_type === 'post' ? 'posts' : $base;       // post
+            $base = $post_type === 'page' ? 'pages' : $base;       // page
+            $base = $post_type === 'attachment' ? 'media' : $base; // attachment
             
-            // assign global post type for later hooks
-            $this->post_type = $options_pages[ $plugin_page ]['acfe_post_type_archive'];
-    
-            // location screen
-            add_filter('acf/location/screen', array($this, 'location_screen'));
-    
-            // get object
-            $post_type_obj = get_post_type_object($this->post_type);
-    
-            if(acfe_maybe_get($post_type_obj, 'has_archive') || $post_type_obj->name === 'post'){
-        
-                // add permalink under title
-                add_action('admin_footer', array($this, 'admin_footer'));
-        
+            if(!acf_is_screen("{$base}_page_{$post_type}-archive")){
+                continue;
             }
+            
+            // assign post type
+            $this->post_type = $post_type;
+            break;
+        
+        }
+        
+        // check exists
+        if(!$this->post_type){
+            return;
+        }
+        
+        // location screen
+        add_filter('acf/location/screen', array($this, 'location_screen'));
+        
+        // get object
+        $post_type_obj = get_post_type_object($this->post_type);
+    
+        if(acfe_maybe_get($post_type_obj, 'has_archive')){
+            
+            // add permalink under title
+            add_action('admin_footer', array($this, 'admin_footer'));
             
         }
         
@@ -123,7 +132,7 @@ class acfe_location_post_type_archive{
      */
     function location_screen($screen){
         
-        $screen['acfe_post_type_archive'] = true;
+        $screen['acfe_dpt_admin_page'] = true;
         return $screen;
         
     }
@@ -159,30 +168,12 @@ class acfe_location_post_type_archive{
     function admin_bar_menu($wp_admin_bar){
         
         // bail early
-        if(is_admin()){
+        if(is_admin() || !is_post_type_archive()){
             return;
         }
         
-        // validate front archive page
-        // is_home() is for post type: post
-        if(!is_post_type_archive() && !is_home()){
-            return;
-        }
-        
-        // try get_post_type()
-        $post_type = get_post_type();
-    
-        if(!$post_type){
-        
-            // try get_queried_object()
-            $object = get_queried_object();
-        
-            if(is_a($object, 'WP_Post_Type')){
-                $post_type = $object->name;
-            }
-        
-        }
-        
+        // get post type
+        $post_type = get_query_var('post_type');
         if(!$post_type){
             return;
         }
@@ -191,56 +182,28 @@ class acfe_location_post_type_archive{
         $object = get_post_type_object($post_type);
         
         // check has archive
-        $has_archive = acfe_maybe_get($object, 'has_archive') || $object->name === 'post';
+        $has_archive = acfe_maybe_get($object, 'has_archive');
         $has_archive_page = acfe_maybe_get($object, 'acfe_admin_archive');
         
         if(!$has_archive || !$has_archive_page){
             return;
         }
-        
-        // get options pages
-        $options_pages = acf_get_options_pages();
-        
-        if(empty($options_pages)){
-            return;
-        }
     
-        $options_page = false;
+        // check capability
+        $capability = acf_get_setting('capability');
+        $capability = apply_filters("acfe/post_type_archive_capability",                    $capability, $post_type);
+        $capability = apply_filters("acfe/post_type_archive_capability/name={$post_type}",  $capability, $post_type);
         
-        // loop options pages
-        foreach($options_pages as $page){
+        if(current_user_can($capability)){
             
-            // validate page
-            if(acfe_maybe_get($page, 'acfe_post_type_archive') === $post_type){
-                $options_page = $page;
-                break;
-                
-            }
-            
-        }
-        
-        if($options_page){
-    
-            // get capability
-            $capability = $options_page['capability'];
-    
-            // check capability
-            if(current_user_can($capability)){
-        
-                // parent
-                $parent = $this->get_menu_parent_slug($object);
-        
-                // add menu item
-                $wp_admin_bar->add_node(array(
-                    'id'     => 'edit',
-                    'title'  => __('Edit') . ' ' . $object->label . ' ' . __('Archive'),
-                    'parent' => false,
-                    'href'   => add_query_arg(array('page' => "{$object->name}-archive"), admin_url($parent)),
-                    'meta'   => array('class' => 'ab-item')
-                ));
-        
-            }
-            
+            // add menu item
+            $wp_admin_bar->add_node(array(
+                'id'        => 'edit',
+                'title'     => 'Edit ' . $object->label . ' ' . __('Archive'),
+                'parent'    => false,
+                'href'      => add_query_arg(array('post_type' => $object->name, 'page' => $object->name . '-archive'), admin_url('edit.php')),
+                'meta'      => array('class' => 'ab-item')
+            ));
             
         }
         
@@ -338,11 +301,11 @@ class acfe_location_post_type_archive{
      */
     function location_match($match, $rule, $screen){
         
-        if(!acf_maybe_get($screen, 'options_page') || !acf_maybe_get($screen, 'acfe_post_type_archive') || !acf_maybe_get($rule, 'value')){
+        if(!acf_maybe_get($screen, 'options_page') || !acf_maybe_get($screen, 'acfe_dpt_admin_page') || !acf_maybe_get($rule, 'value')){
             return $match;
         }
         
-        $match = $screen['options_page'] === "{$rule['value']}-archive";
+        $match = ($screen['options_page'] === $rule['value'] . '-archive');
         
         if($rule['value'] === 'all'){
             $match = true;
@@ -354,32 +317,6 @@ class acfe_location_post_type_archive{
         
         return $match;
 
-    }
-    
-    
-    /**
-     * get_menu_parent_slug
-     *
-     * @param $object
-     *
-     * @return string
-     */
-    function get_menu_parent_slug($object){
-        
-        $name = $object->name;
-        
-        // parent
-        $parent = "edit.php?post_type={$name}";
-        $parent = $name === 'post' ? 'edit.php' : $parent;         // post
-        $parent = $name === 'attachment' ? 'upload.php' : $parent; // attachment
-        
-        // allow post type custom 'show_in_menu' like 'options-general.php'
-        if(!empty($object->show_in_menu) && is_string($object->show_in_menu)){
-            $parent = $object->show_in_menu;
-        }
-        
-        return $parent;
-        
     }
     
 }

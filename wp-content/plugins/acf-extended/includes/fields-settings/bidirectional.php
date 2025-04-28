@@ -8,35 +8,29 @@ if(!class_exists('acfe_bidirectional')):
 
 class acfe_bidirectional{
     
-    // vars
     var $allowed_types = array('relationship', 'post_object', 'user', 'taxonomy');
     
-    /**
-     * construct
-     */
     function __construct(){
         
         foreach($this->allowed_types as $allowed_type){
     
-            add_action("acf/render_field_settings/type={$allowed_type}",      array($this, 'field_settings_render'));
-            add_filter("acf/update_field/type={$allowed_type}",               array($this, 'field_settings_update'));
-            add_action("acf/delete_field/type={$allowed_type}",               array($this, 'field_settings_delete'));
-            add_filter("acf/update_value/type={$allowed_type}",               array($this, 'update_value'), 11, 3);
+            add_action("acf/render_field_settings/type={$allowed_type}",       array($this, 'field_settings_render'));
+            add_filter("acf/update_field/type={$allowed_type}",                array($this, 'field_settings_update'));
+            add_action("acf/delete_field/type={$allowed_type}",                array($this, 'field_settings_delete'));
+    
+            add_filter("acf/update_value/type={$allowed_type}",                array($this, 'update_value'), 11, 3);
             
         }
     
-        add_action('wp_ajax_acfe/fields_settings/bidirectional/query',        array($this, 'ajax_query'));
-        add_action('wp_ajax_nopriv_acfe/fields_settings/bidirectional/query', array($this, 'ajax_query'));
+        add_action('wp_ajax_acfe/fields_settings/bidirectional/query',          array($this, 'ajax_query'));
+        add_action('wp_ajax_nopriv_acfe/fields_settings/bidirectional/query',   array($this, 'ajax_query'));
         
-        add_filter('acf/prepare_field/name=acfe_bidirectional_related',       array($this, 'field_settings_default_value'));
+        add_filter('acf/prepare_field/name=acfe_bidirectional_related',         array($this, 'field_settings_default_value'));
         
     }
     
-    
-    /**
-     * field_settings_render
-     *
-     * @param $field
+    /*
+     * Field Settings
      */
     function field_settings_render($field){
         
@@ -111,9 +105,8 @@ class acfe_bidirectional{
         
     }
     
-    
-    /**
-     * ajax_query
+    /*
+     * Field Settings: Ajax Query
      */
     function ajax_query(){
     
@@ -135,46 +128,39 @@ class acfe_bidirectional{
     
     }
     
-    
-    /**
-     * ajax_results
-     *
-     * @param $options
-     *
-     * @return array[]|false
+    /*
+     * Field Settings: Ajax Results
      */
     function ajax_results($options = array()){
         
-        // disable Filters
+        // Disable Filters
         acf_disable_filters();
     
-        // get field groups
+        // Get field groups
         $r_field_groups = acf_get_field_groups();
         
         if(empty($r_field_groups)){
             return false;
         }
     
-        // vars
+        // Vars
         $hidden = acfe_get_setting('reserved_field_groups', array());
         $choices = array();
         
         foreach($r_field_groups as $r_field_group){
         
-            // bypass ACFE native groups
-            if(in_array($r_field_group['key'], $hidden)){
-                continue;
-            }
+            // Bypass ACFE native groups
+            if(in_array($r_field_group['key'], $hidden)) continue;
         
-            // get related fields
+            // Get related fields
             $r_fields = acf_get_fields($r_field_group['key']);
-            if(empty($r_fields)){
-                continue;
-            }
+            if(empty($r_fields)) continue;
         
-            // filter & find possible related fields
+            // Filter & find possible related fields
             foreach($r_fields as $r_field){
+            
                 $this->get_related_settings($r_field, $r_field_group, $choices);
+            
             }
         
         }
@@ -230,27 +216,20 @@ class acfe_bidirectional{
         
     }
     
-    /**
-     * get_related_settings
-     *
-     * @param $r_field
-     * @param $r_field_group
-     * @param $choices
-     *
-     * @return false|void
+    /*
+     * Field Setting: Get Related Settings
      */
     function get_related_settings($r_field, $r_field_group, &$choices){
     
-        if(in_array($r_field['type'], array('repeater', 'flexible_content'))){
+        if(in_array($r_field['type'], array('repeater', 'flexible_content')))
             return;
-        }
     
-        // recursive search for sub_fields (groups & clones)
+        // Recursive search for sub_fields (groups & clones)
         if(isset($r_field['sub_fields']) && !empty($r_field['sub_fields'])){
         
             foreach($r_field['sub_fields'] as $r_sub_field){
             
-                // recursive call
+                // Recursive call
                 $this->get_related_settings($r_sub_field, $r_field_group, $choices);
             
             }
@@ -259,28 +238,22 @@ class acfe_bidirectional{
         
         }
     
-        // allow only specific fields
+        // Allow only specific fields
         if(!in_array($r_field['type'], $this->allowed_types)){
             return false;
         }
     
-        $choices[ $r_field_group['title'] ][ $r_field['key'] ] = (!empty($r_field['label']) ? $r_field['label'] : $r_field['name']) . ' (' . $r_field['key'] . ')';
+        $choices[$r_field_group['title']][$r_field['key']] = (!empty($r_field['label']) ? $r_field['label'] : $r_field['name']) . ' (' . $r_field['key'] . ')';
         
     }
     
-    
-    /**
-     * field_settings_default_value
-     *
-     * @param $field
-     *
-     * @return mixed
+    /*
+     * Field Setting: Default Value
      */
     function field_settings_default_value($field){
         
-        if(!isset($field['value']) || empty($field['value'])){
+        if(!isset($field['value']) || empty($field['value']))
             return $field;
-        }
         
         $values = acf_get_array($field['value']);
         $r_fields = array();
@@ -291,11 +264,14 @@ class acfe_bidirectional{
             $r_field = acf_get_field($value);
             
             if($r_field){
+                
                 $r_fields[] = $r_field;
                 
             }else{
                 
+                // Unset
                 unset($values[$i]);
+                
                 $r_field_update = true;
                 
             }
@@ -305,25 +281,23 @@ class acfe_bidirectional{
         if($r_field_update){
             
             $field['value'] = $values;
+            
             acf_update_field($field);
             
         }
         
         foreach($r_fields as $r_field){
-            $field['choices'][ $r_field['key'] ] = (!empty($r_field['label']) ? $r_field['label'] : $r_field['name']) . ' (' . $r_field['key'] . ')';
+            
+            $field['choices'][$r_field['key']] = (!empty($r_field['label']) ? $r_field['label'] : $r_field['name']) . ' (' . $r_field['key'] . ')';
+            
         }
         
         return $field;
         
     }
     
-    
-    /**
-     * field_settings_update
-     *
-     * @param $field
-     *
-     * @return mixed
+    /*
+     * Field Setting Update
      */
     function field_settings_update($field){
         
@@ -332,22 +306,20 @@ class acfe_bidirectional{
             return $field;
         }
         
-        // previous setting values
+        // Previous setting values
         $_field = acf_get_field($field['key']);
         
-        // turning off - Remove related field
+        // Turning off - Remove related field
         if($this->has_field_bidirectional($_field) && !$this->has_field_bidirectional($field)){
             
-            // get related bidirectional related
+            // Get related bidirectional related
             $r_fields = acf_get_array($_field['acfe_bidirectional']['acfe_bidirectional_related']);
             
             foreach($r_fields as $r_field_key){
                 
                 $r_field = acf_get_field($r_field_key);
                 
-                if(!$this->has_field_bidirectional($r_field)){
-                    continue;
-                }
+                if(!$this->has_field_bidirectional($r_field)) continue;
                 
                 $r_field_related = acf_get_array($r_field['acfe_bidirectional']['acfe_bidirectional_related']);
                 
@@ -355,9 +327,7 @@ class acfe_bidirectional{
                     
                     foreach($r_field_related as $i => $r_field_r){
                         
-                        if($r_field_r !== $field['key']){
-                            continue;
-                        }
+                        if($r_field_r !== $field['key']) continue;
                         
                         unset($r_field_related[$i]);
                         
@@ -389,17 +359,17 @@ class acfe_bidirectional{
             
         }
         
-        // turning on (or already on) - add related field
+        // Turning on (or already on) - Add related field
         elseif(($this->has_field_bidirectional($_field) && $this->has_field_bidirectional($field)) || (!$this->has_field_bidirectional($_field) && $this->has_field_bidirectional($field))){
             
-            // get related bidirectional related
+            // Get related bidirectional related
             $r_fields = acf_get_array($field['acfe_bidirectional']['acfe_bidirectional_related']);
             
             foreach($r_fields as $r_field_key){
                 
                 $r_field = acf_get_field($r_field_key);
                 
-                // reset related bidirectional related
+                // Reset related bidirectional related
                 $r_field['acfe_bidirectional']['acfe_bidirectional_enabled'] = true;
     
                 $r_field_related = array();
@@ -418,10 +388,10 @@ class acfe_bidirectional{
                 
                 acf_enable_filter('acfe/bidirectional_setting');
                 
-                    // update related bidirectional
+                    // Update related bidirectional
                     acf_update_field($r_field);
         
-                    // update field group (json/php sync)
+                    // Update field group (json/php sync)
                     $field_group = acfe_get_field_group_from_field($r_field);
                     acf_update_field_group($field_group);
                 
@@ -431,33 +401,24 @@ class acfe_bidirectional{
             
         }
         
-        // return
+        // Return
         return $field;
         
     }
     
-    
-    /**
-     * field_settings_delete
-     *
-     * @param $field
+    /*
+     * Field Setting: Delete
      */
     function field_settings_delete($field){
         
-        if(!$this->has_field_bidirectional($field)){
-            return;
-        }
+        if(!$this->has_field_bidirectional($field)) return;
         
-        // get related bidirectional related
+        // Get related bidirectional related
         $r_fields = acf_get_array($field['acfe_bidirectional']['acfe_bidirectional_related']);
         
         foreach($r_fields as $r_field_key){
             
             $r_field = acf_get_field($r_field_key);
-    
-            if(!$r_field){
-                continue;
-            }
             
             $r_field_related = acf_get_array($r_field['acfe_bidirectional']['acfe_bidirectional_related']);
             
@@ -465,9 +426,7 @@ class acfe_bidirectional{
                 
                 foreach($r_field_related as $i => $r_field_r){
                     
-                    if($r_field_r !== $field['key']){
-                        continue;
-                    }
+                    if($r_field_r !== $field['key']) continue;
                     
                     unset($r_field_related[$i]);
                     
@@ -482,10 +441,10 @@ class acfe_bidirectional{
                     
                 }
                 
-                // update related bidirectional
+                // Update related bidirectional
                 acf_update_field($r_field);
     
-                // update field group (json/php sync)
+                // Update field group (json/php sync)
                 $field_group = acfe_get_field_group_from_field($r_field);
                 acf_update_field_group($field_group);
                 
@@ -495,56 +454,42 @@ class acfe_bidirectional{
         
     }
     
-    
-    /**
-     * update_value
-     *
-     * @param $value
-     * @param $post_id
-     * @param $field
-     *
-     * @return mixed
+    /*
+     * Update Value
      */
     function update_value($value, $post_id, $field){
         
-        // bail early if updating a relation
+        // Bail early if updating a relation
         if(acf_is_filter_enabled('acfe/bidirectional')){
             return $value;
         }
         
-        // bail early if no bidirectional setting
+        // Bail early if no bidirectional setting
         if(!$this->get_field_bidirectional($field)){
             return $value;
         }
     
-        // bail early if local meta
+        // Bail early if local meta
         if(acfe_is_local_post_id($post_id)){
             return $value;
         }
-    
-        // bail early if previewing a post
-        if(acf_maybe_get_POST('wp-preview') === 'dopreview'){
-            return $value;
-        }
         
-        // decode current post_id (ie: user_1)
+        // Decode current post_id (ie: user_1)
         $request = acf_decode_post_id($post_id);
         
-        // values
+        // Values
         $old_values = acf_get_array(acf_get_metadata($post_id, $field['name']));
         $new_values = acf_get_array($value);
         
-        // bail early if no difference
+        // Bail early if no difference
         // if($old_values === $new_values)
         //    return $value;
         
-        // values have been removed
+        // Values have been removed
         if(!empty($old_values)){
             foreach($old_values as $r_id){
                 
-                if(in_array($r_id, $new_values)){
-                    continue;
-                }
+                if(in_array($r_id, $new_values)) continue;
     
                 $this->relationship('remove', $r_id, $field, $request['id']);
                 
@@ -555,9 +500,7 @@ class acfe_bidirectional{
         if(!empty($new_values)){
             foreach($new_values as $r_id){
                 
-                if(in_array($r_id, $old_values)){
-                    continue;
-                }
+                if(in_array($r_id, $old_values)) continue;
     
                 $this->relationship('add', $r_id, $field, $request['id']);
                 
@@ -572,7 +515,7 @@ class acfe_bidirectional{
         
         if($force_update){
             
-            // force new values to be saved
+            // Force new values to be saved
             if(!empty($new_values)){
                 foreach($new_values as $r_id){
                     
@@ -587,30 +530,27 @@ class acfe_bidirectional{
         
     }
     
-    
     /**
-     * relationship
+     * Establish Relationship
      *
-     * establish relationship
-     *
-     * @param $type    = add|remove
-     * @param $r_id    = the post_id to add the relationship to
-     * @param $p_field = the parent field
-     * @param $p_value = the relationship to add
+     * $type: add|remove
+     * $r_id: the post_id to add the relationship to
+     * $p_field: the parent field
+     * $p_id: the relationship to add
      */
     function relationship($type, $r_id, $p_field, $p_value){
         
-        // get Related Field Configuration
+        // Get Related Field Configuration
         $r_fields = acf_get_array($p_field['acfe_bidirectional']['acfe_bidirectional_related']);
         
         foreach($r_fields as $r_field_key){
             
             $r_field = acf_get_field($r_field_key);
             
-            // get if bidirectional is active
+            // Get if bidirectional is active
             if(!$this->get_field_bidirectional($r_field)) continue;
             
-            // get Related Data Type ({post_id}, user_{id} ...)
+            // Get Related Data Type ({post_id}, user_{id} ...)
             $r_mtype = '';
             if($p_field['type'] === 'user'){
                 $r_mtype = 'user_';
@@ -618,58 +558,58 @@ class acfe_bidirectional{
                 $r_mtype = 'term_';
             }
             
-            // get Related Field Ancestors
+            // Get Related Field Ancestors
             $r_field_ancestors = acf_get_field_ancestors($r_field);
             
-            // ancestors - complex field (group|clone)
+            // Ancestors - Complexe field (group|clone)
             if(!empty($r_field_ancestors)){
                 
-                // get ancestors
+                // Get ancestors
                 $r_field_ancestors = array_reverse($r_field_ancestors);
                 $r_field_ancestors_fields = array_map('acf_get_field', $r_field_ancestors);
                 
-                // get top ancestor
+                // Get top ancestor
                 $r_ref_field = $r_field_ancestors_fields[0];
                 $r_ref_values = acf_get_array(acf_get_value($r_mtype.$r_id, $r_ref_field));
                 
-                // get values
+                // Get values
                 $r_values = acf_get_array($this->get_value_from_ancestor($r_ref_values, $r_field));
                 
-                // unset top ancestor for update (not needed)
+                // Unset top ancestor for update (not needed)
                 unset($r_field_ancestors_fields[0]);
                 
-                // add related field to get
+                // Add related field to get
                 $r_values_query = array($r_field['key']);
                 
-                // if > 1 ancestors, return ancestors keys only
+                // If > 1 ancestors, return ancestors keys only
                 if(!empty($r_field_ancestors_fields)){
                     
                     $r_field_ancestors_keys = array_map(function($field){
                         return $field['key'];
                     }, $r_field_ancestors_fields);
                     
-                    // add ancestors to get
+                    // Add ancestors to get
                     $r_values_query = array_merge($r_field_ancestors_keys, $r_values_query);
                     
                 }
                 
             }
             
-            // no Ancestors - simple field
+            // No Ancestors - Simple field
             else{
                 
-                // reference field
+                // Refence field
                 $r_ref_field = $r_field;
                 
-                // values
+                // Values
                 $r_values = acf_get_array(acf_get_value($r_mtype.$r_id, $r_field));
                 
             }
             
-            // convert strings to integers
+            // Convert strings to integers
             $r_values = acf_parse_types($r_values);
             
-            // add Value
+            // Add Value
             if($type === 'add'){
                 
                 if(!in_array($p_value, $r_values)){
@@ -678,7 +618,7 @@ class acfe_bidirectional{
                 
             }
             
-            // remove Value
+            // Remove Value
             elseif($type === 'remove'){
                 
                 $r_new_values = array();
@@ -694,9 +634,9 @@ class acfe_bidirectional{
                 
             }
             
-            /**
-             * post object & user 'allow multiple' disabled
-             * value must not be inside array
+            /*
+             * Post Object & User 'Allow Multiple' Disabled
+             * Value must not be inside array
              */
             if(($r_ref_field['type'] === 'post_object' || $r_ref_field['type'] === 'user') && empty($r_ref_field['multiple']) && isset($r_values[0])){
                 
@@ -705,14 +645,14 @@ class acfe_bidirectional{
                 
             }
             
-            // remove potential empty serialized array in meta value 'a:0:{}'
-            if(empty($r_values)){
+            /*
+             * Remove potential empty serialized array in meta value 'a:0:{}'
+             */
+            if(empty($r_values))
                 $r_values = false;
-            }
             
-            /**
-             * construct a value array in case of ancestors. ie:
-             *
+            /*
+             * Construct a value array in case of ancestors. ie:
              * $related_values = Array(
              *     [field_aaa] => Array(
              *         [field_bbb] => Array(
@@ -729,28 +669,19 @@ class acfe_bidirectional{
                 
             }
             
-            // filter acf_update_value (to avoid infinite loop)
+            // Filter acf_update_value (to avoid infinite loop)
             acf_enable_filter('acfe/bidirectional');
             
-                // update Related Field
+                // Update Related Field
                 acf_update_value($r_values, $r_mtype.$r_id, $r_ref_field);
             
-            // remove acf_update_value filter
+            // Remove acf_update_value filter
             acf_disable_filter('acfe/bidirectional');
             
         }
         
     }
     
-    
-    /**
-     * get_value_from_ancestor
-     *
-     * @param $r_ref_values
-     * @param $r_field
-     *
-     * @return false|mixed|void
-     */
     function get_value_from_ancestor($r_ref_values, $r_field){
         
         foreach($r_ref_values as $r_ref_key => $r_ref_value){
@@ -771,38 +702,14 @@ class acfe_bidirectional{
         
     }
     
-    
-    /**
-     * is_field_bidirectional
-     *
-     * @param $field
-     *
-     * @return bool
-     */
     function is_field_bidirectional($field){
         return isset($field['acfe_bidirectional']['acfe_bidirectional_enabled']) && !empty($field['acfe_bidirectional']['acfe_bidirectional_enabled']);
     }
     
-    
-    /**
-     * has_field_bidirectional
-     *
-     * @param $field
-     *
-     * @return bool
-     */
     function has_field_bidirectional($field){
         return isset($field['acfe_bidirectional']['acfe_bidirectional_related']) && !empty($field['acfe_bidirectional']['acfe_bidirectional_related']);
     }
     
-    
-    /**
-     * get_field_bidirectional
-     *
-     * @param $field
-     *
-     * @return false|mixed
-     */
     function get_field_bidirectional($field){
         
         if(!$this->is_field_bidirectional($field) || !$this->has_field_bidirectional($field)){

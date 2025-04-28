@@ -2,6 +2,7 @@ jQuery(document).ready(function($)
 {
 	 		$('.emr-installer').on('click', function(e){
 	 			e.preventDefault();
+	 		//	var $this = $(this);
 	 			var button = $(this);
 				var plugin = button.data('plugin');
 				var nonce = $('#upsell-nonce').val();

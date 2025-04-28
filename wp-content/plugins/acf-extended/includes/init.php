@@ -15,6 +15,7 @@ function acfe_has_acf(){
     return class_exists('ACF') && defined('ACF_PRO') && defined('ACF_VERSION') && version_compare(ACF_VERSION, '5.8', '>=');
 }
 
+
 /**
  * acfe_is_acf_admin_6
  *
@@ -25,34 +26,18 @@ function acfe_is_acf_6(){
 }
 
 /**
- * acfe_is_acf_admin_61
- *
- * @return bool
- */
-function acfe_is_acf_61(){
-    return acf_version_compare(acf_get_setting('version'),  '>=', '6.1');
-}
-
-/**
  * acfe_include
  *
  * Includes a file within the plugin
  *
- * @param $filename
- * @param $once
- *
- * @return false|mixed
+ * @param string $filename
  */
-function acfe_include($filename = '', $once = true){
+function acfe_include($filename = ''){
     
-    $file_path = acfe_get_path($filename);
+    $file_path = ACFE_PATH . ltrim($filename, '/');
     
     if(file_exists($file_path)){
-        if($once){
-            return include_once($file_path);
-        }else{
-            return include($file_path);
-        }
+        return include_once($file_path);
     }
     
     return false;
@@ -157,23 +142,30 @@ function acfe_after_plugin_row($plugin_file, $plugin_data, $status){
         return;
     }
     
-    // vars
+    // get wp version
     $colspan = version_compare($GLOBALS['wp_version'], '5.5', '<') ? 3 : 4;
-    
-    // class
-    $class = 'acfe-plugin-tr';
-    if(isset($plugin_data['update']) && !empty($plugin_data['update'])){
-        $class .= ' acfe-plugin-tr-update';
-    }
     
     ?>
     <style>
-        .plugins tr[data-plugin='<?php echo $plugin_file; ?>'] th,
-        .plugins tr[data-plugin='<?php echo $plugin_file; ?>'] td{
+        .plugins tr[data-plugin='<?php echo ACFE_BASENAME; ?>'] th,
+        .plugins tr[data-plugin='<?php echo ACFE_BASENAME; ?>'] td{
             box-shadow:none;
         }
+        
+        <?php if(isset($plugin_data['update']) && !empty($plugin_data['update'])){ ?>
+
+        .plugins tr.acfe-plugin-tr td{
+            box-shadow:none !important;
+        }
+
+        .plugins tr.acfe-plugin-tr .update-message{
+            margin-bottom:0;
+        }
+        
+        <?php } ?>
     </style>
-    <tr class="plugin-update-tr active <?php echo $class; ?>">
+    
+    <tr class="plugin-update-tr active acfe-plugin-tr">
         <td colspan="<?php echo $colspan; ?>" class="plugin-update colspanchange">
             <div class="update-message notice inline notice-error notice-alt">
                 <p><?php _e('ACF Extended requires <a href="https://www.advancedcustomfields.com/pro/" target="_blank">Advanced Custom Fields PRO</a> (minimum: 5.8).', 'acfe'); ?></p>

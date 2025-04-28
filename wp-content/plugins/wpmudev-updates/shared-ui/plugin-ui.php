@@ -15,7 +15,7 @@ if ( ! class_exists( 'WDEV_Plugin_Ui' ) ) {
 		/**
 		 * Current module version.
 		 */
-		const VERSION = '1.0.1';
+		const VERSION = '1.0';
 
 		/**
 		 * Internal translation container.
@@ -310,10 +310,5 @@ if ( ! class_exists( 'WDEV_Plugin_Ui' ) ) {
 	};
 
 	// Initialize the UI.
-	add_action(
-		'init',
-		function () {
-			WDEV_Plugin_Ui::reset();
-		}
-	);
+	WDEV_Plugin_Ui::reset();
 }

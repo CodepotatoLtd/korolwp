@@ -4,18 +4,14 @@ if(!defined('ABSPATH')){
     exit;
 }
 
-// check setting
-if(acfe_get_setting('modules/field_group_ui')){
+// Check setting
+if(acfe_get_setting('modules/field_group_ui'))
     return;
-}
 
 if(!class_exists('acfe_field_group_meta')):
 
 class acfe_field_group_meta{
-    
-    /**
-     * construct
-     */
+ 
     function __construct(){
         
         add_action('acf/field_group/admin_head', array($this, 'admin_head'));
@@ -23,9 +19,8 @@ class acfe_field_group_meta{
         
     }
     
-    
     /**
-     * admin_head
+     * Admin Head
      */
     function admin_head(){
         
@@ -35,15 +30,14 @@ class acfe_field_group_meta{
         
     }
     
-    
-    /**
-     * render_metabox
+    /*
+     * Render Metabox
      */
     function render_metabox(){
         
         global $field_group;
         
-        // meta
+        // Meta
         acf_render_field_wrap(array(
             'label'         => __('Custom meta data'),
             'name'          => 'acfe_meta',
@@ -96,7 +90,7 @@ class acfe_field_group_meta{
             )
         ));
     
-        // note
+        // Note
         acf_render_field_wrap(array(
             'label'         => __('Note'),
             'name'          => 'acfe_note',
@@ -110,7 +104,7 @@ class acfe_field_group_meta{
             ),
         ));
         
-        // data
+        // Data
         acf_render_field_wrap(array(
             'label'         => __('Field group data'),
             'instructions'  => __('View raw field group data, for development use'),
@@ -132,32 +126,25 @@ class acfe_field_group_meta{
         <?php
     }
     
-    
-    /**
-     * render_data
-     *
-     * @param $field
+    /*
+     * Render: Data button
      */
     function render_data($field){
         
-        // get field group
         $field_group = acf_get_field_group($field['value']);
         
         if(!$field_group){
+            
             echo '<a href="#" class="button disabled" disabled>' . __('Data') . '</a>';
             return;
+            
         }
         
-        // esc field group
-        $field_group = @map_deep($field_group, 'esc_html');
-        
-        // get raw field group
         $raw_field_group = get_post($field_group['ID']);
-        $raw_field_group = @map_deep($raw_field_group, 'esc_html');
         
         ?>
-        <a href="#" class="acf-button button" data-modal><?php _e('Data', 'acfe'); ?></a>
-        <div class="acfe-modal" data-title="<?php echo $field_group['title']; ?>" data-footer="<?php _e('Close', 'acfe'); ?>">
+        <a href="#" class="acf-button button" data-acfe-modal data-acfe-modal-title="<?php echo $field_group['title']; ?>" data-acfe-modal-footer="<?php _e('Close', 'acfe'); ?>"><?php _e('Data', 'acfe'); ?></a>
+        <div class="acfe-modal">
             <div class="acfe-modal-spacer">
                 <pre style="margin-bottom:15px;"><?php print_r($field_group); ?></pre>
                 <pre><?php print_r($raw_field_group); ?></pre>
@@ -167,9 +154,8 @@ class acfe_field_group_meta{
         
     }
     
-    
-    /**
-     * prepare_meta
+    /*
+     * Prepare Meta
      */
     function prepare_meta(){
         

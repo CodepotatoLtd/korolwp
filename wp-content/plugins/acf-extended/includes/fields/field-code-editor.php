@@ -24,15 +24,15 @@ class acfe_field_code_editor extends acf_field{
         $this->label = __('Code Editor', 'acfe');
         $this->category = 'content';
         $this->defaults = array(
-            'default_value'   => '',
-            'placeholder'     => '',
-            'mode'            => 'text/html',
-            'lines'           => true,
-            'indent_unit'     => 4,
-            'maxlength'       => '',
-            'rows'            => 4,
-            'max_rows'        => '',
-            'return_format'   => array(),
+            'default_value' => '',
+            'placeholder'   => '',
+            'mode'          => 'text/html',
+            'lines'         => true,
+            'indent_unit'   => 4,
+            'maxlength'     => '',
+            'rows'          => 4,
+            'max_rows'      => '',
+            'return_entities' => false
         );
         
         $this->textarea = acf_get_field_type('textarea');
@@ -125,34 +125,14 @@ class acfe_field_code_editor extends acf_field{
             'placeholder'   => ''
         ));
     
-        // return format
+        // return entities
         acf_render_field_setting($field, array(
-            'label'         => __('Return Value', 'acf'),
-            'instructions'  => '',
-            'type'          => 'checkbox',
-            'name'          => 'return_format',
-            'layout'        => 'horizontal',
-            'choices'       => array(
-                'htmlentities' => __("HTML Entities", 'acfe'),
-                'nl2br'        => __("New Lines to &lt;br&gt;", 'acfe'),
-            ),
+            'label'         => __('Return HTML Entities', 'acf'),
+            'instructions'  => 'Whether to return the value as HTML entities',
+            'type'          => 'true_false',
+            'name'          => 'return_entities',
+            'ui'            => true,
         ));
-        
-    }
-    
-    
-    /**
-     * update_field
-     *
-     * @param $field
-     *
-     * @return mixed
-     */
-    function update_field($field){
-        
-        $field['return_format'] = acf_get_array($field['return_format']);
-        
-        return $field;
         
     }
     
@@ -197,7 +177,7 @@ class acfe_field_code_editor extends acf_field{
         );
         
         ?>
-        <div <?php echo acf_esc_atts($wrapper); ?>>
+        <div <?php echo acf_esc_attrs($wrapper); ?>>
             <?php $this->textarea->render_field($field); ?>
         </div>
         <?php
@@ -231,20 +211,10 @@ class acfe_field_code_editor extends acf_field{
      */
     function format_value($value, $post_id, $field){
         
-        // force array
-        $field['return_format'] = acf_get_array($field['return_format']);
-        
-        // htmlentities
-        if(in_array('htmlentities', $field['return_format'])){
-            $value = htmlentities($value);
+        if($field['return_entities']){
+            return htmlentities($value);
         }
         
-        // nl2br
-        if(in_array('nl2br', $field['return_format'])){
-            $value = nl2br($value);
-        }
-        
-        // return
         return $value;
         
     }

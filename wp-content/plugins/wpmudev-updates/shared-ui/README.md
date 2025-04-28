@@ -1,9 +1,5 @@
 # README #
 
-## End of life ##
-New development moved to https://github.com/wpmudev/shared-ui
-We will slowly move to new shared ui. Don't use this one in new projects.
-
 
 ## Modification
 

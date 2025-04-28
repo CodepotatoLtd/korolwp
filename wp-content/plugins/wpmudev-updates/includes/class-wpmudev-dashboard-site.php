@@ -1094,7 +1094,6 @@ class WPMUDEV_Dashboard_Site {
 		}
 		WPMUDEV_Dashboard::$settings->reset();
 		WPMUDEV_Dashboard::$api->set_key( '' );
-		WPMUDEV_Dashboard::$settings->set( 'connected_admin', 0, 'general' );
 		WPMUDEV_Dashboard::$api->hub_sync( false, true ); // force a sync so that site is removed from user's hub.
 
 		if ( $redirect ) {
@@ -1227,13 +1226,11 @@ class WPMUDEV_Dashboard_Site {
 				'can_autoupdate'      => false, // If plugin should auto-update?
 				'is_compatible'       => true, // Site has all requirements to install project?
 				'incompatible_reason' => '', // If is_compatible is false.
-				'requires_min_php'    => WPMUDEV_Dashboard::$upgrader->min_php, // Minimum PHP version required.
 				'need_upfront'        => false, // Only used by themes.
 				'is_installed'        => false, // Installed on current site?
 				'is_active'           => false, // WordPress state, i.e. plugin activated?
 				'is_hidden'           => false, // Projects can be hidden via API.
 				'is_licensed'         => false, // User has license to use this project?
-				'is_plugin_addon'     => false,
 				'default_order'       => 0,
 				'downloads'           => 0,
 				'popularity'          => 0,
@@ -1275,19 +1272,17 @@ class WPMUDEV_Dashboard_Site {
 			$system_projects = WPMUDEV_Dashboard::$site->get_system_projects();
 
 			// General details.
-			$res->type             = ( 'theme' === $remote['type'] ? 'theme' : 'plugin' );
-			$res->name             = $remote['name'];
-			$res->info             = strip_tags( $remote['short_description'] );
-			$res->description      = isset( $remote['long_description'] ) ? $remote['long_description'] : '';
-			$res->version_latest   = $remote['version'];
-			$res->features         = $remote['features'];
-			$res->default_order    = isset( $remote['_order'] ) ? intval( $remote['_order'] ) : 0;
-			$res->downloads        = intval( $remote['downloads'] );
-			$res->popularity       = intval( $remote['popularity'] );
-			$res->release_stamp    = intval( $remote['released'] );
-			$res->update_stamp     = intval( $remote['updated'] );
-			$res->requires_min_php = empty( $remote['requires_min_php'] ) ? WPMUDEV_Dashboard::$upgrader->min_php : $remote['requires_min_php'];
-			$res->is_plugin_addon  = $remote['is_plugin_addon'] ?? false;
+			$res->type           = ( 'theme' === $remote['type'] ? 'theme' : 'plugin' );
+			$res->name           = $remote['name'];
+			$res->info           = strip_tags( $remote['short_description'] );
+			$res->description    = isset( $remote['long_description'] ) ? $remote['long_description'] : '';
+			$res->version_latest = $remote['version'];
+			$res->features       = $remote['features'];
+			$res->default_order  = isset( $remote['_order'] ) ? intval( $remote['_order'] ) : 0;
+			$res->downloads      = intval( $remote['downloads'] );
+			$res->popularity     = intval( $remote['popularity'] );
+			$res->release_stamp  = intval( $remote['released'] );
+			$res->update_stamp   = intval( $remote['updated'] );
 
 			// Project tags.
 			if ( 'plugin' === $res->type ) {
@@ -1445,10 +1440,6 @@ class WPMUDEV_Dashboard_Site {
 
 					case 'buddypress':
 						$res->incompatible_reason = __( 'Requires BuddyPress', 'wpmudev' );
-						break;
-
-					case 'php':
-						$res->incompatible_reason = sprintf( __( 'Requires PHP %s or above', 'wpmudev' ), $res->requires_min_php );
 						break;
 
 					default:
@@ -1712,16 +1703,6 @@ class WPMUDEV_Dashboard_Site {
 		$allowed[] = $user_id;
 		WPMUDEV_Dashboard::$settings->set( 'limit_to_user', $allowed, 'general' );
 
-		/**
-		 * Action hook to trigger when a admin user is added to permissions.
-		 *
-		 * @since 4.11.18
-		 *
-		 * @param int   $user_id Added user ID.
-		 * @param array $allowed Allowed user IDs.
-		 */
-		do_action( 'wpmudev_after_add_allowed_user', $user_id, $allowed );
-
 		return true;
 	}
 
@@ -1750,16 +1731,6 @@ class WPMUDEV_Dashboard_Site {
 		unset( $allowed[ $key ] );
 		$allowed = array_values( $allowed );
 		WPMUDEV_Dashboard::$settings->set( 'limit_to_user', $allowed, 'general' );
-
-		/**
-		 * Action hook to trigger when a admin user is removed from permissions.
-		 *
-		 * @since 4.11.18
-		 *
-		 * @param int   $user_id Removed user ID.
-		 * @param array $allowed Allowed user IDs.
-		 */
-		do_action( 'wpmudev_after_remove_allowed_user', $user_id, $allowed );
 
 		return true;
 	}
@@ -2066,19 +2037,71 @@ class WPMUDEV_Dashboard_Site {
 	/**
 	 * Check user permissions to see if we can install this project.
 	 *
-	 * NOTE: Not sure why this duplicate exist. Since it's a public function we can not
-	 * remove it for now. So deprecating.
+	 * @since  1.0.0
 	 *
-	 * @since      1.0.0
-	 * @deprecated 4.11.17
-	 *
-	 * @param int  $project_id   The project to check.
-	 * @param bool $only_license Skip permission check, only validate license.
+	 * @param  int  $project_id   The project to check.
+	 * @param  bool $only_license Skip permission check, only validate license.
 	 *
 	 * @return bool
 	 */
 	public function user_can_install( $project_id, $only_license = false ) {
-		return WPMUDEV_Dashboard::$upgrader->user_can_install( $project_id, $only_license );
+		$data              = WPMUDEV_Dashboard::$api->get_projects_data();
+		$membership_type   = WPMUDEV_Dashboard::$api->get_membership_status();
+		$licensed_projects = WPMUDEV_Dashboard::$api->get_membership_projects();
+
+		if ( 'unit' === $membership_type ) {
+			foreach ( $licensed_projects as $p ) {
+				$is_allowed = intval( $project_id ) === $p;
+				if ( $is_allowed ) {
+					return true;
+				}
+			}
+		}
+
+		// Basic check if we have valid data.
+		if ( empty( $data['projects'] ) ) {
+			return false;
+		}
+		if ( empty( $data['projects'][ $project_id ] ) ) {
+			return false;
+		}
+
+		$project = $data['projects'][ $project_id ];
+
+		if ( ! $only_license ) {
+			if ( ! $this->allowed_user() ) {
+				return false;
+			}
+			if ( ! WPMUDEV_Dashboard::$upgrader->can_auto_install( $project['type'] ) ) {
+				return false;
+			}
+		}
+
+		$is_upfront = WPMUDEV_Dashboard::$site->id_upfront == $project_id;
+		$package    = isset( $project['package'] ) ? $project['package'] : '';
+		$access     = false;
+
+		if ( 'full' == $membership_type ) {
+			// User has full membership.
+			$access = true;
+		} elseif ( 'single' == $membership_type && $licensed_projects == $project_id ) {
+			// User has single membership for the requested project.
+			$access = true;
+		} elseif ( 'free' == $project['paid'] ) {
+			// It's a free project. All users can install this.
+			$access = true;
+		} elseif ( 'lite' == $project['paid'] ) {
+			// It's a lite project. All users can install this.
+			$access = true;
+		} elseif ( 'single' == $membership_type && $package && $package == $licensed_projects ) {
+			// A packaged project that the user bought.
+			$access = true;
+		} elseif ( $is_upfront && 'single' == $membership_type ) {
+			// User wants to get Upfront parent theme.
+			$access = true;
+		}
+
+		return $access;
 	}
 
 	/**
@@ -2580,7 +2603,7 @@ class WPMUDEV_Dashboard_Site {
 		);
 
 		// Add download link only if not plugins page and updates page.
-		if ( ! in_array( $pagenow, array( 'plugins.php', 'update-core.php', 'plugin-install.php' ), true ) && $project->is_compatible ) {
+		if ( ! in_array( $pagenow, array( 'plugins.php', 'update-core.php', 'plugin-install.php' ), true ) ) {
 			$result->download_link = WPMUDEV_Dashboard::$api->rest_url_auth( 'install/' . $pid );
 		}
 
@@ -2653,11 +2676,10 @@ class WPMUDEV_Dashboard_Site {
 					$autoupdate = false;
 					$local      = $this->get_cached_projects( $id );
 					// $last_changes = $plugin['changelog'];
-					$compatible = WPMUDEV_Dashboard::$upgrader->is_project_compatible( $id );
 
-					if ( $compatible && '1' == $plugin['autoupdate'] && WPMUDEV_Dashboard::$api->has_key() ) {
+					if ( '1' == $plugin['autoupdate'] && WPMUDEV_Dashboard::$api->has_key() ) {
 						$package = WPMUDEV_Dashboard::$api->rest_url_auth( 'download/' . $id );
-					} elseif ( $compatible && 119 === (int) $id ) {
+					} elseif ( 119 === (int) $id ) {
 						// Public download url for Dashboard.
 						$package = WPMUDEV_Dashboard::$api->rest_url( 'download-dashboard' );
 					}

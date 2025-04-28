@@ -4,17 +4,13 @@
  * Any data or functionality that it produces should be exported by the
  * main FontAwesome class and the API documented and semantically versioned there.
  */
-
 namespace FortAwesome;
 
 require_once trailingslashit( FONTAWESOME_DIR_PATH ) . 'includes/class-fontawesome-api-settings.php';
 require_once trailingslashit( FONTAWESOME_DIR_PATH ) . 'includes/class-fontawesome-exception.php';
 require_once trailingslashit( FONTAWESOME_DIR_PATH ) . 'includes/class-fontawesome-rest-response.php';
-require_once trailingslashit( FONTAWESOME_DIR_PATH ) . 'includes/class-fontawesome-svg-styles-manager.php';
 
-use WP_REST_Controller;
-use WP_Error;
-use Exception;
+use \WP_REST_Controller, \WP_Error, \Exception;
 
 /**
  * Controller class for REST endpoint
@@ -24,29 +20,29 @@ use Exception;
  */
 class FontAwesome_Config_Controller extends WP_REST_Controller {
 
-    // phpcs:ignore Generic.Commenting.DocComment.MissingShort
+	// phpcs:ignore Generic.Commenting.DocComment.MissingShort
 	/**
 	 * @ignore
 	 */
 	private $plugin_slug = null;
 
-    // phpcs:ignore Generic.Commenting.DocComment.MissingShort
+	// phpcs:ignore Generic.Commenting.DocComment.MissingShort
 	/**
 	 * @ignore
 	 */
 	protected $namespace = null;
 
 
-    // phpcs:ignore Generic.Commenting.DocComment.MissingShort
+	// phpcs:ignore Generic.Commenting.DocComment.MissingShort
 	/**
 	 * @ignore
 	 */
-	public function __construct( $plugin_slug, $rest_namespace ) {
+	public function __construct( $plugin_slug, $namespace ) {
 		$this->plugin_slug = $plugin_slug;
-		$this->namespace   = $rest_namespace;
+		$this->namespace   = $namespace;
 	}
 
-    // phpcs:ignore Generic.Commenting.DocComment.MissingShort
+	// phpcs:ignore Generic.Commenting.DocComment.MissingShort
 	/**
 	 * @ignore
 	 */
@@ -58,18 +54,17 @@ class FontAwesome_Config_Controller extends WP_REST_Controller {
 			'/' . $route_base,
 			array(
 				array(
-					'methods'             => 'POST',
+					'methods'             => 'PUT',
 					'callback'            => array( $this, 'update_item' ),
-					'permission_callback' => function () {
-						return current_user_can( 'manage_options' );
-					},
+					'permission_callback' => function() {
+						return current_user_can( 'manage_options' ); },
 					'args'                => array(),
 				),
 			)
 		);
 	}
 
-    // phpcs:ignore Generic.Commenting.DocComment.MissingShort
+	// phpcs:ignore Generic.Commenting.DocComment.MissingShort
 	/**
 	 * @ignore
 	 */
@@ -134,8 +129,6 @@ class FontAwesome_Config_Controller extends WP_REST_Controller {
 				FontAwesome::OPTIONS_KEY,
 				$db_item
 			);
-
-			FontAwesome_SVG_Styles_Manager::instance()->fetch_svg_styles( fa(), $this->release_provider() );
 
 			$return_data = $this->build_item( fa() );
 			return new FontAwesome_REST_Response( $return_data, 200 );

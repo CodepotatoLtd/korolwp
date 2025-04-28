@@ -4,21 +4,16 @@ if(!defined('ABSPATH')){
     exit;
 }
 
-// check setting
-if(!acf_get_setting('acfe/modules/author')){
+// Check setting
+if(!acf_get_setting('acfe/modules/author'))
     return;
-}
 
 if(!class_exists('acfe_author')):
 
 class acfe_author{
     
-    // vars
     public $post_types = array();
     
-    /**
-     * construct
-     */
     function __construct(){
         
         acf_add_local_field(array(
@@ -41,12 +36,8 @@ class acfe_author{
         
     }
     
-    
-    /**
-     * add_post_meta_boxes
-     *
-     * @param $post_type
-     * @param $post
+    /*
+     * Add Post Meta Boxes
      */
     function add_post_meta_boxes($post_type, $post){
     
@@ -92,12 +83,8 @@ class acfe_author{
         
     }
     
-    
-    /**
-     * render_meta_box
-     *
-     * @param $post
-     * @param $metabox
+    /*
+     * Render Meta Box
      */
     function render_meta_box($post, $metabox){
         
@@ -113,14 +100,8 @@ class acfe_author{
         
     }
     
-    
-    /**
-     * wp_insert_post_data
-     *
-     * @param $data
-     * @param $post_array
-     *
-     * @return mixed
+    /*
+     * WP Insert Post Data
      */
     function wp_insert_post_data($data, $post_array){
         
@@ -150,14 +131,8 @@ class acfe_author{
         
     }
     
-    
-    /**
-     * get_field_group_style
-     *
-     * @param $style
-     * @param $field_group
-     *
-     * @return array|string|string[]
+    /*
+     * Get Field Group Style
      */
     function get_field_group_style($style, $field_group){
         
@@ -168,11 +143,8 @@ class acfe_author{
         
     }
     
-    
-    /**
-     * get_roles
-     *
-     * @return array
+    /*
+     * Get Roles
      */
     function get_roles(){
     
@@ -181,9 +153,7 @@ class acfe_author{
         foreach(wp_roles()->roles as $name => $role){
         
             // check capability
-            if(empty($role['capabilities']['level_1'])){
-                continue;
-            }
+            if(empty($role['capabilities']['level_1'])) continue;
         
             $roles[] = $name;
         

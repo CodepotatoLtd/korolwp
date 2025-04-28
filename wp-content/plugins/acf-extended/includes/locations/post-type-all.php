@@ -8,8 +8,8 @@ if(!class_exists('acfe_location_post_type_all')):
 
 class acfe_location_post_type_all{
     
-    /**
-     * construct
+    /*
+     * Construct
      */
     function __construct(){
     
@@ -18,13 +18,8 @@ class acfe_location_post_type_all{
         
     }
     
-    
-    /**
-     * rule_values
-     *
-     * @param $choices
-     *
-     * @return string[]|void[]
+    /*
+     * Rule Values
      */
     function rule_values($choices){
         
@@ -34,25 +29,10 @@ class acfe_location_post_type_all{
         
     }
     
-    
-    /**
-     * rule_match
-     *
-     * @param $match
-     * @param $rule
-     * @param $options
-     *
-     * @return bool|mixed
+    /*
+     * Rule Match
      */
     function rule_match($match, $rule, $options){
-        
-        // rule value might be empty
-        // in case a Field Group use a custom location type from third party plugin
-        // if the third party plugin is disabled, acf will fallback to "Post Type == ''"
-        // and pass thru this rule because it's the first one
-        if(empty($rule['value'])){
-            return $match;
-        }
         
         if($rule['value'] !== 'all'){
             return $match;

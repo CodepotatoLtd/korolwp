@@ -8,43 +8,26 @@ if(!class_exists('acfe_module_export')):
 
 class acfe_module_export extends ACF_Admin_Tool{
     
-    // vars
-    public $module;
+    public $instance;
     public $action;
     public $data = array();
     
-    /**
-     * construct
-     *
-     * @param $module
-     */
-    function __construct($module){
-        
-        // module
-        $this->module = $module;
+    public $description;
+    public $select;
+    public $default_action;
+    public $allowed_actions = array();
+    public $file;
+    public $files;
+    public $messages = array();
     
-        // vars
-        $this->name = $this->module->get_export_tool();
-        $this->title = $this->module->get_message('export_title');
-        
-        parent::__construct();
-        
-    }
-    
-    
-    /**
-     * html
-     *
-     * @return void
-     */
     function html(){
         
-        // single
+        // Single
         if($this->is_active()){
             
             $this->html_single();
             
-        // archive
+        // Archive
         }else{
             
             $this->html_archive();
@@ -53,40 +36,23 @@ class acfe_module_export extends ACF_Admin_Tool{
         
     }
     
-    
-    /**
-     * html_archive
-     */
     function html_archive(){
         
-        if(!method_exists($this->module, 'get_items')){
-            return;
-        }
-        
         // vars
-        $choices = array();
-        $items = $this->module->get_raw_items();
-    
-        if($items){
-            foreach($items as $item){
-                
-                $choices[ $item['name'] ] = esc_html($item['label']);
-                
-            }
-        }
+        $choices = $this->instance->export_choices();
         
         ?>
         
         <?php if(acfe_is_acf_6()): ?>
         
             <div class="acf-postbox-header">
-                <h2 class="acf-postbox-title"><?php echo $this->module->get_message('export_description'); ?></h2>
+                <h2 class="acf-postbox-title"><?php echo $this->description; ?></h2>
             </div>
             <div class="acf-postbox-inner">
             
         <?php else: ?>
         
-            <p><?php echo $this->module->get_message('export_description'); ?></p>
+            <p><?php echo $this->description; ?></p>
         
         <?php endif; ?>
         
@@ -97,7 +63,7 @@ class acfe_module_export extends ACF_Admin_Tool{
             
                 // render
                 acf_render_field_wrap(array(
-                    'label'     => $this->module->get_message('export_select'),
+                    'label'     => $this->select,
                     'type'      => 'checkbox',
                     'name'      => 'keys',
                     'prefix'    => false,
@@ -107,10 +73,12 @@ class acfe_module_export extends ACF_Admin_Tool{
                     'class'     => 'acfe-module-export-choices'
                 ));
             
-            }else{
+            }
+            
+            else{
                 
                 echo '<div style="padding:15px 12px;">';
-                    echo $this->module->get_message('export_not_found');
+                    echo $this->messages['not_found'];
                 echo '</div>'; 
                 
             }
@@ -122,11 +90,11 @@ class acfe_module_export extends ACF_Admin_Tool{
         
         <p class="acf-submit">
             
-            <?php if(in_array('json', $this->module->export_actions)){ ?>
+            <?php if(in_array('json', $this->allowed_actions)){ ?>
                 <button type="submit" name="action" class="button button-primary" value="json" <?php echo $disabled; ?>><?php _e('Export File'); ?></button>
             <?php } ?>
             
-            <?php if(in_array('php', $this->module->export_actions)){ ?>
+            <?php if(in_array('php', $this->allowed_actions)){ ?>
                 <button type="submit" name="action" class="button" value="php" <?php echo $disabled; ?>><?php _e('Generate PHP'); ?></button>
             <?php } ?>
             
@@ -140,205 +108,71 @@ class acfe_module_export extends ACF_Admin_Tool{
         
     }
     
-    
-    /**
-     * html_single
-     */
     function html_single(){
-    
-        // enqueue
-        wp_enqueue_script('code-editor');
-        wp_enqueue_style('code-editor');
         
         ?>
-        
-        <?php if(acfe_is_acf_6()): ?>
-            <div class="acf-postbox-header">
-                <h2 class="acf-postbox-title"><?php echo $this->module->get_message('export_description'); ?></h2>
-            </div>
-        <?php endif; ?>
-        
-        <div class="acf-postbox-columns" style="margin-top: 0;margin-right: 280px;margin-bottom: 0;margin-left: 0;padding: 0;">
+        <div class="acf-postbox-columns">
             <div class="acf-postbox-main">
                 
-                <?php
-                $instructions = array(
-                    __("You can copy and paste the following code to your theme's <code>functions.php</code> file or include it within an external file.", 'acfe')
-                );
-                
-                if($this->module->get_message('export_instructions')){
-                    $instructions[] = $this->module->get_message('export_instructions');
-                }
-                ?>
-                
-                <p><?php echo implode(' ', $instructions); ?></p>
+                <p><?php _e("You can copy and paste the following code to your theme's functions.php file or include it within an external file.", 'acf'); ?></p>
                 
                 <div id="acf-admin-tool-export">
-                    <textarea id="acf-export-textarea" readonly="true"><?php
-    
-                        foreach($this->data as $item){
-    
-                            // translation
-                            $l10n = acf_get_setting('l10n');
-                            $l10n_textdomain = acf_get_setting('l10n_textdomain');
-    
-                            if($l10n && $l10n_textdomain){
-        
-                                acf_update_setting('l10n_var_export', true);
-        
-                                $item = $this->module->translate_item($item);
-        
-                                acf_update_setting('l10n_var_export', false);
-        
-                            }
-    
-                            // cleanup keys
-                            $item = $this->module->prepare_item_for_export($item);
-                            
-                            // var export
-                            $code = acfe_var_export($item);
-        
-                            // echo
-                            echo $this->module->export_code($code, $item) . "\r\n" . "\r\n";
-        
-                        }
-                        
-                        ?></textarea>
+                    <textarea id="acf-export-textarea" readonly="true"><?php $this->instance->export_php($this->data); ?></textarea>
                 </div>
                 
                 <p class="acf-submit">
-                    <a class="button" id="acf-export-copy"><?php _e('Copy to clipboard', 'acf'); ?></a>
+                    <a class="button" id="acf-export-copy"><?php _e( 'Copy to clipboard', 'acf' ); ?></a>
                 </p>
+                
                 <script type="text/javascript">
                 (function($){
-
-                    if(typeof acf === 'undefined'){
-                        return;
+                    
+                    var $a = $('#acf-export-copy');
+                    var $textarea = $('#acf-export-textarea');
+                    
+                    if(!document.queryCommandSupported('copy')){
+                        return $a.remove();
                     }
                     
-                    // acf 6.0 add display block;
-                    $('#acf-admin-tools #normal-sortables').css('display', 'block');
-                    
-                    acf.addAction('ready', function(){
-
-                        // elements
-                        var $a = $('#acf-export-copy');
-                        var $textarea = $('#acf-export-textarea');
-
-                        // initialize code mirror
-                        var edit = wp.codeEditor.initialize($textarea.get(0), {
-
-                            codemirror: $.extend(wp.codeEditor.defaultSettings.codemirror, {
-                                lineNumbers:      true,
-                                lineWrapping:     true,
-                                styleActiveLine:  false,
-                                continueComments: true,
-                                indentUnit:       4,
-                                tabSize:          1,
-                                indentWithTabs:   false,
-                                mode:             'text/x-php',
-                                extraKeys:        {
-                                    'Tab':       function(cm){cm.execCommand('indentMore')},
-                                    'Shift-Tab': function(cm){cm.execCommand('indentLess')},
-                                },
-                            })
-
-                        });
-
-                        // set height
-                        edit.codemirror.getScrollerElement().style.minHeight = 15 * 18.5 + 'px';
-
-                        if(!document.queryCommandSupported('copy')){
-                            return $a.remove();
-                        }
-
-                        $a.on('click', function(e){
-
-                            e.preventDefault();
-                            var $this = $(this);
-
+                    $a.on('click', function(e){
+                        
+                        e.preventDefault();
+                        
+                        $textarea.get(0).select();
+                        
+                        try{
+                            
                             // copy
-                            navigator.clipboard.writeText(edit.codemirror.getValue()).then(function(){
-
-                                // tooltip
-                                acf.newTooltip({
-                                    text:       "<?php _e('Copied', 'acf'); ?>",
-                                    timeout:    250,
-                                    target:     $this,
-                                });
-
+                            var copy = document.execCommand('copy');
+                            if(!copy)
+                                return;
+                            
+                            // tooltip
+                            acf.newTooltip({
+                                text:       "<?php _e('Copied', 'acf' ); ?>",
+                                timeout:    250,
+                                target:     $(this),
                             });
-
-                        });
+                            
+                        }catch(err){
+                            // do nothing
+                        }
                         
                     });
                 
                 })(jQuery);
                 </script>
             </div>
-
-            <div class="acf-postbox-side">
-
-                <div class="acf-panel acf-panel-selection -open">
-                    <h3 class="acf-panel-title"><?php echo $this->module->get_message('export_select'); ?> <i class="dashicons dashicons-arrow-down"></i></h3>
-                    <div class="acf-panel-inside">
-                        
-                        <?php
-                        // vars
-                        $choices = array();
-                        $selected = $this->get_keys();
-                        $items = $this->module->get_items();
-
-                        if($items){
-                            foreach($items as $item){
-                                $choices[ $item['name'] ] = esc_html($item['label']);
-                            }
-                        }
-
-                        // render
-                        acf_render_field_wrap(array(
-                            'type'    => 'checkbox',
-                            'name'    => 'keys',
-                            'prefix'  => false,
-                            'value'   => $selected,
-                            'toggle'  => true,
-                            'choices' => $choices,
-                        ));
-                        ?>
-                        
-                    </div>
-                </div>
-                
-                <p class="acf-submit">
-    
-                    <?php if(in_array('json', $this->module->export_actions)){ ?>
-                        <button type="submit" name="action" class="button button-primary" value="json"><?php _e('Export File'); ?></button>
-                    <?php } ?>
-    
-                    <?php if(in_array('php', $this->module->export_actions)){ ?>
-                        <button type="submit" name="action" class="button" value="php"><?php _e('Generate PHP'); ?></button>
-                    <?php } ?>
-                    
-                </p>
-            </div>
-            
         </div>
         <?php
     
     }
     
-    
-    /**
-     * load
-     *
-     * @return void
-     */
     function load(){
         
-        if(!$this->is_active()){
+        if(!$this->is_active())
             return;
-        }
-        
+            
         $this->action = $this->get_action();
         $this->data = $this->get_data();
         
@@ -346,20 +180,17 @@ class acfe_module_export extends ACF_Admin_Tool{
         if($this->action === 'json'){
             
             $this->submit();
-    
+            
+        }
+        
         // PHP
-        }elseif($this->action === 'php'){
+        elseif($this->action === 'php'){
     
             // add notice
             if(!empty($this->data)){
         
                 $count = count($this->data);
-                
-                $text = $this->module->get_message('export_success_single');
-                
-                if($count > 1){
-                   $text = sprintf($this->module->get_message('export_success_multiple'), $count);
-                }
+                $text = sprintf(_n($this->messages['success_single'], $this->messages['success_multiple'], $count, 'acf' ), $count);
         
                 acf_add_admin_notice($text, 'success');
         
@@ -369,50 +200,31 @@ class acfe_module_export extends ACF_Admin_Tool{
         
     }
     
-    
-    /**
-     * submit
-     *
-     * @return ACF_Admin_Notice|n|void
-     */
     function submit(){
         
-        // vars
         $this->action = $this->get_action();
         $this->data = $this->get_data();
-        $keys = wp_list_pluck($this->data, 'name');
+        $keys = array_keys($this->data);
         
         // validate
         if(!$this->data){
-            return acf_add_admin_notice($this->module->get_message('export_not_selected'), 'warning');
+            return acf_add_admin_notice($this->messages['not_selected'], 'warning');
         }
         
         // Json
         if($this->action === 'json'){
         
-            // prefix
-            $prefix = (count($this->data) > 1) ? $this->module->export_files['multiple'] : $this->module->export_files['single'];
+            // Prefix
+            $prefix = (count($keys) > 1) ? $this->file : $this->files;
             
-            // slugs
+            // Slugs
             $slugs = implode('-', $keys);
             
-            // date
+            // Date
             $date = date('Y-m-d');
             
             // file
             $file_name = 'acfe-export-' .  $prefix  . '-' . $slugs . '-' .  $date . '.json';
-            
-            // data
-            $data = array();
-            foreach($this->data as $item){
-                
-                // cleanup keys
-                $item = $this->module->prepare_item_for_export($item);
-                
-                // append to data
-                $data[] = $item;
-                
-            }
             
             // headers
             header("Content-Description: File Transfer");
@@ -420,10 +232,12 @@ class acfe_module_export extends ACF_Admin_Tool{
             header("Content-Type: application/json; charset=utf-8");
             
             // return
-            echo acf_json_encode($data);
-    
+            echo acf_json_encode($this->data);
+        
+        }
+        
         // PHP
-        }elseif($this->action === 'php'){
+        elseif($this->action === 'php'){
             
             // url
             $url = add_query_arg(array(
@@ -440,26 +254,21 @@ class acfe_module_export extends ACF_Admin_Tool{
         
     }
     
-    
-    /**
-     * get_data
-     *
-     * @return array
-     */
     function get_data(){
         
         // vars
         $keys = $this->get_keys();
         $data = array();
         
-        foreach($keys as $name){
+        foreach($keys as $key){
       
-            // get item
-            $item = $this->module->get_raw_item($name);
+            // export
+            $args = $this->instance->export_data($key);
             
-            if($item){
-                $data[] = $item;
-            }
+            if(!$args)
+                continue;
+            
+            $data[$key] = $args;
             
         }
         
@@ -467,12 +276,6 @@ class acfe_module_export extends ACF_Admin_Tool{
         
     }
     
-    
-    /**
-     * get_keys
-     *
-     * @return array|false|string[]
-     */
     function get_keys(){
         
         // vars
@@ -484,9 +287,11 @@ class acfe_module_export extends ACF_Admin_Tool{
         if($keys_post){
          
             $keys = (array) $keys_post;
-    
+            
+        }
+        
         // $_GET
-        }elseif($keys_get){
+        elseif($keys_get){
             
             $keys_get = str_replace(' ', '+', $keys_get);
             $keys = explode('+', $keys_get);
@@ -497,21 +302,15 @@ class acfe_module_export extends ACF_Admin_Tool{
         
     }
     
-    
-    /**
-     * get_action
-     *
-     * @return false|mixed|null
-     */
     function get_action(){
         
         // vars
-        $action = acfe_maybe_get_REQUEST('action');
+        $default = $this->default_action;
+        $action = acfe_maybe_get_REQUEST('action', $default);
         
         // check allowed
-        if(!in_array($action, $this->module->export_actions)){
-            return current($this->module->export_actions);
-        }
+        if(!in_array($action, $this->allowed_actions))
+            $action = $default;
         
         // return
         return $action;

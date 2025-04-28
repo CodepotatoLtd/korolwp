@@ -420,23 +420,6 @@ class acfe_field_user_roles extends acf_field{
         return $field;
         
     }
-    
-    
-    /**
-     * translate_field
-     *
-     * @param $field
-     *
-     * @return mixed
-     */
-    function translate_field($field){
-        
-        $field['placeholder'] = acf_translate($field['placeholder']);
-        $field['search_placeholder'] = acf_translate($field['search_placeholder']);
-        
-        return $field;
-        
-    }
 
 }
 

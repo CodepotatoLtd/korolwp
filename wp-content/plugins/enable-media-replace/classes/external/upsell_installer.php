@@ -9,13 +9,6 @@ function emr_plugin_install() {
 
 	$plugin = isset($_POST['plugin']) ? sanitize_text_field($_POST['plugin']) : null;
 
-	if ( ! current_user_can('install_plugins'))
-	{
-		// Send back a response.
-		wp_send_json(array('result'=> false));
-		die;
-	}
-
 	switch($plugin)
 	{
 		 case "envira":
@@ -109,14 +102,6 @@ function emr_activate() {
 	check_admin_referer( 'emr-plugin-activate', 'nonce' );
 
 $plugin = isset($_POST['plugin']) ? sanitize_text_field($_POST['plugin']) : null;
-
-if ( ! current_user_can('activate_plugins'))
-{
-	// Send back a response.
-	wp_send_json(array('result'=> false));
-	die;
-}
-
 
 switch($plugin)
 {

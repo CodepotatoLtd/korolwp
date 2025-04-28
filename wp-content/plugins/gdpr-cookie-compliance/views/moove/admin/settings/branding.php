@@ -28,10 +28,10 @@ if ( isset( $_POST ) && isset( $_POST['moove_gdpr_nonce'] ) ) :
 
 			foreach ( $_POST as $form_key => $form_value ) :
 				if ( 'moove_gdpr_info_bar_content' === $form_key ) :
-					$value                                  = wp_kses_post( wpautop( wp_unslash( $form_value ) ) );
+					$value                                  = wpautop( wp_unslash( $form_value ) );
 					$gdpr_options[ $form_key . $wpml_lang ] = $value;
 				elseif ( 'moove_gdpr_modal_strictly_secondary_notice' . $wpml_lang === $form_key ) :
-					$value                     = wp_kses_post( pautop( wp_unslash( $form_value ) ) );
+					$value                     = wpautop( wp_unslash( $form_value ) );
 					$gdpr_options[ $form_key ] = $value;
 				elseif ( 'moove_gdpr_floating_button_enable' !== $form_key && 'moove_gdpr_modal_powered_by_disable' !== $form_key && 'moove_gdpr_company_logo_id' !== $form_key ) :
 					$value                     = sanitize_text_field( wp_unslash( $form_value ) );
@@ -136,6 +136,22 @@ endif;
 
 			<tr>
 				<th scope="row">
+					<label for="moove_gdpr_logo_position"><?php esc_html_e( 'Logo Position', 'gdpr-cookie-compliance' ); ?></label>
+				</th>
+				<td>
+					<input name="moove_gdpr_logo_position" type="radio" value="left" id="moove_gdpr_logo_position_left" <?php echo isset( $gdpr_options['moove_gdpr_logo_position'] ) ? ( 'left' === $gdpr_options['moove_gdpr_logo_position'] ? 'checked' : '' ) : 'checked'; ?> class="on-off"> <label for="moove_gdpr_logo_position_left"><?php esc_html_e( 'Left', 'gdpr-cookie-compliance' ); ?></label> 
+					<span class="separator"></span>
+
+					<input name="moove_gdpr_logo_position" type="radio" value="center" id="moove_gdpr_logo_position_center" <?php echo isset( $gdpr_options['moove_gdpr_logo_position'] ) ? ( 'center' === $gdpr_options['moove_gdpr_logo_position'] ? 'checked' : '' ) : ''; ?> class="on-off"> <label for="moove_gdpr_logo_position_center"><?php esc_html_e( 'Center', 'gdpr-cookie-compliance' ); ?></label> 
+					<span class="separator"></span>
+					<input name="moove_gdpr_logo_position" type="radio" value="right" id="moove_gdpr_logo_position_right" <?php echo isset( $gdpr_options['moove_gdpr_logo_position'] ) ? ( 'right' === $gdpr_options['moove_gdpr_logo_position'] ? 'checked' : '' ) : ''; ?> class="on-off"> <label for="moove_gdpr_logo_position_right"><?php esc_html_e( 'Right', 'gdpr-cookie-compliance' ); ?></label>
+
+					<?php do_action( 'gdpr_cc_moove_gdpr_logo_position_settings' ); ?>
+				</td>
+			</tr>
+
+			<tr>
+				<th scope="row">
 					<label for="moove_gdpr_button_style"><?php esc_html_e( 'Button Style', 'gdpr-cookie-compliance' ); ?></label>
 				</th>
 				<td>
@@ -190,7 +206,7 @@ endif;
 				<td>
 					<input name="moove_gdpr_cdn_url" type="text" id="moove_gdpr_cdn_url" value="<?php echo isset( $gdpr_options['moove_gdpr_cdn_url'] ) && $gdpr_options['moove_gdpr_cdn_url'] ? esc_url( $gdpr_options['moove_gdpr_cdn_url'] ) : ''; ?>" class="regular-text">
 					<p class="description">
-						<strong>* <?php esc_html_e( 'Optional, leave it empty to use default domain','gdpr-cookie-compliance');?></strong><br /><?php esc_html_e('Enter your CDN root URL to enable CDN for GDPR Lity library files. The URL can be http, https or protocol-relative', 'gdpr-cookie-compliance' ); ?> (<?php esc_html_e( 'e.g.','gdpr-cookie-compliance');?> //<?php esc_html_e( 'cdn.example.com','gdpr-cookie-compliance');?>/).</p>
+						<strong>* <?php esc_html_e( 'Optional, leave it empty to use default domain','gdpr-cookie-compliance');?></strong><br /><?php esc_html_e('Enter your CDN root URL to enable CDN for GDPR Lity library files. The URL can be http, https or protocol-relative', 'gdpr-cookie-compliance' ); ?> (e.g. //cdn.example.com/).</p>
 					<!--  .description -->
 				</td>
 			</tr>

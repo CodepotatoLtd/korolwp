@@ -6,7 +6,6 @@
             "key": "field_62fe2b140a4ac",
             "label": "Name",
             "name": "name",
-            "aria-label": "",
             "type": "text",
             "instructions": "",
             "required": 0,
@@ -26,7 +25,6 @@
             "key": "field_62fe2b180a4ad",
             "label": "Position",
             "name": "position",
-            "aria-label": "",
             "type": "text",
             "instructions": "",
             "required": 0,
@@ -46,7 +44,6 @@
             "key": "field_6315b68a476fa",
             "label": "Email",
             "name": "email",
-            "aria-label": "",
             "type": "text",
             "instructions": "",
             "required": 0,
@@ -63,30 +60,9 @@
             "maxlength": ""
         },
         {
-            "key": "field_6627e385823fc",
-            "label": "Phone",
-            "name": "phone",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "maxlength": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
             "key": "field_62fe2b1e0a4ae",
             "label": "Bio",
             "name": "bio",
-            "aria-label": "",
             "type": "wysiwyg",
             "instructions": "",
             "required": 0,
@@ -130,5 +106,5 @@
     "acfe_form": 0,
     "acfe_meta": "",
     "acfe_note": "",
-    "modified": 1713890191
+    "modified": 1662367380
 }
