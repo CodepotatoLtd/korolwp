@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (C) 2014-2020 ServMask Inc.
+ * Copyright (C) 2014-2025 ServMask Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,6 +14,8 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * Attribution: This code is part of the All-in-One WP Migration plugin, developed by
  *
  * ███████╗███████╗██████╗ ██╗   ██╗███╗   ███╗ █████╗ ███████╗██╗  ██╗
  * ██╔════╝██╔════╝██╔══██╗██║   ██║████╗ ████║██╔══██╗██╔════╝██║ ██╔╝
@@ -102,8 +104,14 @@ class Ai1wm_Backups {
 	 */
 	public static function delete_file( $file ) {
 		if ( ai1wm_is_filename_supported( $file ) ) {
-			return @unlink( ai1wm_backup_path( array( 'archive' => $file ) ) );
+			if ( $deleted = @unlink( ai1wm_backup_path( array( 'archive' => $file ) ) ) ) {
+				do_action( 'ai1wm_status_backup_deleted', $file );
+			}
+
+			return $deleted;
 		}
+
+		return false;
 	}
 
 	/**
@@ -163,8 +171,20 @@ class Ai1wm_Backups {
 	 * Check if backups are downloadable
 	 */
 	public static function are_downloadable() {
-		$path = untrailingslashit( ABSPATH );
+		static $downloadable = null;
+		if ( is_null( $downloadable ) ) {
+			$downloadable = Ai1wm_Backups::are_in_wp_content_folder() || strpos( AI1WM_BACKUPS_PATH, untrailingslashit( ABSPATH ) ) === 0;
+		}
 
-		return substr( AI1WM_BACKUPS_PATH, 0, strlen( $path ) ) === $path;
+		return $downloadable;
+	}
+
+	public static function are_in_wp_content_folder() {
+		static $in_wp_content = null;
+		if ( is_null( $in_wp_content ) ) {
+			$in_wp_content = strpos( AI1WM_BACKUPS_PATH, untrailingslashit( WP_CONTENT_DIR ) ) === 0;
+		}
+
+		return $in_wp_content;
 	}
 }

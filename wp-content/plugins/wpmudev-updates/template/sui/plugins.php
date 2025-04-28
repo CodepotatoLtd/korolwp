@@ -2,6 +2,8 @@
 /**
  * Dashboard plugin template
  *
+ * @var WPMUDEV_Dashboard_Sui_Page_Urls $urls URLs class.
+ *
  * @package WPMUDEV DASHBOARD 4.9.0
  */
 
@@ -250,13 +252,6 @@ $has_hosted_access     = $is_wpmudev_host && ! $is_standalone_hosting;
 
 			<p><?php printf( esc_html__( '%s Checking for updates, please wait…', 'wpmudev' ), '<i class="sui-icon-loader sui-md sui-loading" aria-hidden="true"></i>' ); //phpcs:ignore ?></p>
 
-			<img
-				src="<?php echo esc_url( WPMUDEV_Dashboard::$site->plugin_url . 'assets/images/devman-loading.png' ); ?>"
-				srcset="<?php echo esc_url( WPMUDEV_Dashboard::$site->plugin_url . 'assets/images/devman-loading.png' ); ?> 1x, <?php echo esc_url( WPMUDEV_Dashboard::$site->plugin_url . 'assets/images/devman-loading@2x.png' ); ?> 2x"
-				alt="<?php esc_html_e( 'Dev-man is drinking a cup of coffee while waiting for content to load.' ); ?>"
-				class="sui-image sui-image-center"
-			/>
-
 		</div>
 
 		<table class="sui-table sui-table-flushed dashui-table-plugins" style="display: none;">
@@ -330,7 +325,13 @@ foreach ( $data['projects'] as $project ) {
 	if ( empty( $project['id'] ) ) {
 		continue;
 	}
+
 	if ( 'plugin' !== $project['type'] ) {
+		continue;
+	}
+
+	// No need to render addons.
+	if ( ! empty( $project['is_plugin_addon'] ) ) {
 		continue;
 	}
 
@@ -397,7 +398,7 @@ foreach ( $data['projects'] as $project ) {
 				foreach ( $plugin_actions as $plugin_action ) :
 					// Message for page reload.
 					$msg = '<p>' . esc_html__( 'This page needs to be reloaded before changes you just made become visible.', 'wpmudev' ) . '</p>';
-					$msg        .= '<div class="sui-notice-buttons"><a href="' . add_query_arg( 'success-action', $plugin_action ) . '" class="sui-button">' . esc_html__( 'Reload now', 'wpmudev' ) . '</a></div>';
+					$msg        .= '<div class="sui-notice-buttons"><a href="' . esc_url( add_query_arg( 'success-action', $plugin_action, $urls->plugins_url ) ) . '" class="sui-button">' . esc_html__( 'Reload now', 'wpmudev' ) . '</a></div>';
 					?>
 					<div
 						role="alert"
